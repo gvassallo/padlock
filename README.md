@@ -1,6 +1,6 @@
-# Podlock 
+# Padlock 
 
-To start Podlock :
+To start Padlock :
 
   1. Install dependencies with `npm install`
   2. Build react compontent with `gulp browserify` 
