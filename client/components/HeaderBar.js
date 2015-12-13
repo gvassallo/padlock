@@ -18,6 +18,9 @@ export default class HeaderBar extends React.Component {
                         <LinkContainer to="/login"> 
                             <NavItem eventKey={1}>Login</NavItem> 
                         </LinkContainer>
+                        <LinkContainer to="/register"> 
+                            <NavItem eventKey={2}>Register</NavItem> 
+                        </LinkContainer>
                     </Nav> 
                 </Navbar.Collapse> 
             </Navbar> 
