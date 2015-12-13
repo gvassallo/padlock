@@ -6,7 +6,7 @@ var PageHeader = require('react-bootstrap').PageHeader;
 
 const pageHeaderInstance = (
     <center>  
-        <PageHeader>Podlock <small>Manage your passwords easily</small></PageHeader>
+        <PageHeader>Padlock <small>Manage your passwords easily</small></PageHeader>
     </center> 
 );
 
