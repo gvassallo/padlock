@@ -19,7 +19,7 @@ gulp.task('server', function () {
 
 
 gulp.task('browserify', function () {
-    browserify('./client/main.js', { debug: true })
+    browserify('./client/index.js', { debug: true })
         .transform('babelify', {presets: ['react']})
         .bundle()
         .on('error', gutil.log)

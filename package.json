@@ -8,9 +8,11 @@
   "repository": "none",
   "engines": ">=0.12.0",
   "dependencies": {
+    "axios": "^0.8.0",
     "bcrypt": "^0.8.5",
     "bluebird": "^2.10.0",
     "body-parser": "^1.13.1",
+    "bootstrap-sass": "^3.3.5",
     "compression": "^1.4.4",
     "cookie-parser": "^1.4.0",
     "cors": "^2.7.1",
@@ -22,14 +24,13 @@
     "path": "^0.12.7",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.12.1",
     "react": "*",
     "react-bootstrap": "^0.28.1",
     "react-dom": "*",
     "react-mixin": "*",
     "react-router": "^1.0.0",
-    "react-router-bootstrap": "*", 
-    "bootstrap-sass": "^3.3.5"
+    "react-router-bootstrap": "*",
+    "sequelize": "^3.12.1"
   },
   "babel": {
     "plugins": [
