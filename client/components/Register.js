@@ -13,7 +13,8 @@ export default class Register extends React.Component {
         this.state = {
           email: '',
           password: '',
-          name: '',
+          username: '',
+          fullname: ''
         };
         // this.onChange = this.onChange.bind(this);
     }
@@ -42,9 +43,10 @@ export default class Register extends React.Component {
         return (
         <div> 
             <form onSubmit={this.register.bind(this)} action=''>
-              <Input type='text' onChange={this.handleChange('name')} placeholder='Name' />
+              <Input type='text' onChange={this.handleChange('username')} placeholder='Username' />
               <Input type='email' onChange={this.handleChange('email')} placeholder='Email' />
               <Input type='password' onChange={this.handleChange('password')} placeholder='Password' />
+              <Input type='text' onChange={this.handleChange('fullname')} placeholder='Full Name' />
               <ButtonInput type='submit' value='Register' block />
             </form>
             <div className='pt-lg text-center'>

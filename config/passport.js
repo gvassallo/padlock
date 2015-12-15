@@ -37,18 +37,19 @@ module.exports = (passport) => {
     passwordField: 'password',
     passReqToCallback: true,
     session: false
-  }, (req, email, password, done) => {
+    }, (req, email, password, done) => {
     db.sequelize.transaction({ autocommit: false })
       .then(function(t) {
         return User
-          .generateHash(password)
-          .then(hash => {
+           .generateHash(password)
+           .then(hash => {
             return User
               .create({ fullName: req.body.fullName,
                         username: req.body.username,
                         email: email,
-                        password: hash }, { transaction: t });
-          })
+                        password: hash },
+                        { transaction: t });
+            })
           .then(user => {
             t.user = getUser(user);
             return generateToken(user, Date.now(), t);

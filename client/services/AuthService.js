@@ -9,7 +9,7 @@ class AuthService {
       .post('/api/auth/register', user)
       .then(res => {
         if (res.status === 200) {
-          // this.auth(res.data.user, res.data.token);
+          this.auth(res.data.user, res.data.token);
           console.log("oook"); 
           return Promise.resolve(res.data);
         }

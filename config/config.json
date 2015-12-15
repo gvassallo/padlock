@@ -19,5 +19,8 @@
     "database": "padlock",
     "host": "127.0.0.1",
     "dialect": "postgres"
-  }
+  },
+  "secret": "shhhthisisasecret",
+  "expireTime": 86400,
+  "cookieSecret": "thisismycookienoyours"
 }

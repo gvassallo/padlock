@@ -3,8 +3,8 @@ var express = require('express');
 
 
 module.exports = (passport) => {
-    var router = express.Router();  
 
+    var router = express.Router();  
 
     var auth = require('./auth.js')(router, passport); 
 
