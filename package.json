@@ -11,7 +11,7 @@
     "alt": "^0.18.1",
     "axios": "^0.8.0",
     "bcrypt": "^0.8.5",
-    "bluebird": "^2.10.0",
+    "bluebird": "^2.10.2",
     "body-parser": "^1.13.1",
     "bootstrap-sass": "^3.3.5",
     "compression": "^1.4.4",

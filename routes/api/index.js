@@ -2,11 +2,11 @@
 var express = require('express'); 
 
 
-module.exports =  (function() {
+module.exports = (passport) => {
     var router = express.Router();  
 
 
-    var auth = require('./auth.js')(router); 
+    var auth = require('./auth.js')(router, passport); 
 
     router.route('/')
       .get((req, res) => {
@@ -17,4 +17,4 @@ module.exports =  (function() {
     
     //
     return router; 
-})(); 
+}; 

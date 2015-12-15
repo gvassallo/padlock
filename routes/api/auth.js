@@ -1,12 +1,16 @@
 'use strict'; 
 
-module.exports = (router) => {
+module.exports = (passport,router) => {
 
-router.route('/auth/register')
-      .post((req, res) => {
-        // console.log(req.headers);
-        res.json({ statusCode: 200, message: 'Valid token. Enjoy the router.' });
-      });
-
+    router.route('/auth/register')
+      .post(
+        passport.authenticate('local-signup'),
+        (req, res) => {
+          res.json({
+            user: req.user.user,
+            token: req.user.token
+          });
+        }
+      );
 }; 
 

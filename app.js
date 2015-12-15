@@ -6,11 +6,11 @@ var path = require("path");
 var passport = require("passport"); 
 // var session = require('express-session'); 
 
-var port = process.env.PORT || 4000; 
+var port = process.env.PORT || 3000; 
 
 // Passport initialization 
-// app.use(passport.initialize());
-// require('./config/passport')(passport);
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 
 var api = require("./routes/api"); 
@@ -26,6 +26,10 @@ router.route('/js/app.js')
             res.sendFile(path.join(__dirname, "client/bundle.js"));             
         }); 
 
+router.route('/css/style.css')
+        .get((req, res) => {
+res.sendFile(path.join(__dirname, "client/css/style.css"));             
+        }); 
 app.listen(port); 
 app.use('/api', api); 
 app.use('/', router); 

@@ -9,9 +9,10 @@ export default class AppRouter extends React.Component{
     render() {
          return(
           <Router>
-            <Route path='/' component={App}/> 
-            <Route path='/login' component={Login}/> 
-            <Route path='/register' component={Register}/> 
+            <Route path='/' component={App}> 
+                <Route path='login' component={Login}/> 
+                <Route path='register' component={Register}/> 
+            </Route> 
           </Router> 
         ); 
     }
