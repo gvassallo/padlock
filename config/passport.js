@@ -44,7 +44,7 @@ module.exports = (passport) => {
            .generateHash(password)
            .then(hash => {
             return User
-              .create({ fullName: req.body.fullName,
+              .create({ fullName: req.body.fullname,
                         username: req.body.username,
                         email: email,
                         password: hash },

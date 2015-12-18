@@ -26,9 +26,5 @@ gulp.task('browserify', function () {
         .pipe(source('bundle.js'))
         .pipe(gulp.dest('./client'))
 });
-//
-// gulp.task('watch',function() {
-//     gulp.watch('web/components#<{(|.js', ['browserify'])
-// });
-//
+
 gulp.task('default', ['browserify', 'server']); 
