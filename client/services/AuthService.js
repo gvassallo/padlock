@@ -22,17 +22,18 @@ class AuthService {
     });
   }
 
-  // login(user) {
-  //   return axios
-  //     .post('/api/auth', user)
-  //     .then(res => {
-  //       if (res.status === 200) {
-  //         this.auth(res.data.user, res.data.token);
-  //         return Promise.resolve(res.data);
-  //       }
-  //       throw Error(res.message);
-  //     });
-  // }
+  login(user) {
+    return axios
+      .post('/api/auth', user)
+      .then(res => {
+        if (res.status === 200) {
+          console.log("logged in"); 
+          this.auth(res.data.user, res.data.token);
+          return Promise.resolve(res.data);
+        }
+        throw Error(res.message);
+      });
+  }
 
   register(user) {
     return axios

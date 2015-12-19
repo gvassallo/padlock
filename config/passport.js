@@ -70,16 +70,16 @@ module.exports = (passport) => {
   }));
 
   passport.use('local-login', new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'username',
     passwordField: 'password',
     passReqToCallback: true,
     session: false
-  }, (req, email, password, done) => {
+  }, (req, username, password, done) => {
     db.sequelize.transaction({ autocommit: false })
       .then(function(t) {
         let that = { };
         return User
-          .findOne({ where: { $or: [ { email: email }, { username: email } ] }},
+          .findOne({ where: { $or: [ { email: username }, { username: username } ] }},
                    { transaction: t })
           .then((user) => {
             if (user === null) {
