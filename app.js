@@ -16,7 +16,7 @@ app.use(compression());
 // Setup bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-var port = process.env.PORT || 5000; 
+var port = process.env.PORT || 3000; 
 
 // Passport initialization 
 app.use(passport.initialize());
