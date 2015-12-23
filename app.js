@@ -33,12 +33,12 @@ router.route('/')
 
 router.route('/js/app.js')
         .get((req, res) => {
-            res.sendFile(path.join(__dirname, "client/bundle.js"));             
+res.sendFile(path.join(__dirname, "client/dist/js/bundle.js"));             
         }); 
 
 router.route('/css/style.css')
         .get((req, res) => {
-res.sendFile(path.join(__dirname, "client/css/style.css"));             
+res.sendFile(path.join(__dirname, "client/dist/css/style.css"));             
         }); 
 app.listen(port); 
 app.use('/api', api); 

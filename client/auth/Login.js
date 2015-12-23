@@ -4,6 +4,7 @@ import { Input, ButtonInput } from 'react-bootstrap';
 import { connect } from 'react-redux'; 
 import AuthActions from '../actions/AuthActions'
 import * as AuthAction  from '../actions/authr'; 
+import BaseForm from './BaseForm'
 
 class Login extends React.Component {
     constructor(){
@@ -29,11 +30,13 @@ class Login extends React.Component {
 
     render() {
         return (
+        <BaseForm> 
         <form onSubmit={this.login.bind(this)} action=''> 
             <Input type="text" onChange={this.handleChange('username')} placeholder="Enter name" />
             <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
             <ButtonInput type="submit" value="Login" block/> 
         </form> 
+        </BaseForm> 
         ); 
     }
 }; 

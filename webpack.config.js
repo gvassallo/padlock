@@ -7,20 +7,10 @@ devtool: 'eval',
 entry: './client/index.js',
 
 output: {
-    path: path.join(__dirname, 'client'),
+path: path.join(__dirname, 'client/dist/js'),
     filename: 'bundle.js'
-  },
+    },
 
-  // resolve: {
-  //   alias: {
-  //     phoenix: __dirname + '/deps/phoenix/web/static/js/phoenix.js'
-  //   }
-    // resolve: {
-    //     root: [
-    //         path.join(__dirname, "..", "babel", "node_modules")
-    //     ],
-    //     extensions: ['', '.js', '.json'] 
-    // }, // },
 
     resolveLoader: {
       modulesDirectories: [

@@ -4,6 +4,7 @@ import { Input, ButtonInput, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as AuthActions from '../actions/authr.js'; 
 import { connect } from 'react-redux'; 
+import BaseForm from './BaseForm' 
 
 class Register extends React.Component {
 
@@ -33,7 +34,7 @@ class Register extends React.Component {
 
     render() {
         return (
-        <div> 
+        <BaseForm>  
             <form onSubmit={this.register.bind(this)} action=''>
               <Input type='text' onChange={this.handleChange('username')} placeholder='Username' />
               <Input type='email' onChange={this.handleChange('email')} placeholder='Email' />
@@ -47,7 +48,7 @@ class Register extends React.Component {
                 <Button bsStyle='primary' block>Login</Button>
               </LinkContainer>
             </div>
-          </div> 
+          </BaseForm> 
         ); 
     }
 }; 
