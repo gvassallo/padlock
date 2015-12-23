@@ -8,7 +8,6 @@
   "repository": "none",
   "engines": ">=0.12.0",
   "dependencies": {
-    "alt": "^0.18.1",
     "axios": "^0.8.0",
     "bcrypt": "^0.8.5",
     "bluebird": "^2.10.2",

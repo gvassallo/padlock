@@ -1,4 +1,3 @@
-import alt from '../alt'; 
 import AuthService from '../services/AuthService';
 import history from '../history';
 
@@ -45,5 +44,4 @@ class AuthActions {
   }
 }
 
-export default alt.createActions(AuthActions);
 

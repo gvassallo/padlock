@@ -4,8 +4,6 @@ import { Input, ButtonInput } from 'react-bootstrap';
 import { connect } from 'react-redux'; 
 import AuthActions from '../actions/AuthActions'
 import * as AuthAction  from '../actions/authr'; 
-import AuthStore from '../stores/AuthStore'; 
-
 
 class Login extends React.Component {
     constructor(){
