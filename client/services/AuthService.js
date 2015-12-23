@@ -27,7 +27,6 @@ class AuthService {
       .post('/api/auth', user)
       .then(res => {
         if (res.status === 200) {
-          console.log("logged in"); 
           this.auth(res.data.user, res.data.token);
           return Promise.resolve(res.data);
         }

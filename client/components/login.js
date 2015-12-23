@@ -1,18 +1,19 @@
 import React from 'react'; 
 
 import { Input, ButtonInput } from 'react-bootstrap'; 
-
+import { connect } from 'react-redux'; 
 import AuthActions from '../actions/AuthActions'
+import * as AuthAction  from '../actions/authr'; 
 import AuthStore from '../stores/AuthStore'; 
 
-export default class Login extends React.Component {
+
+class Login extends React.Component {
     constructor(){
         super(); 
         this.state = {
             username: '', 
             password: ''
         }; 
-        this.onChange = this.onChange.bind(this); 
     }
 
     handleChange(field){ 
@@ -23,22 +24,11 @@ export default class Login extends React.Component {
     }
         
     login(event) {
+        const { dispatch } = this.props;  
         event.preventDefault(); 
-        AuthActions.login(this.state); 
+        dispatch(AuthAction.login(this.state)); 
     }
 
-    componentWillMount() {
-      AuthStore.listen(this.onChange);
-    }
-
-    componentWillUnmount() {
-      AuthStore.unlisten(this.onChange);
-    }
-
-    onChange() {
-      this.state.loading = AuthStore.getState().loading;
-      this.setState(this.state);
-    }
     render() {
         return (
         <form onSubmit={this.login.bind(this)} action=''> 
@@ -49,3 +39,5 @@ export default class Login extends React.Component {
         ); 
     }
 }; 
+
+export default connect()(Login);  

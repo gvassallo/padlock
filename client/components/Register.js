@@ -2,11 +2,10 @@ import React from 'react';
 
 import { Input, ButtonInput, Button } from 'react-bootstrap'; 
 import { LinkContainer } from 'react-router-bootstrap';
+import * as AuthActions from '../actions/authr.js'; 
+import { connect } from 'react-redux'; 
 
-// import AuthStore from '../stores/AuthStore';
-import AuthActions from '../actions/AuthActions';
-
-export default class Register extends React.Component {
+class Register extends React.Component {
 
     constructor() {
         super();
@@ -16,7 +15,6 @@ export default class Register extends React.Component {
           username: '',
           fullname: ''
         };
-        // this.onChange = this.onChange.bind(this);
     }
 
     handleChange(field) {
@@ -27,17 +25,11 @@ export default class Register extends React.Component {
     }
 
     register(event) {
+      const { dispatch } = this.props; 
       event.preventDefault();
-      AuthActions.register(this.state);
+      dispatch(AuthActions.register(this.state)); 
     }
   
-    // componentWillMount() {
-    //   AuthStore.listen(this.onChange);
-    // }
-    //
-    // componentWillUnmount() {
-    //   AuthStore.unlisten(this.onChange);
-    // }
 
     render() {
         return (
@@ -59,3 +51,5 @@ export default class Register extends React.Component {
         ); 
     }
 }; 
+
+export default connect()(Register); 

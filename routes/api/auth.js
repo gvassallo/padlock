@@ -18,7 +18,6 @@ module.exports = (router, passport) => {
     .post(
       passport.authenticate('local-signup'),
       (req, res) => {
-        console.log(res); 
         res.json({
           user: req.user.user,
           token: req.user.token

@@ -1,11 +1,17 @@
 import React from 'react'; 
 import ReactDOM from 'react-dom'; 
-import AppRouter from './router'
+import {Provider} from 'react-redux'; 
+import AppRouter from './router';
+import configureStore from './stores/configureStore'; 
 
 const mountNode = document.getElementById('content');
 
+const store = configureStore(); 
+
 ReactDOM.render(
-    <AppRouter/>,
+    <Provider store={store}> 
+        <AppRouter/>
+    </Provider>, 
     mountNode
 ); 
 

@@ -6,7 +6,7 @@ import Register from './components/Register'
 import App from './app'
 import history from './history'
 import AuthService from './services/AuthService'
-import AuthActions from './actions/AuthActions'
+import * as AuthActions from './actions/authr'
 import HelloWorld from './components/HelloWorld'
 
 function requireAuth(nextState, replaceState) {
@@ -19,8 +19,6 @@ function requireAuth(nextState, replaceState) {
 
 function alreadyLogged(nextState, replaceState) {
   let nextPath = nextState.location.pathname;
-  if (AuthService.isLoggedIn())
-    console.log("sei ok");
   if (AuthService.isLoggedIn() && (nextPath === '/login' || nextPath === '/register')) {
     replaceState(null, '/');
   }
