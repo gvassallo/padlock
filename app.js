@@ -24,36 +24,10 @@ require('./config/passport')(passport);
 
 
 var api = require("./routes/api")(passport); 
-var router = express.Router(); 
+var client = require("./routes/client"); 
 
-router.route('/') 
-      .get((req, res) => {
-           res.sendFile(path.join(__dirname, "index.html"));
- }); 
-
-router.route('/js/app.js')
-        .get((req, res) => {
-res.sendFile(path.join(__dirname, "client/dist/js/bundle.js"));             
-        }); 
-
-router.route('/css/style.css')
-        .get((req, res) => {
-res.sendFile(path.join(__dirname, "client/dist/css/style.css"));             
-        }); 
 app.listen(port); 
+app.use('/', client); 
 app.use('/api', api); 
-app.use('/', router); 
 
 
-
-// custom 404 page
-// app.use(function(req, res){ res.type('text/plain');
-//             res.status(404);
-//             res.send('404 - Not Found');
-// });
-//     // custom 500 page
-// app.use(function(err, req, res, next){ console.error(err.stack);
-//             res.type('text/plain');
-//             res.status(500);
-//             res.send('500 - Server Error');
-// });

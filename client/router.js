@@ -6,36 +6,42 @@ import Register from './auth/Register'
 import App from './app'
 import history from './history'
 import AuthService from './services/AuthService'
-import { auth } from './actions/authr'
+import { auth } from './actions/AuthActions'
 import HelloWorld from './components/HelloWorld'
+import { connect } from 'react-redux'; 
 
-function requireAuth(nextState, replaceState) {
-  if (!AuthService.isLoggedIn()) {
-    replaceState({ nextPathname: nextState.location.pathname }, '/login');
-  } else {
-    auth(AuthService.getUser(), AuthService.getToken());
-  }
-}
 
-function alreadyLogged(nextState, replaceState) {
-  let nextPath = nextState.location.pathname;
-  if (AuthService.isLoggedIn() && (nextPath === '/login' || nextPath === '/register')) {
-    replaceState(null, '/');
-  }
-}
+class AppRouter extends React.Component{
 
-export default class AppRouter extends React.Component{
+    requireAuth(nextState, replaceState) {
+    if (!AuthService.isLoggedIn()) {
+        replaceState({ nextPathname: nextState.location.pathname }, '/login');
+    } else {
+        const { dispatch } = this.props;  
+        dispatch(auth(AuthService.getUser(), AuthService.getToken())); 
+        }
+    }
+
+    alreadyLogged(nextState, replaceState) {
+        let nextPath = nextState.location.pathname;
+        if (AuthService.isLoggedIn() && (nextPath === '/login' || nextPath === '/register')) {
+            replaceState(null, '/');
+        }
+    }
+
 
     render() {
          return(
-          <Router history={history} onEnter={requireAuth}>
-            <Route path='/' component={App} > 
+          <Router history={history}>
+            <Route path='/' component={App} onEnter={this.requireAuth.bind(this)}> 
                 <IndexRoute component={HelloWorld}/> 
             </Route> 
-            <Route path='login' component={Login} onEnter={alreadyLogged}/> 
-            <Route path='register' component={Register} onEnter={alreadyLogged}/> 
+            <Route path='login' component={Login} onEnter={this.alreadyLogged}/> 
+            <Route path='register' component={Register} onEnter={this.alreadyLogged}/> 
           </Router> 
         ); 
     }
 }; 
 
+
+export default connect()(AppRouter); 

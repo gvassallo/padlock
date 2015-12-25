@@ -15,7 +15,11 @@ export default function auth(state = initialstate, action) {
         return Object.assign({}, state, {
             token: action.token 
         }); 
-
+    case types.RESET_USER_AND_TOKEN:
+        return Object.assign({}, state, {
+            user: null,
+            token: null 
+        }); 
     default: 
         return state; 
     }

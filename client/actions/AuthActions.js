@@ -1,47 +1,70 @@
-import AuthService from '../services/AuthService';
-import history from '../history';
+import * as types from '../constants/ActionTypes'
+import AuthService from '../services/AuthService'
+import history from '../history' 
 
-class AuthActions {
-  login(user) {
-    AuthService.login(user)
-      .then(data => {
-        this.actions.loginSuccess(data.user, data.token);
-      })
-      .catch(message => {
-        this.actions.loginFailed(message);
-      });
-    this.dispatch();
-  }
-
-  register(user) {
-    AuthService.register(user)
-      .then(data => {
-        this.actions.loginSuccess(data.user, data.token);
-      })
-      .catch(message => {
-        this.actions.loginFailed(message);
-      });
-    this.dispatch();
-  }
-
-  auth(user, token) {
-    this.dispatch({ user, token });
-  }
-  
-  loginSuccess(user, token) {
-    this.dispatch({ user, token });
-    history.pushState(null, '/');
-  }
-
-  loginFailed(data) {
-    this.dispatch(data);
-  }
-
-  logout() {
-    AuthService.logout();
-    this.dispatch();
-    history.pushState(null, '/login');
-  }
+function receiveAccessToken(token) {
+    return {
+        type: types.RECEIVE_ACCESS_TOKEN,
+        token 
+    };
 }
 
+function receiveAuthedUser(user) {
+    return {
+        type: types.RECEIVE_AUTHED_USER,
+        user
+    };
+}
+
+function receiveAuthedUserAndToken(user, token) {
+   return dispatch => {
+    dispatch(receiveAuthedUser(user));
+    dispatch(receiveAccessToken(token)); 
+    }; 
+}
+
+export function login(user) {
+    return dispatch => {
+        AuthService.login(user)
+            .then((data) => {
+                dispatch(receiveAuthedUserAndToken(data.user, data.token));
+                history.pushState(null, '/')
+            })
+            .catch( e=>{ console.log(e.message)});
+    } 
+}
+
+
+export function register(user) {
+    return dispatch => {
+        AuthService.register(user)
+            .then((data) => {
+                dispatch(receiveAuthedUserAndToken(data.user, data.token));
+                history.pushState(null, '/')
+            })
+            .catch( e=>{console.log(e.message)});
+    } 
+} 
+
+export function auth(user, token) {
+    return dispatch => {
+        dispatch(receiveAuthedUserAndToken(user, token)); 
+    }; 
+}
+
+export function logout() {
+    AuthService.logout(); 
+    console.log("logout"); 
+    return {    
+        type: types.RESET_USER_AND_TOKEN
+    };
+}
+
+
+function  loginFailed(data) {
+        return{
+            type: types.LOGIN_FAILED,
+            data 
+        }
+    };
 

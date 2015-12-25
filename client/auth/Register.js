@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Input, ButtonInput, Button } from 'react-bootstrap'; 
 import { LinkContainer } from 'react-router-bootstrap';
-import * as AuthActions from '../actions/authr.js'; 
+import * as AuthActions from '../actions/AuthActions'; 
 import { connect } from 'react-redux'; 
 import BaseForm from './BaseForm' 
 

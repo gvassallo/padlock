@@ -3,7 +3,7 @@ import React from 'react';
 import { Input, ButtonInput } from 'react-bootstrap'; 
 import { connect } from 'react-redux'; 
 import AuthActions from '../actions/AuthActions'
-import * as AuthAction  from '../actions/authr'; 
+import * as AuthAction  from '../actions/AuthActions'; 
 import BaseForm from './BaseForm'
 
 class Login extends React.Component {
