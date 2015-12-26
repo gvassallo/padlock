@@ -3,4 +3,5 @@ node_modules
 client/bundle.js
 client/dist 
 *.swp
+coverage
 

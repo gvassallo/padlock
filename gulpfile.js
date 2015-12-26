@@ -5,6 +5,8 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var gutil = require('gulp-util');
 var sass = require('gulp-sass'); 
+var mocha = require('gulp-mocha');
+var istanbul = require('gulp-istanbul');
 
 const paths = {
   bundle: 'app.js',
@@ -38,6 +40,39 @@ gulp.task('server', function () {
 // });
 //
 
+gulp.task('test', () => {
+  process.env.NODE_ENV = 'test';
+  return gulp.src([
+      'app.js',
+      'models/**/*.js',
+      'routes/**/*.js'
+  ])
+    .pipe(istanbul({ includeUntested: true }))
+    .pipe(istanbul.hookRequire())
+    .on('finish', () => {
+      gulp.src([
+        'tests/unit/*.test.js', 
+        'tests/integration/*.test.js'
+      ], { read: false })
+        .pipe(mocha({
+          reporter: 'spec',
+        }))
+        .on('error', (err) => {
+          console.log(err.message);
+          process.exit(1);
+        })
+        .pipe(istanbul.writeReports())
+        .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 }}))
+        .once('error', (err) => {
+          console.log(err.message);
+          process.exit(1);
+        })
+        .once('end', () => {
+          process.exit(0);
+        });
+    });
+});
+
 gulp.task('styles', () => {
     return gulp.src('client/scss/**/*.scss')
     .pipe(sass({
@@ -51,9 +86,9 @@ gulp.task('styles', () => {
       util.log('Sass', util.colors.red(err.message));
       this.emit('end');
     })
-    // .pipe(concat('style.css'))
     .pipe(gulp.dest(paths.distCss));
 });
+
 
 
 

@@ -31,3 +31,8 @@ app.use('/', client);
 app.use('/api', api); 
 
 
+// Enable integration tests
+/* istanbul ignore else */
+if (process.env.NODE_ENV === 'test') {
+  module.exports = app;
+}
