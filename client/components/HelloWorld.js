@@ -1,10 +1,11 @@
 import React from 'react'; 
+import Services from './Services'; 
 
 class HelloWorld extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello, world!</h1>
+          <Services/>         
       </div>
     );
   }

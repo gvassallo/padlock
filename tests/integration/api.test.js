@@ -113,7 +113,7 @@ describe('rotues/api', ()=> {
             .post('/api/logins')
             .set('Content-Type', 'application/json')
             .set('x-access-token', this.userData.token)
-            .send({service: 'fb', username: 'me', password: 'pwd'})
+            .send({service: this.service.name, username: 'me', password: 'pwd'})
             .expect(200)
             .expect('Content-Type', /json/) 
             .end((err, res) => {
@@ -130,7 +130,7 @@ describe('rotues/api', ()=> {
             .post('/api/logins')
             .set('Content-Type', 'application/json')
             .set('x-access-token', this.userData.token)
-            .send({service: 'fb', username: 'me', password: 'pwd'})
+            .send({service: this.service.name, username: 'me', password: 'pwd'})
             .expect(500)
             .expect('Content-Type', /json/)
             .end((err, res) => {

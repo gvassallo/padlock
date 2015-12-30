@@ -1,6 +1,7 @@
 import React from 'react'; 
 
-import { Input, ButtonInput } from 'react-bootstrap'; 
+import { Input, ButtonInput, Button } from 'react-bootstrap'; 
+import {LinkContainer} from 'react-router-bootstrap'; 
 import { connect } from 'react-redux'; 
 import AuthActions from '../actions/AuthActions'
 import * as AuthAction  from '../actions/AuthActions'; 
@@ -36,6 +37,12 @@ class Login extends React.Component {
             <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
             <ButtonInput type="submit" value="Login" block/> 
         </form> 
+        <div className='pt-lg text-center'>
+          <p>Need to signup?</p>
+          <LinkContainer to='/register'>
+            <Button bsStyle='primary' block>Register now</Button>
+          </LinkContainer>
+        </div>
         </BaseForm> 
         ); 
     }

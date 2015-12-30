@@ -28,7 +28,6 @@ module.exports = (passport, router) => {
                         .createLogin({username: login.username, password: login.password}, {transaction: t});  
                     })
                     .catch(err =>{ 
-                        console.log(err.message); 
                         t.rollback(); 
                         return next({ message: 'Cannot create new login', statusCode: 500 });
                     })
