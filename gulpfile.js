@@ -10,11 +10,11 @@ var istanbul = require('gulp-istanbul');
 
 const paths = {
   bundle: 'app.js',
-  srcJsx: 'app/index.js',
+  srcJsx: 'client/index.js',
   srcCss: 'app/**/*.css',
   srcImg: 'app/images/**',
   dist: 'dist',
-  distJs: 'dist/js',
+distJs: 'client/dist/js',
   distImg: 'dist/images',
 distCss: 'client/dist/css'
 };
@@ -30,15 +30,15 @@ gulp.task('server', function () {
     })
 }); 
 
-// gulp.task('browserify', function () {
-//     browserify('./client/index.js', { debug: true })
-//         .transform('babelify', {presets: ['react']})
-//         .bundle()
-//         .on('error', gutil.log)
-//         .pipe(source('bundle.js'))
-//         .pipe(gulp.dest('./client'))
-// });
-//
+gulp.task('browserify', function () {
+    browserify(paths.srcJsx, { debug: true })
+        .transform('babelify', {presets: ['react']})
+        .bundle()
+        .on('error', gutil.log)
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest(paths.distJs))
+});
+
 
 gulp.task('test', () => {
   process.env.NODE_ENV = 'test';

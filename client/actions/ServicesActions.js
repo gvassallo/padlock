@@ -5,11 +5,23 @@ export function download() {
     return dispatch => {
         ServicesService.download()
             .then(data => {
-                dispatch(receiveServicesList(data.services)); 
+            console.log(data); 
+                if(data.length > 0) 
+                dispatch(receiveServicesList(data)); 
             })
             .catch( e=> {console.log(e.message)}); 
         }
+}
+
+export function addNew(service){
+    return dispatch => {
+        ServicesService.addNew(service)
+            .then(data => {
+                dispatch(receiveNewService(data));  
+            })
+            .catch( e=> {console.log(e.message)}); 
     }
+}
 
 function receiveServicesList(services){
     return {
@@ -18,5 +30,11 @@ function receiveServicesList(services){
     }; 
 }
 
+function receiveNewService(service) {
+    return {
+        type: types.RECEIVE_NEW_SERVICE, 
+        service 
+    }; 
+}
 
 

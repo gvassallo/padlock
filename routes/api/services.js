@@ -24,27 +24,46 @@ module.exports = (passport, router) => {
               return next({ statusCode: 500, message: err.message });
             });
         });
+        }) 
+        .post((req, res, next) => {
+            db.sequelize.transaction({autocommit: false})
+            .then(t => {
+                return User
+                .findOne({where: {uuid: req.decoded.uuid}, transaction: t}) 
+                .then(user => {
+                    console.log(req.body); 
+                    return user.createService({name: req.body.service.name}, {transaction: t} ); 
+                })
+                .then( service => {
+                    t.commit(); 
+                    return res.json(service); 
+                })
+                .catch(err =>{ 
+                    t.rollback(); 
+                    return next({ message: 'Cannot create new service', statusCode: 500 });
+                }); 
+            }); 
         }); 
     
-    router.route('/services/:name/logins')
-        .get((req, res, next) => {
-        db.sequelize.transaction({autocommit: false})
-        .then( t => {
-          return Service  
-            .findOne({where: { $and: [{userId: req.decoded.uuid},{name: req.params.name}]}}, {
-              transaction: t})
-            .then(service => {
-              return service.getLogins();
-            })
-            .then(logins => {
-              t.commit();
-              return res.json(logins);
-            })
-            .catch(err => {
-              t.rollback();
-                //to change 
-              return next({ statusCode: 404, message: err.message });
-            });
-        });
-    }); 
+    // router.route('/services/:name/logins')
+    //     .get((req, res, next) => {
+    //     db.sequelize.transaction({autocommit: false})
+    //     .then( t => {
+    //       return Service  
+    //         .findOne({where: { $and: [{userId: req.decoded.uuid},{name: req.params.name}]}}, {
+    //           transaction: t})
+    //         .then(service => {
+    //           return service.getLogins();
+    //         })
+    //         .then(logins => {
+    //           t.commit();
+    //           return res.json(logins);
+    //         })
+    //         .catch(err => {
+    //           t.rollback();
+    //             //to change 
+    //           return next({ statusCode: 404, message: err.message });
+    //         });
+    //     });
+    // }); 
 }; 

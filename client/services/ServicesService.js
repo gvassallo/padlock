@@ -35,7 +35,17 @@ class ServicesService {
             }); 
     }
 
-
+    addNew(service){
+        console.log(service); 
+        return axios 
+        .post('/api/services', service)
+        .then(res => {
+            if(res.status === 200) {
+                return Promise.resolve(res.data); 
+            }
+            throw Error(res.message); 
+        }); 
+    }
 }
 
 export default new ServicesService(); 

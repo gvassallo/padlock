@@ -9,7 +9,7 @@ import AuthService from './services/AuthService'
 import { auth } from './actions/AuthActions'
 import HelloWorld from './components/HelloWorld'
 import { connect } from 'react-redux'; 
-
+import Services from './views/Services'
 
 class AppRouter extends React.Component{
 
@@ -34,7 +34,7 @@ class AppRouter extends React.Component{
          return(
           <Router history={history}>
             <Route path='/' component={App} onEnter={this.requireAuth.bind(this)}> 
-                <IndexRoute component={HelloWorld}/> 
+                <IndexRoute component={Services}/> 
             </Route> 
             <Route path='login' component={Login} onEnter={this.alreadyLogged}/> 
             <Route path='register' component={Register} onEnter={this.alreadyLogged}/> 

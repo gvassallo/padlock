@@ -1,7 +1,7 @@
 import * as types from '../constants/ActionTypes' 
 
 const initialstate = {
-    list: [{name: 'troia'}, {name: 'madonna'}] 
+    list: [] 
 }
 
 export default function services(state = initialstate, action ) {
@@ -10,7 +10,14 @@ export default function services(state = initialstate, action ) {
 
     case types.RECEIVE_SERVICES_LIST: 
         return Object.assign({}, state, {
-            list: action.services  
+            list: [...state.list, ...action.services] 
+        }); 
+
+    case types.RECEIVE_NEW_SERVICE: 
+        return Object.assign({}, state, {
+            list: [
+                ...state.list, action.service
+            ]
         }); 
     default :
         return state; 
