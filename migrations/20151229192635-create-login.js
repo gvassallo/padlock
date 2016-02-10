@@ -2,10 +2,14 @@
 module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.createTable('Logins', {
+      uuid: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV1,
+        primaryKey: true
+      },
       username: {
         type: Sequelize.STRING, 
         allowNull: false, 
-        primaryKey: true 
       },
       password: {
         type: Sequelize.STRING, 
@@ -14,12 +18,6 @@ module.exports = {
       service: {
         type: Sequelize.STRING, 
         allowNull: false,
-        references: {
-          model: 'Services',
-          key: 'name'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +26,16 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      }, 
+      userId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'uuid'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       }
     });
   },

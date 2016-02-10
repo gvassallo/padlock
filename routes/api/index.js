@@ -14,9 +14,8 @@ module.exports = (passport) => {
     router.use(ensureAuthenticated); 
     router.use(cors()); 
     
-    require('./services.js')(passport, router); 
     require('./logins.js')(passport, router); 
-    
+    require('./users.js')(passport, router);     
 
     router.route('/')
       .get((req, res) => {

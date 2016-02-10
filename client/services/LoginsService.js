@@ -2,7 +2,7 @@
 
 import axios from 'axios' 
 
-class ServicesService {
+class LoginsService {
 
   constructor() {
     this.token = localStorage.getItem('token'); 
@@ -26,7 +26,7 @@ class ServicesService {
 
     download(){
         return axios 
-            .get('/api/services')
+            .get('/api/logins')
             .then(res => {
                 if(res.status === 200) {
                  return Promise.resolve(res.data); 
@@ -35,10 +35,10 @@ class ServicesService {
             }); 
     }
 
-    addNew(service){
-        console.log(service); 
+    addNew(login){
+        console.log(login); 
         return axios 
-        .post('/api/services', service)
+        .post('/api/logins', login)
         .then(res => {
             if(res.status === 200) {
                 return Promise.resolve(res.data); 
@@ -48,5 +48,5 @@ class ServicesService {
     }
 }
 
-export default new ServicesService(); 
+export default new LoginsService(); 
 

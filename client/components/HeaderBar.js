@@ -10,7 +10,6 @@ class HeaderBar extends React.Component {
 
     logout(event) {
         event.preventDefault();
-        console.log("logging out"); 
         const { dispatch } = this.props; 
         dispatch(AuthActions.logout()); 
     }
@@ -28,7 +27,9 @@ class HeaderBar extends React.Component {
           { this.props.token ? (
             <Nav pullRight>
               <NavDropdown eventKey={1} title={ this.props.user.username } id="basic-nav-dropdown" noCaret>
+                <LinkContainer to='/profile'>
                   <MenuItem eventKey={1.1}>Profile</MenuItem>
+                </LinkContainer>
                 <MenuItem divider />
                 <MenuItem eventKey={1.2} onClick={this.logout.bind(this)}>Log out</MenuItem>
               </NavDropdown>

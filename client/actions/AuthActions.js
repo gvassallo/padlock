@@ -54,7 +54,7 @@ export function auth(user, token) {
 
 export function logout() {
     AuthService.logout(); 
-    console.log("logout"); 
+    history.pushState(null, '/login'); 
     return {    
         type: types.RESET_USER_AND_TOKEN
     };

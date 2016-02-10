@@ -6,64 +6,36 @@ var User = db.User;
 var Service = db.Service; 
 
 module.exports = (passport, router) => {
-    router.route('/services')
-        .get((req, res, next) => {
-        db.sequelize.transaction({autocommit: false})
-        .then( t => {
-            return User
-            .findOne({where: {uuid : req.decoded.uuid}, transaction: t})  
-            .then(user => {
-              return user.getServices({ transaction: t });
-            })
-            .then(services => {
-              t.commit();
-              return res.json(services);
-            })
-            .catch(err => {
-              t.rollback();
-              return next({ statusCode: 500, message: err.message });
-            });
-        });
-        }) 
-        .post((req, res, next) => {
-            db.sequelize.transaction({autocommit: false})
-            .then(t => {
-                return User
-                .findOne({where: {uuid: req.decoded.uuid}, transaction: t}) 
-                .then(user => {
-                    console.log(req.body); 
-                    return user.createService({name: req.body.service.name}, {transaction: t} ); 
-                })
-                .then( service => {
-                    t.commit(); 
-                    return res.json(service); 
-                })
-                .catch(err =>{ 
-                    t.rollback(); 
-                    return next({ message: 'Cannot create new service', statusCode: 500 });
-                }); 
-            }); 
-        }); 
     
-    // router.route('/services/:name/logins')
-    //     .get((req, res, next) => {
-    //     db.sequelize.transaction({autocommit: false})
-    //     .then( t => {
-    //       return Service  
-    //         .findOne({where: { $and: [{userId: req.decoded.uuid},{name: req.params.name}]}}, {
-    //           transaction: t})
-    //         .then(service => {
-    //           return service.getLogins();
-    //         })
-    //         .then(logins => {
-    //           t.commit();
-    //           return res.json(logins);
-    //         })
-    //         .catch(err => {
-    //           t.rollback();
-    //             //to change 
-    //           return next({ statusCode: 404, message: err.message });
-    //         });
-    //     });
-    // }); 
+    // create a login(username and password) for a service 
+    router.route('/services/:serviceId/logins')
+        .post((req, res, next)=> {
+            var login = req.body.login;
+            login.userId = req.decoded.uuid; 
+            db.sequelize.transaction({autocommit: false}) 
+            .then( t => {
+            // find the service with a certain name 
+            console.log(login);  
+            Service
+            .findOne({ where: { $and: [ { name: req.params.serviceId }, { userId: login.userId} ]}, transaction: t})  
+            .then(service_found => {
+                    return service_found
+                    .createLogin({username: login.username, password: login.password}, {transaction: t})
+                    .then(login => {
+                        t.commit(); 
+                        return res.json(login); 
+                    }) 
+                    .catch(err =>{ 
+                        console.log(err.message); 
+                        t.rollback(); 
+                        return next({ message: 'Cannot create new login', statusCode: 500 });
+                    })
+            })
+            .catch(err =>{ 
+                console.log(err.message); 
+                t.rollback(); 
+                return next({ message: 'Cannot create new login, the service does not exist', statusCode: 500 });
+            })
+        }) 
+    }); 
 }; 

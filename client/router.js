@@ -4,12 +4,13 @@ import { Router, Route, Link, IndexRoute } from 'react-router';
 import Login from './auth/Login'
 import Register from './auth/Register'
 import App from './app'
-import history from './history'
+import { browserHistory }  from 'react-router'
 import AuthService from './services/AuthService'
 import { auth } from './actions/AuthActions'
-import HelloWorld from './components/HelloWorld'
-import { connect } from 'react-redux'; 
-import Services from './views/Services'
+import SideBar from './components/SideBar'
+import { connect } from 'react-redux' 
+import Logins from './views/Logins'
+import Profile from './views/Profile' 
 
 class AppRouter extends React.Component{
 
@@ -32,9 +33,10 @@ class AppRouter extends React.Component{
 
     render() {
          return(
-          <Router history={history}>
+          <Router router={AppRouter} history={browserHistory}>
             <Route path='/' component={App} onEnter={this.requireAuth.bind(this)}> 
-                <IndexRoute component={Services}/> 
+              <IndexRoute component={Logins}/> 
+              <Route path='/profile' component={Profile} /> 
             </Route> 
             <Route path='login' component={Login} onEnter={this.alreadyLogged}/> 
             <Route path='register' component={Register} onEnter={this.alreadyLogged}/> 
