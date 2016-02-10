@@ -41,26 +41,27 @@ class Logins extends React.Component {
         event.preventDefault(); 
         const {dispatch} = this.props; 
         dispatch(LoginsActions.addNew(this.state));         
+        this.refs.modal.close(); 
     }
 
     render() {
         return (
-        <div>  
-        <LoginsList logins={this.props.logins}/> 
-        <ModalForm> 
+        <div className="modal-container">  
+          <LoginsList logins={this.props.logins}/> 
+          <ModalForm className="container" ref={'modal'}> 
             <Grid> 
-                <Row> 
-                    <Col sm={4} smOffset={1} md={4} mdOffset={1}  >
-                        <form onSubmit={this.addNewLogin.bind(this)} action=''> 
-                        <Input type="text" onChange={this.handleChange('service')} placeholder="Enter service" />
-                        <Input type="text" onChange={this.handleChange('username')} placeholder="Enter username" />
-                        <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
-                        <ButtonInput type="submit" value="Add" block/> 
-                        </form> 
-                    </Col> 
-                </Row>  
+              <Row> 
+                <Col sm={7} smOffset={1} md={7} mdOffset={1}  >
+                  <form onSubmit={this.addNewLogin.bind(this)} action=''> 
+                    <Input type="text" onChange={this.handleChange('service')} placeholder="Enter service" />
+                    <Input type="text" onChange={this.handleChange('username')} placeholder="Enter username" />
+                    <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
+                    <ButtonInput type="submit" value="Add" block/> 
+                  </form> 
+                </Col> 
+              </Row>  
             </Grid> 
-        </ModalForm>
+          </ModalForm>
         </div> 
         ); 
     }

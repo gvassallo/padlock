@@ -20,12 +20,16 @@ class ModalForm extends React.Component {
         return (
              
         <div> 
-            <Button className="plus-button" onClick={this.open.bind(this)} >
+            <Button bsStyle="primary" className="plus-button" onClick={this.open.bind(this)} >
                 New Service 
             </Button>   
-        <Modal show={this.state.showModal} onHide={this.close.bind(this)} className="container-fluid">
+          <Modal 
+            show={this.state.showModal} 
+            onHide={this.close.bind(this)}
+            container={this}
+            aria-labelledby="contained-modal-title">
           <Modal.Header closeButton>
-            <Modal.Title>Add new service</Modal.Title>
+            <Modal.Title id="contained-modal-title">Add new login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
               {this.props.children} 

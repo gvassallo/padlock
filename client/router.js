@@ -14,19 +14,22 @@ import Profile from './views/Profile'
 
 class AppRouter extends React.Component{
 
-    requireAuth(nextState, replaceState) {
+    requireAuth(nextState, replace) {
     if (!AuthService.isLoggedIn()) {
-        replaceState({ nextPathname: nextState.location.pathname }, '/login');
+      replace({ 
+        pathname: '/login', 
+        state: {nextPathname: nextState.location.pathname }
+      });
     } else {
         const { dispatch } = this.props;  
         dispatch(auth(AuthService.getUser(), AuthService.getToken())); 
         }
     }
 
-    alreadyLogged(nextState, replaceState) {
+    alreadyLogged(nextState, replace) {
         let nextPath = nextState.location.pathname;
         if (AuthService.isLoggedIn() && (nextPath === '/login' || nextPath === '/register')) {
-            replaceState(null, '/');
+            this.context.router.replace('/');
         }
     }
 

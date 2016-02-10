@@ -71,6 +71,7 @@ class AuthService {
     localStorage.removeItem('token');
     this.user = null;
     this.token = null;
+    
   }
 
   getUser() {

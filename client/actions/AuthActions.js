@@ -1,6 +1,6 @@
 import * as types from '../constants/ActionTypes'
 import AuthService from '../services/AuthService'
-import history from '../history' 
+import {browserHistory} from 'react-router'
 
 function receiveAccessToken(token) {
     return {
@@ -28,7 +28,7 @@ export function login(user) {
         AuthService.login(user)
             .then((data) => {
                 dispatch(receiveAuthedUserAndToken(data.user, data.token));
-                history.pushState(null, '/')
+                browserHistory.push('/')
             })
             .catch( e=>{ console.log(e.message)});
     } 
@@ -40,7 +40,7 @@ export function register(user) {
         AuthService.register(user)
             .then((data) => {
                 dispatch(receiveAuthedUserAndToken(data.user, data.token));
-                history.pushState(null, '/')
+                browserHistory.push('/')
             })
             .catch( e=>{console.log(e.message)});
     } 
@@ -54,14 +54,14 @@ export function auth(user, token) {
 
 export function logout() {
     AuthService.logout(); 
-    history.pushState(null, '/login'); 
+    browserHistory.push('/login'); 
     return {    
         type: types.RESET_USER_AND_TOKEN
     };
 }
 
 
-function  loginFailed(data) {
+function loginFailed(data) {
         return{
             type: types.LOGIN_FAILED,
             data 

@@ -1,68 +1,33 @@
 @import "bootstrap"; 
 
 body {
-  padding-top: 70px;
+  padding-top: 50px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+/* make sidebar nav vertical */ 
+.navbar {
+  padding: 0;
+  max-height: none;
+  box-sizing: border-box; 
 
-/* Position and sizing of burger button */
-.bm-overlay{
-     opacity: 0; 
-}
-.bm-burger-button {
-  position: fixed;
-  width: 36px;
-  height: 30px;
-  left: 28px;
-  margin-top: 28px;
-}
- 
-// /* Color/shape of burger icon bars */
-// .bm-burger-bars {
-//   background: #373a47;
-// }
-//  
-// /* Position and sizing of clickable cross button */
-.bm-cross-button {
-  height: 24px;
-  width: 24px;
-}
-//  
-/* Color/shape of close button cross */
-.bm-cross {
-  background: #bdc3c7;
-}
-//  
-/* General sidebar styles */
-.bm-menu {
-  background: white;
-  a {
-    color: #1C2126; 
+  ul {
+    float: none;
+  }
+  ul:not {
+    display: block;
+  }
 
-    &:hover, 
-    &:focus {
-         color: #c94e50;  
+  li {
+    float: none;
+    display: block;
+  
+    a {
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
   }
-  padding: 2.5em 1.5em 0;
-  font-size: 1.15em;
 }
 
-/* Wrapper for item list */
-.bm-item-list {
-  padding: 0.8em;
-  span{
-       margin-left: 10px; 
-       font-size: 18pt; 
-  }
-  i {
-      font-size: 18pt; 
-  }
-
-}
-// .inner-contet{
-//     padding-top: 20px;      
-// }
 .plus-button{
 
 }

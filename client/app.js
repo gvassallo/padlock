@@ -10,10 +10,9 @@ export default class App extends React.Component {
          return (
         <div>
             <HeaderBar/>
-{/*<SideBar className="sidebar" /> */}
-            <div id="page-wrap" className = 'container-fluid inner-content'> 
-                    {this.props.children} 
-            </div>  
+            <SideBar> 
+              {this.props.children} 
+            </SideBar>
         </div>
         ); 
     }

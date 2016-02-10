@@ -1,75 +1,41 @@
-import React from 'react'; 
-// import Menu from 'react-burger-menu' 
-import BurgerMenu from 'react-burger-menu' 
-import { Link } from 'react-router'
-import { LinkContainer } from 'react-router-bootstrap'
-let MenuWrap = React.createClass({
+import React from 'react'
+import { Grid, Row, Col, Navbar, Nav, NavItem } from 'react-bootstrap'
 
-  getInitialState() {
-    return { hidden : false };
-  },
 
-  componentWillReceiveProps(nextProps) {
-    const sideChanged = this.props.children.props.right !== nextProps.children.props.right;
-
-    if (sideChanged) {
-      this.setState({ hidden : true });
-
-      setTimeout(() => {
-        this.show();
-      }, this.props.wait);
-    }
-  },
-
-  show() {
-    this.setState({ hidden : false });
-  },
-
-  render() {
-    let style;
-
-    if (this.state.hidden) {
-      style = { display: 'none' };
-    }
-
-    return (
-      <div style={ style } className={ this.props.side }>
-        { this.props.children }
-      </div>
-    );
-  }
-});
-
-let SideBar = React.createClass({
-    getMenu(){
-        const Menu = BurgerMenu['push'];  
-    let jsx = ( 
-        <MenuWrap wait={ 20 }>
-            <Menu  pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } customIcon={ 'img/burger.svg'} className="sidebar">
-              <Link to="/"> 
-                  <div className="menu-item">
-                      <i className="glyphicon glyphicon-th"/>
-                      <span>Services</span>
+class SideBar extends React.Component{
+    render(){
+      return( 
+        <Row > 
+            <Col sm={2} md={2}> 
+          <div className="sidebar-nav">
+                <div className="navbar navbar-default" role="navigation">
+                  <div className="navbar-header">
+                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                      <span className="sr-only">Toggle navigation</span>
+                      <span className="icon-bar"></span>
+                      <span className="icon-bar"></span>
+                      <span className="icon-bar"></span>
+                    </button>
+                    <span className="visible-xs navbar-brand">Sidebar menu</span>
                   </div>
-              </Link> 
-              <Link  to="/profile" >
-                <div className="menu-item profile">
-                  <i className="glyphicon glyphicon-user"/>
-                      <span>Profile</span>
-                </div> 
-              </Link> 
-          </Menu>
-        </MenuWrap>
-        ); 
-        return jsx;  
-    }, 
-    render() {
-        return(
-        <div id="outer-container" className="outer-container" style={ {height: '100%' } }>  
-            {this.getMenu()} 
-        </div> 
-    );
+                  <div className="navbar-collapse collapse sidebar-navbar-collapse">
+                    <ul className="nav navbar-nav">
+                      <li className="active"><a href="#">Menu Item 1</a></li>
+                      <li><a href="#">Menu Item 2</a></li>
+                    </ul>
+                  </div>
+                </div>
+          </div>
+            </Col>
+          <div> 
+            <Col sm={10} md={10}>
+                {this.props.children} 
+            </Col> 
+          </div>
+        </Row>
+      );  
     }
-}); 
+
+}
 
 export default SideBar; 
