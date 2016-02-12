@@ -1,37 +1,84 @@
 @import "bootstrap"; 
 
 body {
-  padding-top: 50px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 /* make sidebar nav vertical */ 
-.navbar {
-  padding: 0;
-  max-height: none;
-  box-sizing: border-box; 
+// .navbar {
+//   padding: 0;
+//   max-height: none;
+//   box-sizing: border-box; 
+//
+//   ul {
+//     float: none;
+//   }
+//   ul:not {
+//     display: block;
+//   }
+//
+//   li {
+//     float: none;
+//     display: block;
+//   
+//     a {
+//       padding-top: 12px;
+//       padding-bottom: 12px;
+//     }
+//   }
+// }
 
-  ul {
-    float: none;
-  }
-  ul:not {
-    display: block;
-  }
 
-  li {
-    float: none;
-    display: block;
-  
-    a {
-      padding-top: 12px;
-      padding-bottom: 12px;
-    }
-  }
+
+.page-with-sidebar{
+  padding-left: 62px; 
+  padding-top: 50px; 
 }
 
-.plus-button{
-
+.sidebar-wrapper{
+  background: #2b333d;
+  width: 62px; 
+  position: fixed;
+  top: 50px;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  left: 0;
+  height: 100%;
+  transition-duration: .3s;
+  z-index: 99; 
 }
 
+.nav-sidebar{
+  margin-top: 72px; 
+  margin-bottom: 100px;
+  transition-duration: .3s; 
+  list-style: none; 
+  overflow: hidden;
+}
+
+.nav {
+  padding-left: 0;  
+  padding-top: 40px;
+}
+
+.nav-element{
+  padding: 7px 15px;
+  font-size: 15px;
+  line-height: 24px;
+  color: #555555;
+  display: block;
+  text-decoration: none;
+  padding-left: 23px;
+  font-weight: normal;
+  outline: none;
+  color: #c5d0de;
+}
+.nav-list{
+  paddig-top: 20px; 
+}
+.content-wrapper {
+    width: 100%;    
+}
 .vertical-center{
   text-align: center; 
   align-items: center;

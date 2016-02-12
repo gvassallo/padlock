@@ -1,38 +1,27 @@
 import React from 'react'
-import { Grid, Row, Col, Navbar, Nav, NavItem } from 'react-bootstrap'
-
+import { Link } from 'react-router'
+import {LinkContainer } from 'react-router-bootstrap'
 
 class SideBar extends React.Component{
     render(){
       return( 
-        <Row > 
-            <Col sm={2} md={2}> 
-          <div className="sidebar-nav">
-                <div className="navbar navbar-default" role="navigation">
-                  <div className="navbar-header">
-                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-                      <span className="sr-only">Toggle navigation</span>
-                      <span className="icon-bar"></span>
-                      <span className="icon-bar"></span>
-                      <span className="icon-bar"></span>
-                    </button>
-                    <span className="visible-xs navbar-brand">Sidebar menu</span>
-                  </div>
-                  <div className="navbar-collapse collapse sidebar-navbar-collapse">
-                    <ul className="nav navbar-nav">
-                      <li className="active"><a href="#">Menu Item 1</a></li>
-                      <li><a href="#">Menu Item 2</a></li>
-                    </ul>
-                  </div>
-                </div>
-          </div>
-            </Col>
-          <div> 
-            <Col sm={10} md={10}>
-                {this.props.children} 
-            </Col> 
-          </div>
-        </Row>
+      <div className="page-sidebar-expanded page-with-sidebar"> 
+            <div className="nicescroll sidebar-expanded sidebar-wrapper" tabIndex="0" >
+              <ul className="nav nav-sideabar">
+                  <li className="nav-element">
+                    <LinkContainer to="/">
+                      <span className="glyphicon glyphicon-home"></span>
+                    </LinkContainer> 
+                  </li>
+                  <li className="nav-element sidebar-user">
+                    <span className="glyphicon glyphicon-user"></span>
+                  </li>
+              </ul>
+            </div> 
+            <div className="content-wrapper">  
+              {this.props.children} 
+            </div> 
+      </div> 
       );  
     }
 
