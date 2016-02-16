@@ -3,32 +3,8 @@
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-/* make sidebar nav vertical */ 
-// .navbar {
-//   padding: 0;
-//   max-height: none;
-//   box-sizing: border-box; 
-//
-//   ul {
-//     float: none;
-//   }
-//   ul:not {
-//     display: block;
-//   }
-//
-//   li {
-//     float: none;
-//     display: block;
-//   
-//     a {
-//       padding-top: 12px;
-//       padding-bottom: 12px;
-//     }
-//   }
-// }
 
-
-
+// SIDEBAR
 .page-with-sidebar{
   padding-left: 62px; 
   padding-top: 50px; 
@@ -49,33 +25,29 @@ body {
 }
 
 .nav-sidebar{
-  margin-top: 72px; 
+  margin-top: 30px; 
   margin-bottom: 100px;
   transition-duration: .3s; 
   list-style: none; 
   overflow: hidden;
+  a {
+    text-align: center;  
+    color: #c5d0de;
+  }
+
+  span {
+    font-size: 20px; 
+  }
+  li {
+    padding-top: 10px; 
+  }
 }
 
 .nav {
   padding-left: 0;  
-  padding-top: 40px;
+  padding-top: 0px;
 }
 
-.nav-element{
-  padding: 7px 15px;
-  font-size: 15px;
-  line-height: 24px;
-  color: #555555;
-  display: block;
-  text-decoration: none;
-  padding-left: 23px;
-  font-weight: normal;
-  outline: none;
-  color: #c5d0de;
-}
-.nav-list{
-  paddig-top: 20px; 
-}
 .content-wrapper {
     width: 100%;    
 }
@@ -83,3 +55,56 @@ body {
   text-align: center; 
   align-items: center;
 }
+
+// SPINNER
+.spinner {
+    text-align: center; 
+    paddint-top: 100px; 
+}
+.glyphicon-spin {
+    font-size: 200px; 
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+//LOGIN CARD
+.delete-link {
+  margin-left: 1.35em; 
+  color: #FF5323;
+}
+
+// .navbar-collapse.collapse {
+// display: block!important;
+// }
+//
+// .navbar-nav>li, .navbar-nav {
+// float: left !important;
+// }
+//
+// .navbar-nav.navbar-right:last-child {
+// margin-right: -15px !important;
+// }
+//
+// .navbar-right {
+// float: right!important;
+// }
+//

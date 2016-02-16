@@ -5,3 +5,6 @@ export const LOGIN = 'LOGIN';
 export const RECEIVE_LOGINS_LIST = 'RECEIVE_LOGINS_LIST'; 
 export const RECEIVE_NEW_LOGIN = 'RECEIVE_NEW_LOGIN'; 
 export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO'; 
+export const RESET_LOGINS_LIST = 'RESET_LOGINS_LIST'; 
+export const MODAL_OPEN = 'MODAL_OPEN'; 
+export const MODAL_CLOSE = 'MODAL_CLOSE'; 

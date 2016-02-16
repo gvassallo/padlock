@@ -6,6 +6,7 @@ import { Grid, Row, Col, ListGroup, ListGroupItem, Input, ButtonInput, Button} f
 import  BaseForm  from '../auth/BaseForm'
 import ModalForm from '../components/ModalForm'
 import LoginsList from '../components/LoginsList' 
+import Spinner from '../components/Spinner'
 
 const mapStateToProps = (state) => ({
     logins : state.logins.list
@@ -22,12 +23,12 @@ class Logins extends React.Component {
         }
     }
 
-    download(){
-        this.props.dispatch(LoginsActions.download()); 
+    componentDidMount(){
+      this.download();  
     }
 
-    componentDidMount(){
-        this.download();  
+    download(){
+        this.props.dispatch(LoginsActions.download()); 
     }
 
     handleChange(field){ 
@@ -47,21 +48,16 @@ class Logins extends React.Component {
     render() {
         return (
         <div className="modal-container">  
-          <LoginsList logins={this.props.logins}/> 
+          {/*<Spinner/>*/} 
           <ModalForm className="container" ref={'modal'}> 
-            <Grid> 
-              <Row> 
-                <Col sm={7} smOffset={1} md={7} mdOffset={1}  >
                   <form onSubmit={this.addNewLogin.bind(this)} action=''> 
                     <Input type="text" onChange={this.handleChange('service')} placeholder="Enter service" />
                     <Input type="text" onChange={this.handleChange('username')} placeholder="Enter username" />
                     <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
                     <ButtonInput type="submit" value="Add" block/> 
                   </form> 
-                </Col> 
-              </Row>  
-            </Grid> 
           </ModalForm>
+          <LoginsList logins={this.props.logins}/>
         </div> 
         ); 
     }

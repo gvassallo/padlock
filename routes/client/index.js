@@ -19,9 +19,9 @@ router.route('/css/style.css')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/dist/css/style.css"));             
         }); 
-router.route('/img/burger.svg')
+router.route('/img/*')
         .get((req, res) => {
-res.sendFile(path.join(__dirname, "../../client/dist/img/burger.svg"));             
+        res.sendFile(path.join(__dirname, "../../client/dist/img/spinner-img.png"));             
         }); 
 
 module.exports = router; 

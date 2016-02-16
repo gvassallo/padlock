@@ -30,6 +30,7 @@
     "react-burger-menu": "^1.5.1",
     "react-dom": "*",
     "react-mixin": "*",
+    "react-native-progress": "^2.2.0",
     "react-redux": "^4.0.2",
     "react-router": "^2.0.0-rc2",
     "react-router-bootstrap": "*",

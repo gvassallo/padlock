@@ -19,6 +19,10 @@ export default function logins(state = initialstate, action ) {
                 ...state.list, action.login
             ]
         }); 
+
+    case types.RESET_LOGINS_LIST: 
+        return Object.assign({}, state, {list:[]}); 
+
     default :
         return state; 
     }

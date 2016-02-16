@@ -22,6 +22,12 @@ export function addNew(login){
     }
 }
 
+export function resetLoginsList(){
+    return {
+      type: types.RESET_LOGINS_LIST 
+    };
+}
+
 function receiveLoginsList(logins){
     return {
         type: types.RECEIVE_LOGINS_LIST, 

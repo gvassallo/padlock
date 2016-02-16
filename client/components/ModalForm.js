@@ -1,30 +1,23 @@
 import React from 'react'; 
 import {Modal, Button} from 'react-bootstrap'
+import {connect} from 'react-redux'
+import * as ModalActions from '../actions/ModalActions'
+
+const mapStateToProps = (state) => ({
+    open : state.modal.open
+});
 
 class ModalForm extends React.Component {
-    constructor() {
-        super(); 
-        this.state = {
-            showModal: false 
-        }; 
-    }
+
     close() {
-        this.state.showModal = false; 
-        this.setState(this.state); 
+      this.props.dispatch(ModalActions.modalClose());
     }
-    open() {
-        this.state.showModal = true; 
-        this.setState(this.state); 
-    }
+
     render() {
         return (
-             
         <div> 
-            <Button bsStyle="primary" className="plus-button" onClick={this.open.bind(this)} >
-                New Service 
-            </Button>   
           <Modal 
-            show={this.state.showModal} 
+            show={this.props.open} 
             onHide={this.close.bind(this)}
             container={this}
             aria-labelledby="contained-modal-title">
@@ -42,4 +35,4 @@ class ModalForm extends React.Component {
     ); 
     }
 }; 
-export default ModalForm; 
+export default connect(mapStateToProps)(ModalForm); 
