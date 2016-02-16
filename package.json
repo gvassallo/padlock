@@ -17,6 +17,7 @@
     "cookie-parser": "^1.4.0",
     "cors": "^2.7.1",
     "express": "^4.13.3",
+    "font-awesome": "^4.5.0",
     "history": "1.17.x",
     "jsonwebtoken": "^5.0.5",
     "nodemon": "^1.8.1",

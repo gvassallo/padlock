@@ -1,9 +1,13 @@
-@import "bootstrap"; 
+@import 'bootstrap'; 
+@import 'font-awesome'; 
 
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-
+// HEADERBAR
+.header span{
+    font-size: 18px;
+}
 // SIDEBAR
 .page-with-sidebar{
   padding-left: 62px; 

@@ -1,0 +1,120 @@
+/*!
+ * Bootstrap v3.3.5 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// Core variables and mixins
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// Reset and dependencies
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+// @import "bootstrap/glyphicons";
+
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
+
+// Components
+@import "bootstrap/component-animations";
+@import "bootstrap/dropdowns";
+@import "bootstrap/button-groups";
+@import "bootstrap/input-groups";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+// @import "bootstrap/breadcrumbs";
+// @import "bootstrap/pagination";
+@import "bootstrap/pager";
+@import "bootstrap/labels";
+@import "bootstrap/badges";
+// @import "bootstrap/jumbotron";
+// @import "bootstrap/thumbnails";
+@import "bootstrap/alerts";
+// @import "bootstrap/progress-bars";
+// @import "bootstrap/media";
+@import "bootstrap/list-group";
+@import "bootstrap/panels";
+@import "bootstrap/responsive-embed";
+@import "bootstrap/wells";
+@import "bootstrap/close";
+
+// Components w/ JavaScript
+@import "bootstrap/modals";
+@import "bootstrap/tooltip";
+@import "bootstrap/popovers";
+// @import "bootstrap/carousel";
+
+// Utility classes
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
+
+// .form-control {
+//   box-shadow: none;
+//   &:focus {
+//     box-shadow: 0px 0px 0px transparent inset, 0px 0px 2px rgba($input-border-focus, 0.4);
+//   }
+// }
+//
+// .has-error {
+//   .form-control {
+//     box-shadow: none;
+//     &:focus {
+//       box-shadow: 0px 0px 0px transparent inset, 0px 0px 2px rgba($state-danger-text, 0.4);
+//     }
+//   }
+// }
+//
+// .form-group.with-icon {
+//   position: relative;
+//
+//   .form-control {
+//     padding-right: 40px;
+//
+//     & + span.fa {
+//       left: auto;
+//       position: absolute;
+//       right: 0px;
+//       text-align: center;
+//       top: 10px;
+//       width: 40px;
+//     }
+//   }
+// }
+//
+// .dropdown-menu {
+//   box-shadow: 0 2px 5px -3px rgba(0, 0, 0, .3);
+// }
+//
+// .panel {
+//   .panel-heading.panel-heading-dark {
+//     background-color: $primary-color-dark;
+//     color: white;
+//   }
+// }
+//
+// .panel.panel-light {
+//   border-color: $btn-default-border;
+//   > .panel-heading {
+//     background-color: $btn-default-border;
+//   }
+// }
+//
+// .page-header {
+//   margin-top: 15px;
+//   padding-left: 15px;
+// }
+//
+// .modal-header {
+//   padding: 10px 15px;
+// }
+//
+// .modal-content {
+//   box-shadow: 0px 1px 5px -2px rgba(0, 0, 0, 0.5);
+// }

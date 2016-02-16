@@ -13,14 +13,14 @@ class SideBar extends React.Component{
             <li>
               <LinkContainer to="/">
                 <a href=""> 
-                  <span className="glyphicon glyphicon-home"></span>
+                  <span className="fa fa-home"></span>
                 </a> 
               </LinkContainer> 
             </li>
             <li> 
               <LinkContainer to="/profile">
                 <a href="">
-                  <span className="glyphicon glyphicon-user"></span>
+                  <span className="fa fa-user"></span>
                 </a> 
               </LinkContainer> 
             </li>

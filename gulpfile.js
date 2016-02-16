@@ -3,7 +3,7 @@ var nodemon = require('nodemon');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var source = require('vinyl-source-stream');
-var gutil = require('gulp-util');
+var util = require('gulp-util');
 var sass = require('gulp-sass'); 
 var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
@@ -78,8 +78,8 @@ gulp.task('styles', () => {
     .pipe(sass({
       errLogToConsole: true,
       includePaths: [
-        'node_modules/bootstrap-sass/assets/stylesheets'
-        // path.join(config.bowerDir, '/font-awesome/scss')
+        'node_modules/bootstrap-sass/assets/stylesheets', 
+        'node_modules/font-awesome/scss'
       ]
     }))
     .on('error', function(err) {
@@ -89,7 +89,10 @@ gulp.task('styles', () => {
     .pipe(gulp.dest(paths.distCss));
 });
 
-
+gulp.task('icons', () => {
+  return gulp.src('node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest(path.join(config.destDir, '/fonts')));
+});
 
 
 gulp.task('default', ['server']); 

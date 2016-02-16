@@ -25,6 +25,7 @@ class HeaderBar extends React.Component {
 
     render() {
         return (
+    <div className="header">
       <Navbar fixedTop fluid>
         <Navbar.Header>
           <Navbar.Brand>
@@ -35,14 +36,15 @@ class HeaderBar extends React.Component {
         <Navbar.Collapse> 
           <Nav pullRight>  
               <NavItem eventKey={1} onClick={this.open.bind(this)}> 
-                  <span className="glyphicon glyphicon-plus"/>
+                  <span className="fa fa-plus"/>
               </NavItem> 
               <NavItem eventKey={2} onClick={this.logout.bind(this)}> 
-                  <span className="glyphicon glyphicon-log-out log-out"/>
+                  <span className="fa fa-sign-out log-out"/>
               </NavItem> 
           </Nav>
         </Navbar.Collapse> 
       </Navbar>
+    </div>
     ); 
     }
 }; 
