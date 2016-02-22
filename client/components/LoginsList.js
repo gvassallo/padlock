@@ -4,6 +4,10 @@ import LoginCard from './LoginCard'
 import {connect} from 'react-redux'
 import * as OptionsActions from '../actions/OptionsActions'
 
+const mapStateToProps = (state) => ({
+    login_card_open : state.options.login_card_open  
+}); 
+
 class LoginsList extends React.Component{
     constructor(){
       super(); 
@@ -22,7 +26,6 @@ class LoginsList extends React.Component{
       this.state.login.username= listValue.username; 
       this.state.login.password= listValue.password; 
       this.state.login.uuid = listValue.uuid; 
-      // problem to solve, redux doesn't allow refs 
       this.props.dispatch(OptionsActions.loginCardOpen()); 
     }
 
@@ -40,10 +43,10 @@ class LoginsList extends React.Component{
             </ListGroupItem>;
           })}
         </ListGroup> 
-        <LoginCard ref={'login_card'} login={this.state.login}/>
+        <LoginCard open={this.props.login_card_open} login={this.state.login}/>
       </div> 
       ); 
     }
 }
 
-export default connect()(LoginsList); 
+export default connect(mapStateToProps)(LoginsList); 

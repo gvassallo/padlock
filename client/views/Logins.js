@@ -11,7 +11,8 @@ import LoginsList from '../components/LoginsList'
 import Spinner from '../components/Spinner'
 
 const mapStateToProps = (state) => ({
-    logins : state.logins.list
+    logins : state.logins.list, 
+    modal_open: state.options.modal_open 
 });
 class Logins extends React.Component {
     constructor(){
@@ -40,12 +41,6 @@ class Logins extends React.Component {
         }; 
     }
 
-    addNewLogin(event){ 
-        event.preventDefault();
-        const {dispatch} = this.props; 
-        dispatch(LoginsActions.addNew(this.state.login));         
-        dispatch(OptionsActions.modalClose());
-    }
 
     render() {
         return (
@@ -59,7 +54,7 @@ class Logins extends React.Component {
                     <ButtonInput type="submit" value="Add" block/> 
                   </form> 
           </ModalForm> */}
-          <LoginCard/>
+          <LoginCard open={this.props.modal_open} login={this.state.login} create={true}/>
           <LoginsList logins={this.props.logins}/>
         </div> 
         ); 

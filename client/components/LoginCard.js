@@ -4,9 +4,6 @@ import {Modal, Button, ButtonInput, Row, Col, Grid, Input, Form} from 'react-boo
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 
-const mapStateToProps = (state) => ({
-    open : state.options.login_card_open 
-}); 
 
 class LoginCard extends React.Component {
     constructor(){
@@ -14,6 +11,7 @@ class LoginCard extends React.Component {
       this.state = {
         modify: false, 
         login: {
+          service: '', 
           username: '', 
           password: '', 
           uuid: '' 
@@ -21,10 +19,12 @@ class LoginCard extends React.Component {
       }; 
     }
     componentDidMount(){
+      if(this.props.create) this.state.modify = true; 
       this.state.login.uuid = this.props.login.uuid;  
     }
     close(){
       this.props.dispatch(OptionsActions.loginCardClose()); 
+      this.props.dispatch(OptionsActions.modalClose()); 
       this.state.modify = false; 
       this.setState(this.state); 
     }
@@ -50,11 +50,51 @@ class LoginCard extends React.Component {
 
     saveChanges(event){
       event.preventDefault();
-      this.props.dispatch(LoginsActions.updateLogin(this.props.login)); 
-      this.state.modify = false ; 
-      this.setState(this.state); 
+      const {dispatch} = this.props; 
+      if(this.props.create){
+        dispatch(LoginsActions.addNew(this.props.login));         
+        dispatch(OptionsActions.modalClose());
+      }else {
+        dispatch(LoginsActions.updateLogin(this.props.login)); 
+        this.state.modify = false ; 
+        this.setState(this.state); 
+      }
     }
 
+    addNewLogin(event){ 
+        event.preventDefault();
+    }
+
+    getButtons(){
+      if(this.props.create){
+        return(
+          <div className="card-block">
+            <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
+          </div>
+        );  
+      }else if(this.state.modify){
+        return (
+          <div className="card-block">
+            <Row> 
+              <Col xs={3} sm={3}> 
+                <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
+              </Col> 
+              <Col xs={4} sm={3}> 
+                <Button className="delete-link" bsStyle="danger" onClick={this.deleteLogin.bind(this)}>Delete</Button>
+              </Col> 
+            </Row> 
+          </div>
+        ); 
+      }else {
+        return(
+          <div className="card-block">
+            <Button  className="" onClick={this.allowModification.bind(this)}>
+              <span className="fa fa-edit"/> 
+            </Button>
+          </div>
+        ); 
+      }
+    }
     render(){
       return(
       <div> 
@@ -65,9 +105,16 @@ class LoginCard extends React.Component {
               bsSize="small"
               aria-labelledby="contained-modal-title">
             <Modal.Header closeButton>
+              {this.props.create?(
+              <Col xs={8} sm={8}>
+                <Input type="text" 
+                  placeholder="service" 
+                  onChange={this.handleChange('service')}/>
+              </Col>
+              ):(
               <h4 className="card-title">
                 <center>{this.props.login.service}</center>
-              </h4>
+              </h4>)}
             </Modal.Header>
             <Modal.Body>
               <div className="card">
@@ -110,24 +157,7 @@ class LoginCard extends React.Component {
                       </Row>
                     </section>
                   <hr/>
-                  {this.state.modify? (
-                  <div className="card-block">
-                    <Row> 
-                      <Col xs={3} sm={3}> 
-                        <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
-                      </Col> 
-                      <Col xs={4} sm={3}> 
-                        <Button className="delete-link" bsStyle="danger" onClick={this.deleteLogin.bind(this)}>Delete</Button>
-                      </Col> 
-                    </Row> 
-                  </div>
-                    ):(
-                  <div className="card-block">
-                    <Button  className="" onClick={this.allowModification.bind(this)}>
-                      <span className="fa fa-edit"/> 
-                    </Button>
-                  </div>
-                    )}
+                  {this.getButtons()}
                 </form> 
               </div>
               </div>
@@ -138,4 +168,4 @@ class LoginCard extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(LoginCard); 
+export default connect()(LoginCard); 
