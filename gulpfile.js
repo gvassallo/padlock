@@ -34,7 +34,7 @@ gulp.task('browserify', function () {
     browserify(paths.srcJsx, { debug: true })
         .transform('babelify', {presets: ['react']})
         .bundle()
-        .on('error', gutil.log)
+        .on('error', util.log)
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(paths.distJs))
 });

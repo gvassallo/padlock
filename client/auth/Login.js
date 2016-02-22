@@ -1,6 +1,6 @@
 import React from 'react'; 
 
-import { Input, ButtonInput, Button } from 'react-bootstrap'; 
+import { Input, ButtonInput, Button, Alert, Row, Col } from 'react-bootstrap'; 
 import {LinkContainer} from 'react-router-bootstrap'; 
 import { connect } from 'react-redux'; 
 import AuthActions from '../actions/AuthActions'
@@ -12,7 +12,8 @@ class Login extends React.Component {
         super(); 
         this.state = {
             username: '', 
-            password: ''
+            password: '', 
+            alertShow: false 
         }; 
     }
 
@@ -26,24 +27,47 @@ class Login extends React.Component {
     login(event) {
         const { dispatch } = this.props;  
         event.preventDefault(); 
-        dispatch(AuthAction.login(this.state)); 
+        dispatch(AuthAction.login(this.state))
+        .catch(e=>{
+          this.state.alertShow = true; 
+          this.setState(this.state); 
+         }); 
+    }
+
+    showAlert(){
+      if(this.state.alertShow){
+        return (
+          <Row> 
+            <Col sm={6} smOffset={3} md={4} mdOffset={4}>
+              <Alert bsStyle="danger"> 
+                <center>
+                  <h4>Holy shit!</h4>
+                  <p>Username/Email or Password are wrong, idiot!</p>
+                </center>
+              </Alert> 
+            </Col>
+          </Row>);
+      }
     }
 
     render() {
         return (
-        <BaseForm> 
-        <form onSubmit={this.login.bind(this)} action=''> 
-            <Input type="text" onChange={this.handleChange('username')} placeholder="Enter name" />
-            <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
-            <ButtonInput type="submit" value="Login" block/> 
-        </form> 
-        <div className='pt-lg text-center'>
-          <p>Need to signup?</p>
-          <LinkContainer to='/register'>
-            <Button bsStyle='primary' block>Register now</Button>
-          </LinkContainer>
+        <div>
+          <BaseForm> 
+          <form onSubmit={this.login.bind(this)} action=''> 
+              <Input type="text" onChange={this.handleChange('username')} placeholder="Enter name" />
+              <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
+              <ButtonInput type="submit" value="Login" block/> 
+          </form> 
+          <div className='pt-lg text-center'>
+            <p>Need to signup?</p>
+            <LinkContainer to='/register'>
+              <Button bsStyle='primary' block>Register now</Button>
+            </LinkContainer>
+          </div>
+          </BaseForm> 
+          {this.showAlert()} 
         </div>
-        </BaseForm> 
         ); 
     }
 }; 

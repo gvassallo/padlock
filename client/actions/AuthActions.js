@@ -25,24 +25,26 @@ function receiveAuthedUserAndToken(user, token) {
 
 export function login(user) {
     return dispatch => {
-        AuthService.login(user)
-            .then((data) => {
-                dispatch(receiveAuthedUserAndToken(data.user, data.token));
-                browserHistory.push('/')
+         return AuthService.login(user)
+            .then((data) =>{
+              return dispatch(receiveAuthedUserAndToken(data.user, data.token));
             })
-            .catch( e=>{ console.log(e.message)});
-    } 
+            .then(()=>{
+              browserHistory.push('/');
+            })
+        } 
 }
 
 
 export function register(user) {
     return dispatch => {
-        AuthService.register(user)
+        return AuthService.register(user)
             .then((data) => {
-                dispatch(receiveAuthedUserAndToken(data.user, data.token));
-                browserHistory.push('/')
+              return dispatch(receiveAuthedUserAndToken(data.user, data.token));
             })
-            .catch( e=>{console.log(e.message)});
+            .then(()=>{
+              browserHistory.push('/');
+            })
     } 
 } 
 

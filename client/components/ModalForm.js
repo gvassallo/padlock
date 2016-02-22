@@ -1,16 +1,16 @@
 import React from 'react'; 
 import {Modal, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
-import * as ModalActions from '../actions/ModalActions'
+import * as OptionsActions from '../actions/OptionsActions'
 
 const mapStateToProps = (state) => ({
-    open : state.modal.open
+    open : state.options.modal_open
 });
 
 class ModalForm extends React.Component {
 
     close() {
-      this.props.dispatch(ModalActions.modalClose());
+      this.props.dispatch(OptionsActions.modalClose());
     }
 
     render() {

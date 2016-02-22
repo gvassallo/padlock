@@ -30,7 +30,7 @@ class AuthService {
           this.auth(res.data.user, res.data.token);
           return Promise.resolve(res.data);
         }
-        throw Error(res.message);
+        throw new Error(res.message);
       });
   }
 
@@ -42,7 +42,7 @@ class AuthService {
           this.auth(res.data.user, res.data.token);
           return Promise.resolve(res.data);
         }
-        throw Error(res.message);
+        throw new Error(res.message);
       });
   }
 

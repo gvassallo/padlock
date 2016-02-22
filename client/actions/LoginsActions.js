@@ -21,7 +21,24 @@ export function addNew(login){
             .catch( e=> {console.log(e.message)}); 
     }
 }
-
+export function deleteLogin(login){
+    return dispatch => {
+        LoginsService.delete(login)
+          .then(data => {
+            dispatch(download()); 
+          })
+          .catch( e=> {console.log(e.message)}); 
+    }
+}
+export function updateLogin(login){
+    return dispatch => {
+      return LoginsService.update(login)
+        .then(data=> {
+          dispatch(download());  
+        })
+        .catch( e=> {console.log(e.message)}); 
+    }
+}
 export function resetLoginsList(){
     return {
       type: types.RESET_LOGINS_LIST 

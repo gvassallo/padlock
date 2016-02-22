@@ -39,7 +39,7 @@ class Logins extends React.Component {
     }
 
     addNewLogin(event){ 
-        event.preventDefault(); 
+        event.preventDefault();
         const {dispatch} = this.props; 
         dispatch(LoginsActions.addNew(this.state));         
         this.refs.modal.close(); 

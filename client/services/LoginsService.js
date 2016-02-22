@@ -31,19 +31,41 @@ class LoginsService {
                 if(res.status === 200) {
                  return Promise.resolve(res.data); 
                 }
-                throw Error(res.message); 
+                throw new Error(res.message); 
             }); 
     }
 
     addNew(login){
-        console.log(login); 
         return axios 
         .post('/api/logins', login)
         .then(res => {
             if(res.status === 200) {
                 return Promise.resolve(res.data); 
             }
-            throw Error(res.message); 
+            throw new Error(res.message); 
+        }); 
+    }
+
+    delete(login){
+        return axios 
+          .delete('/api/logins/'+login.uuid)
+            .then(res => {
+                if(res.status === 200) {
+                 return Promise.resolve(res.data); 
+                }
+                throw new Error(res.message); 
+            }); 
+    }
+
+    update(login){
+      return axios
+        //OCHOOO cambiare server 
+        .put('/api/logins/'+login.uuid, {login: login})
+        .then(res => {
+            if(res.status === 200) {
+                return Promise.resolve(res.data); 
+            }
+            throw new Error(res.message); 
         }); 
     }
 }

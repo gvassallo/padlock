@@ -21,6 +21,6 @@
     "dialect": "postgres"
   },
   "secret": "shhhthisisasecret",
-  "expireTime": 86400,
+  "expireTime": 90000,
   "cookieSecret": "thisismycookienoyours"
 }

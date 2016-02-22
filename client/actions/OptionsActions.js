@@ -11,3 +11,15 @@ export function modalClose(){
       type: types.MODAL_CLOSE
   }; 
 }
+
+export function loginCardOpen(){
+  return {
+      type: types.LOGIN_CARD_OPEN
+  }; 
+}
+
+export function loginCardClose(){
+  return {
+      type: types.LOGIN_CARD_CLOSE
+  }; 
+}

@@ -6,7 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux'; 
 import * as AuthActions from '../actions/AuthActions' 
 import * as LoginsActions from '../actions/LoginsActions'
-import * as ModalActions from '../actions/ModalActions'
+import * as OptionsActions from '../actions/OptionsActions'
 
 class HeaderBar extends React.Component {
 
@@ -20,7 +20,7 @@ class HeaderBar extends React.Component {
     open(event){
         event.preventDefault();
         const { dispatch } = this.props; 
-        dispatch(ModalActions.modalOpen()); 
+        dispatch(OptionsActions.modalOpen()); 
     }
 
     render() {

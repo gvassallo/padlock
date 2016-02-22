@@ -1,9 +1,8 @@
-import React from 'react'; 
-
-import { Input, ButtonInput, Button } from 'react-bootstrap'; 
-import { LinkContainer } from 'react-router-bootstrap';
-import * as AuthActions from '../actions/AuthActions'; 
-import { connect } from 'react-redux'; 
+import React from 'react' 
+import { Input, ButtonInput, Button, Row, Col, Alert } from 'react-bootstrap' 
+import { LinkContainer } from 'react-router-bootstrap'
+import * as AuthActions from '../actions/AuthActions' 
+import { connect } from 'react-redux' 
 import BaseForm from './BaseForm' 
 
 class Register extends React.Component {
@@ -14,7 +13,8 @@ class Register extends React.Component {
           email: '',
           password: '',
           username: '',
-          fullname: ''
+          fullname: '', 
+          alertShow: false
         };
     }
 
@@ -28,13 +28,33 @@ class Register extends React.Component {
     register(event) {
       const { dispatch } = this.props; 
       event.preventDefault();
-      dispatch(AuthActions.register(this.state)); 
+      dispatch(AuthActions.register(this.state)) 
+      .catch(e=>{
+        this.state.alertShow = true; 
+        this.setState(this.state); 
+       }); 
     }
   
+    showAlert(){
+      if(this.state.alertShow){
+        return (
+          <Row> 
+            <Col sm={6} smOffset={3} md={4} mdOffset={4}>
+              <Alert bsStyle="danger"> 
+                <center>
+                  <h4>Holy shit!</h4>
+                  <p>Username/Email or Password are wrong, idiot!</p>
+                </center>
+              </Alert> 
+            </Col>
+          </Row>);
+      }
+    }
 
     render() {
         return (
-        <BaseForm>  
+        <div>
+          <BaseForm>  
             <form onSubmit={this.register.bind(this)} action=''>
               <Input type='text' onChange={this.handleChange('username')} placeholder='Username' />
               <Input type='email' onChange={this.handleChange('email')} placeholder='Email' />
@@ -49,6 +69,8 @@ class Register extends React.Component {
               </LinkContainer>
             </div>
           </BaseForm> 
+          {this.showAlert()}
+        </div>
         ); 
     }
 }; 

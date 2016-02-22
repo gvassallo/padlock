@@ -8,3 +8,5 @@ export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO';
 export const RESET_LOGINS_LIST = 'RESET_LOGINS_LIST'; 
 export const MODAL_OPEN = 'MODAL_OPEN'; 
 export const MODAL_CLOSE = 'MODAL_CLOSE'; 
+export const LOGIN_CARD_OPEN = 'LOGIN_CARD_OPEN'; 
+export const LOGIN_CARD_CLOSE = 'LOGIN_CARD_CLOSE'; 

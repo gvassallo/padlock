@@ -16,6 +16,7 @@ describe('rotues/api', ()=> {
         token: ''
       };
     this.login = {
+        id: '', 
         service: 'fb', 
         username: 'gabri',
         password: 'pwd' 
@@ -106,6 +107,7 @@ describe('rotues/api', ()=> {
                 if (err) done(err);
                 expect(res.body).to.be.an('object');
                 expect(res.body).to.include.keys('service', 'username', 'password');
+                this.login = res.body; 
                 done(err);
             });
         }); 
@@ -124,6 +126,39 @@ describe('rotues/api', ()=> {
               done(err);
             });
         }); 
+        it('PUT /api/logins/:id', done => {
+          this.login.username = "new username"; 
+          this.login.password = "new password"; 
+          request(app)
+            .put('/api/logins/' + this.login.uuid)
+            .set('Content-Type', 'application/json')
+            .set('x-access-token', this.userData.token)
+            .send({login: this.login})
+            .expect(200)
+            .expect('Content-Type', /json/) 
+            .end((err, res) => {
+                expect(res.body).to.be.an('object');
+                expect(res.body).to.include.keys('service', 'username', 'password');
+                console.log(res); 
+                this.login = res.body; 
+                console.log(this.login); 
+                done(err);
+            });
+        }); 
+        it('DELETE /api/logins/:id', done => {
+          var login = this.login;
+          request(app)
+            .del('/api/logins/' + login.uuid)
+            .set('Content-Type', 'application/json')
+            .set('x-access-token', this.userData.token)
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end((err, res) => {
+              expect(res.body).to.be.an('object');
+              expect(res.body).to.be.empty;
+              done(err);
+            });
+        });
     }); 
     
   describe('/api/users', () => {

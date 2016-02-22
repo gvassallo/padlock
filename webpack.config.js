@@ -11,7 +11,6 @@ path: path.join(__dirname, 'client/dist/js'),
     filename: 'bundle.js'
     },
 
-
     resolveLoader: {
       modulesDirectories: [
           path.join(__dirname, 'node_modules') 

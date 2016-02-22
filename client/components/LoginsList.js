@@ -1,12 +1,15 @@
 import React from 'react'; 
 import {Grid, Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap' 
 import LoginCard from './LoginCard'
+import {connect} from 'react-redux'
+import * as OptionsActions from '../actions/OptionsActions'
 
 class LoginsList extends React.Component{
     constructor(){
       super(); 
       this.state = {
         login: {
+          uuid: '', 
           service: '', 
           username: '', 
           password: ''
@@ -18,7 +21,9 @@ class LoginsList extends React.Component{
       this.state.login.service = listValue.service; 
       this.state.login.username= listValue.username; 
       this.state.login.password= listValue.password; 
-      this.refs.login_card.open(); 
+      this.state.login.uuid = listValue.uuid; 
+      // problem to solve, redux doesn't allow refs 
+      this.props.dispatch(OptionsActions.loginCardOpen()); 
     }
 
     render(){
@@ -41,4 +46,4 @@ class LoginsList extends React.Component{
     }
 }
 
-export default LoginsList; 
+export default connect()(LoginsList); 
