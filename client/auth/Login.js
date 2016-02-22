@@ -52,19 +52,43 @@ class Login extends React.Component {
 
     render() {
         return (
-        <div>
+        <div className="login-form">
           <BaseForm> 
           <form onSubmit={this.login.bind(this)} action=''> 
-              <Input type="text" onChange={this.handleChange('username')} placeholder="Enter name" />
-              <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
-              <ButtonInput type="submit" value="Login" block/> 
+            <section>
+              <Row>
+                <Col sm={4} md={4}>
+                  <label>Username</label>
+                </Col>
+                <Col sm={8} md={8}>
+                  <Input type="text" onChange={this.handleChange('username')} placeholder="Enter name" />
+                </Col>
+              </Row>
+            </section> 
+            <section>
+              <Row>
+                <Col sm={4} md={4}>
+                  <label>Password</label>
+                </Col>
+                <Col sm={8} md={8}>
+                  <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
+                </Col>
+              </Row>
+            </section>
+            <hr/>
+            <section>
+              <Row>
+                <Col sm={4} xs={4} smOffset={4} xsOffset={4}> 
+                  <LinkContainer to='/register'>
+                    <Button bsStyle='primary' block>Register</Button>
+                  </LinkContainer>
+                </Col>
+                <Col sm={4} xs={4}>
+                  <ButtonInput type="submit" value="Login" block/>  
+                </Col>
+              </Row>
+            </section>
           </form> 
-          <div className='pt-lg text-center'>
-            <p>Need to signup?</p>
-            <LinkContainer to='/register'>
-              <Button bsStyle='primary' block>Register now</Button>
-            </LinkContainer>
-          </div>
           </BaseForm> 
           {this.showAlert()} 
         </div>

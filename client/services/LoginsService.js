@@ -59,8 +59,7 @@ class LoginsService {
 
     update(login){
       return axios
-        //OCHOOO cambiare server 
-        .put('/api/logins/'+login.uuid, {login: login})
+        .put('/api/logins/'+login.uuid, login)
         .then(res => {
             if(res.status === 200) {
                 return Promise.resolve(res.data); 

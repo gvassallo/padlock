@@ -4,6 +4,19 @@
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+//LOGIN FORM 
+/* Portrait and Landscape */
+.login-form {
+  margin-top: 100px; 
+}
+@media only screen 
+  and (min-device-width: 300px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+  .login-form {
+    margin-top: 0; 
+  }
+}
 // HEADERBAR
 .header span{
     font-size: 18px;
@@ -91,24 +104,18 @@ body {
     }
 }
 //LOGIN CARD
+// .login-card-form {
+// }
+.bar{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: #757575;
+  width: 100%;
+  height: 1px;
+}
 .delete-link {
-  margin-left: 1.35em; 
-  color: #FF5323;
+  // margin-left: 1.35em; 
+  // color: #FF5323;
 }
 
-// .navbar-collapse.collapse {
-// display: block!important;
-// }
-//
-// .navbar-nav>li, .navbar-nav {
-// float: left !important;
-// }
-//
-// .navbar-nav.navbar-right:last-child {
-// margin-right: -15px !important;
-// }
-//
-// .navbar-right {
-// float: right!important;
-// }
-//

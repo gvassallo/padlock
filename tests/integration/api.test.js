@@ -100,7 +100,7 @@ describe('rotues/api', ()=> {
             .post('/api/logins') 
             .set('Content-Type', 'application/json')
             .set('x-access-token', this.userData.token)
-            .send({login: this.login})
+            .send(this.login)
             .expect(200)
             .expect('Content-Type', /json/) 
             .end((err, res) => {
@@ -117,7 +117,7 @@ describe('rotues/api', ()=> {
             .post('/api/logins') 
             .set('Content-Type', 'application/json')
             .set('x-access-token', this.userData.token)
-            .send({login: {username: null, password: 'pwd'}})
+            .send({username: null, password: 'pwd', service: 'fb'})
             .expect(500)
             .expect('Content-Type', /json/)
             .end((err, res) => {
@@ -133,7 +133,7 @@ describe('rotues/api', ()=> {
             .put('/api/logins/' + this.login.uuid)
             .set('Content-Type', 'application/json')
             .set('x-access-token', this.userData.token)
-            .send({login: this.login})
+            .send(this.login)
             .expect(200)
             .expect('Content-Type', /json/) 
             .end((err, res) => {

@@ -26,12 +26,13 @@ module.exports = (passport, router) => {
         });
         }) 
         .post((req, res, next) => {
+            var login = req.body; 
             db.sequelize.transaction({autocommit: false})
             .then(t => {
                 return User
                 .findOne({where: {uuid: req.decoded.uuid}, transaction: t}) 
                 .then(user => {
-                    return user.createLogin(req.body.login, {transaction: t} ); 
+                    return user.createLogin(login, {transaction: t} ); 
                 })
                 .then( login => {
                     t.commit(); 
@@ -50,26 +51,24 @@ module.exports = (passport, router) => {
           .findById(req.params.id)
           .then(login => res.json(login));
       })
+      //@TODO transactions! 
       .delete((req, res, next) => {
         Login 
           .destroy({ where: { userId: req.decoded.uuid, uuid: req.params.id }})
           .then(() => res.json({}));
       })
-      //@WARNING need to send the login object 
-      //@TODO check if it's correct  
       .put((req, res, next)=>{
             Login
             .findById(req.params.id)  
             .then(login => {
               login.updateAttributes({ 
-              username: req.body.login.username, 
-              password: req.body.login.password
+              username: req.body.username, 
+              password: req.body.password
               })
               .then(login => {
                 return res.json(login)
               })
               .catch(e => {
-              console.log(e); 
                 return next({ message: 'Cannot update the login', statusCode: 500 });
               });
             }); 
