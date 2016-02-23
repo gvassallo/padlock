@@ -126,6 +126,22 @@ describe('rotues/api', ()=> {
               done(err);
             });
         }); 
+
+        it('GET /api/logins/:id', done=> {
+          request(app)
+          .get('/api/logins/'+this.login.uuid) 
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            if(err) done(err); 
+            expect(res.body).to.be.an('object'); 
+            expect(res.body).to.include.keys('service', 'username', 'password');
+            done(err); 
+          }); 
+        }); 
+
         it('PUT /api/logins/:id', done => {
           this.login.username = "new username"; 
           this.login.password = "new password"; 
@@ -139,9 +155,7 @@ describe('rotues/api', ()=> {
             .end((err, res) => {
                 expect(res.body).to.be.an('object');
                 expect(res.body).to.include.keys('service', 'username', 'password');
-                console.log(res); 
                 this.login = res.body; 
-                console.log(this.login); 
                 done(err);
             });
         }); 

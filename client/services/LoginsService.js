@@ -67,6 +67,16 @@ class LoginsService {
             throw new Error(res.message); 
         }); 
     }
+    getPassword(login){
+      return axios
+        .get('/api/logins/'+login.uuid)
+        .then(res=> {
+          if(res.status ===200) {
+            return Promise.resolve(res.data.password);  
+          } 
+          throw new Error(res.message); 
+        }); 
+    }
 }
 
 export default new LoginsService(); 

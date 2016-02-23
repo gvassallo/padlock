@@ -32,6 +32,7 @@ module.exports = (passport, router) => {
                 return User
                 .findOne({where: {uuid: req.decoded.uuid}, transaction: t}) 
                 .then(user => {
+                    login.password = Login.encryptPwd(login.password);
                     return user.createLogin(login, {transaction: t} ); 
                 })
                 .then( login => {
@@ -49,6 +50,9 @@ module.exports = (passport, router) => {
       .get((req, res, next) => {
         Login
           .findById(req.params.id)
+          .then(login => {
+            login.password = login.decryptPwd(); 
+            return login;})
           .then(login => res.json(login));
       })
       //@TODO transactions! 

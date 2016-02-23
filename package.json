@@ -20,6 +20,7 @@
     "font-awesome": "^4.5.0",
     "history": "1.17.x",
     "jsonwebtoken": "^5.0.5",
+    "node-rsa": "^0.3.2",
     "nodemon": "^1.8.1",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",

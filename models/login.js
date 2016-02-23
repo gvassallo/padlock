@@ -1,4 +1,8 @@
 'use strict';
+var bluebird = require('bluebird'); 
+var NodeRSA = bluebird.promisifyAll(require('node-rsa')); 
+var NodeRSA = require('node-rsa'); 
+var key = NodeRSA({b: 512}); 
 
 module.exports = function(sequelize, DataTypes) {
   var Login = sequelize.define('Login', {
@@ -25,6 +29,16 @@ module.exports = function(sequelize, DataTypes) {
           // associations can be defined here
           Login.belongsTo(models.User, {foreignKey: 'userId'}); 
           // Login.belongsTo(models.Service, { foreignKey: 'service'});
+        }, 
+        encryptPwd: function(password) { 
+            // return key.encrypt(password, 'base64'); 
+            return "cryptedpwd"; 
+        }
+    }, 
+    instanceMethods: {
+        decryptPwd: function() {
+          // return key.decrypt(this.password, 'utf8');  
+            return "encrypted";  
         }
     }
   });
