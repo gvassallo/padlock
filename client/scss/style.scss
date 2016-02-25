@@ -1,3 +1,4 @@
+@import 'settings'; 
 @import 'bootstrap'; 
 @import 'font-awesome'; 
 
@@ -9,6 +10,9 @@ body {
 .login-form {
   margin-top: 100px; 
 }
+.register-form {
+  margin-top: 100px; 
+}
 @media only screen 
   and (min-device-width: 300px) 
   and (max-device-width: 667px) 
@@ -16,10 +20,19 @@ body {
   .login-form {
     margin-top: 0; 
   }
+  .register-form {
+    margin-top: 0; 
+  }
 }
 // HEADERBAR
 .header span{
     font-size: 18px;
+}
+.navbar{
+  z-index: 0; 
+}
+.title{
+  padding-left: 60px; 
 }
 // SIDEBAR
 .page-with-sidebar{
@@ -31,7 +44,7 @@ body {
   background: #2b333d;
   width: 62px; 
   position: fixed;
-  top: 50px;
+  top: 0px;
   bottom: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -40,9 +53,13 @@ body {
   transition-duration: .3s;
   z-index: 99; 
 }
-
+.logo span{
+  margin-top: 5px; 
+  font-size: 40px; 
+  color: #3688e4; 
+}
 .nav-sidebar{
-  margin-top: 30px; 
+  margin-top: 35px; 
   margin-bottom: 100px;
   transition-duration: .3s; 
   list-style: none; 
@@ -72,7 +89,13 @@ body {
   text-align: center; 
   align-items: center;
 }
-
+//FOOTER 
+.footer{
+  text-align: center;    
+  p {
+    font-size: 14px; 
+  }
+}
 // SPINNER
 .spinner {
     text-align: center; 

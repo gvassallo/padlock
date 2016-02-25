@@ -9,6 +9,11 @@ class SideBar extends React.Component{
       return( 
       <div className="page-sidebar-expanded page-with-sidebar"> 
         <div className="nicescroll sidebar-expanded sidebar-wrapper" tabIndex="0" >
+          <center> 
+          <a className="logo" href="#"> 
+            <span className="fa fa-lock"/> 
+          </a> 
+          </center>
           <ul className="nav nav-sidebar">
             <li>
               <LinkContainer to="/">

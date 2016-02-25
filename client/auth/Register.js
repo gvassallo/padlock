@@ -14,7 +14,8 @@ class Register extends React.Component {
           password: '',
           username: '',
           fullname: '', 
-          alertShow: false
+          alertShow: false, 
+          loading: false
         };
     }
 
@@ -26,10 +27,13 @@ class Register extends React.Component {
     }
 
     register(event) {
+      this.state.loading = true; 
+      this.setState(this.state); 
       const { dispatch } = this.props; 
       event.preventDefault();
       dispatch(AuthActions.register(this.state)) 
       .catch(e=>{
+        this.state.loading = false; 
         this.state.alertShow = true; 
         this.setState(this.state); 
        }); 
@@ -53,14 +57,46 @@ class Register extends React.Component {
 
     render() {
         return (
-        <div>
+        <div className="register-form">
           <BaseForm>  
             <form onSubmit={this.register.bind(this)} action=''>
-              <Input type='text' onChange={this.handleChange('username')} placeholder='Username' />
-              <Input type='email' onChange={this.handleChange('email')} placeholder='Email' />
-              <Input type='password' onChange={this.handleChange('password')} placeholder='Password' />
-              <Input type='text' onChange={this.handleChange('fullname')} placeholder='Full Name' />
+              <Row> 
+                <Col sm={4} md={4}>
+                  <label>Username</label>
+                </Col>
+                <Col sm={8} md={8}>
+                  <Input type='text' onChange={this.handleChange('username')}/>
+                </Col>
+              </Row> 
+              <Row> 
+                <Col sm={4} md={4}>
+                  <label>Email</label>
+                </Col>
+                <Col sm={8} md={8}>
+                  <Input type='text' onChange={this.handleChange('email')}/>
+                </Col>
+              </Row> 
+              <Row> 
+                <Col sm={4} md={4}>
+                  <label>Password</label>
+                </Col>
+                <Col sm={8} md={8}>
+                  <Input type='password' onChange={this.handleChange('password')}/>
+                </Col>
+              </Row> 
+              <Row> 
+                <Col sm={4} md={4}>
+                  <label>Full Name</label>
+                </Col>
+                <Col sm={8} md={8}>
+                  <Input type='text' onChange={this.handleChange('fullname')}/>
+                </Col>
+              </Row> 
+              {this.state.loading?(
+              <ButtonInput type='submit' value='Wait' disabled/>
+              ):(
               <ButtonInput type='submit' value='Register' block />
+              )} 
             </form>
             <div className='pt-lg text-center'>
               <p>Already have an account?</p>

@@ -8,6 +8,7 @@ import  BaseForm  from '../auth/BaseForm'
 import ModalForm from '../components/ModalForm'
 import NewLoginCard from '../components/NewLoginCard'
 import LoginsList from '../components/LoginsList' 
+import Footer from '../components/Footer'
 import Spinner from '../components/Spinner'
 
 const mapStateToProps = (state) => ({
@@ -48,6 +49,7 @@ class Logins extends React.Component {
           {/*<Spinner/> */}
           <NewLoginCard open={this.props.modal_open} login={this.state.login}/>
           <LoginsList logins={this.props.logins}/>
+          <Footer/> 
         </div> 
         ); 
     }

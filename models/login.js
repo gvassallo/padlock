@@ -28,7 +28,6 @@ module.exports = function(sequelize, DataTypes) {
         associate: function(models) {
           // associations can be defined here
           Login.belongsTo(models.User, {foreignKey: 'userId'}); 
-          // Login.belongsTo(models.Service, { foreignKey: 'service'});
         }, 
         encryptPwd: function(password) { 
             // return key.encrypt(password, 'base64'); 
@@ -38,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods: {
         decryptPwd: function() {
           // return key.decrypt(this.password, 'utf8');  
-            return "encrypted";  
+            return "decrypted";  
         }
     }
   });

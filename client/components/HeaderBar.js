@@ -30,10 +30,11 @@ class HeaderBar extends React.Component {
     <div className="header">
       <Navbar fixedTop fluid>
         <Navbar.Header>
+          <div className="title"> 
           <Navbar.Brand>
             Padlock
           </Navbar.Brand>
-          <Navbar.Toggle />
+        </div> 
         </Navbar.Header>
         <Navbar.Collapse> 
           <Nav pullRight>  

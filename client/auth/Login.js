@@ -13,7 +13,8 @@ class Login extends React.Component {
         this.state = {
             username: '', 
             password: '', 
-            alertShow: false 
+            alertShow: false, 
+            loading: false
         }; 
     }
 
@@ -25,10 +26,13 @@ class Login extends React.Component {
     }
         
     login(event) {
+        this.state.loading = true; 
+        this.setState(this.state); 
         const { dispatch } = this.props;  
         event.preventDefault(); 
         dispatch(AuthAction.login(this.state))
         .catch(e=>{
+          this.state.loading = false; 
           this.state.alertShow = true; 
           this.setState(this.state); 
          }); 
@@ -84,7 +88,11 @@ class Login extends React.Component {
                   </LinkContainer>
                 </Col>
                 <Col sm={4} xs={4}>
-                  <ButtonInput type="submit" value="Login" block/>  
+                  {this.state.loading?(
+                    <ButtonInput type="submit" value="Wait" disabled/>  
+                  ):(
+                    <ButtonInput type="submit" value="Login" block/>  
+                  )}
                 </Col>
               </Row>
             </section>

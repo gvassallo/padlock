@@ -17,26 +17,26 @@ class LoginCard extends React.Component {
           password: '', 
           uuid: '' 
         }, 
-        password: ''
-
+        reveal: false 
       }; 
     }
+ 
     componentDidMount(){
-      if(this.props.create) this.state.modify = true; 
-      this.state.login.uuid = this.props.login.uuid;  
+      this.state.login=this.props.login;  
+    }
+
+    handleChange(field){
+      return (event) => {
+        this.state.login[field] = event.target.value; 
+        this.setState(this.state); 
+      }
     }
 
     close(){
       this.props.dispatch(OptionsActions.loginCardClose()); 
-      this.props.dispatch(OptionsActions.modalClose()); 
       this.state.modify = false; 
+      this.state.reveal = false; 
       this.setState(this.state); 
-    }
-
-    deleteLogin(event){
-      event.preventDefault();  
-      this.props.dispatch(LoginsActions.deleteLogin(this.props.login)); 
-      this.close(); 
     }
 
     allowModification(event){
@@ -45,11 +45,10 @@ class LoginCard extends React.Component {
       this.setState(this.state); 
     }
 
-    handleChange(field){
-      return (event) => {
-        this.props.login[field] = event.target.value; 
-        this.setState(this.state); 
-      }
+    deleteLogin(event){
+      event.preventDefault();  
+      this.props.dispatch(LoginsActions.deleteLogin(this.state.login)); 
+      this.close(); 
     }
 
     saveChanges(event){
@@ -64,12 +63,39 @@ class LoginCard extends React.Component {
         event.preventDefault(); 
         LoginsService.getPassword(this.props.login)
           .then(password => {
-            this.state.password = password; 
+            this.state.login.password = password; 
+            this.state.reveal = true; 
+            this.setState(this.state); 
           }); 
     }
+
+    getPasswordField(){
+      if(!this.state.modify && !this.state.reveal) {
+        return(
+          <Input type="password"
+            value="password"
+            onChange={this.handleChange('password')} 
+            buttonAfter={this.getDrowpDown()}
+            readOnly/>
+        ); 
+      }else if(!this.state.modify && this.state.reveal){ 
+        return(
+          <Input type="text"
+            value={this.state.login.password}
+            onChange={this.handleChange('password')} readOnly/>
+        ); 
+      }else {
+        return(
+          <Input type="text"
+            value={this.state.login.password}
+            onChange={this.handleChange('password')}/>
+        );  
+      }
+    }
+
     getDrowpDown(){
       return(
-      <DropdownButton title="" id="input-dropdown-addon">
+      <DropdownButton pullRight title="" id="input-dropdown-addon">
         <MenuItem key="1" onClick={this.revealPassword.bind(this)}>Reveal Password</MenuItem>
       </DropdownButton>); 
     }
@@ -85,7 +111,7 @@ class LoginCard extends React.Component {
           aria-labelledby="contained-modal-title">
         <Modal.Header closeButton>
           <h4 className="card-title">
-            <center>{this.props.login.service}</center>
+            <center>{this.state.login.service}</center>
           </h4>
         </Modal.Header>
         <Modal.Body>
@@ -100,11 +126,11 @@ class LoginCard extends React.Component {
                     <Col xs={8} sm={8}>
                     {this.state.modify? (
                       <Input type="text" 
-                        value={this.props.login.username} 
+                        value={this.state.login.username} 
                         onChange={this.handleChange('username')}/>
                       ) : (
                       <Input type="text" 
-                        value={this.props.login.username} 
+                        value={this.state.login.username} 
                         readOnly/>
                     )}
                     </Col> 
@@ -116,39 +142,30 @@ class LoginCard extends React.Component {
                       <label className="text-muted">password</label> 
                     </Col>
                     <Col xs={8} sm={8}>
-                    {this.state.modify? (
-                      <Input type="text"
-                        value={this.state.password}
-                        onChange={this.handleChange('password')}/>
-                      ) : (
-                      <Input type="text"
-                        buttonAfter={this.getDrowpDown()}
-                        value={this.state.password}
-                        readOnly/>
-                    )}
+                      {this.getPasswordField()}
                     </Col> 
                   </Row>
                 </section>
-              <hr/>
-              {this.state.modify? (
-              <div className="card-block">
-                <Row> 
-                  <Col xs={3} sm={3}> 
-                    <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
-                  </Col> 
-                  <Col xs={4} sm={3}> 
-                    <Button className="delete-link" bsStyle="danger" onClick={this.deleteLogin.bind(this)}>Delete</Button>
-                  </Col> 
-                </Row> 
-              </div>
-              ):(
-              <div className="card-block">
-                <Button  className="" onClick={this.allowModification.bind(this)}>
-                  <span className="fa fa-edit"/> 
-                </Button>
-              </div>)}
-            </form> 
-          </div>
+                <hr/>
+                {this.state.modify? (
+                <div className="card-block">
+                  <Row> 
+                    <Col xs={3} sm={3}> 
+                      <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
+                    </Col> 
+                    <Col xs={4} sm={3}> 
+                      <Button className="delete-link" bsStyle="danger" onClick={this.deleteLogin.bind(this)}>Delete</Button>
+                    </Col> 
+                  </Row> 
+                </div>
+                ):(
+                <div className="card-block">
+                  <Button  className="" onClick={this.allowModification.bind(this)}>
+                    <span className="fa fa-edit"/> 
+                  </Button>
+                </div>)}
+              </form> 
+            </div>
           </div>
         </Modal.Body>
        </Modal>       
