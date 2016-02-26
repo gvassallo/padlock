@@ -9,30 +9,37 @@ import ModalForm from '../components/ModalForm'
 import NewLoginCard from '../components/NewLoginCard'
 import LoginsList from '../components/LoginsList' 
 import Footer from '../components/Footer'
-import Spinner from '../components/Spinner'
+import {ProgressBar} from 'react-bootstrap' 
 
 const mapStateToProps = (state) => ({
     logins : state.logins.list, 
     modal_open: state.options.modal_open 
 });
+
 class Logins extends React.Component {
     constructor(){
         super(); 
         this.state = {
-            login : {
-                username : '', 
-                password : '', 
-                service:   '' 
-            }
+          login : {
+              username : '', 
+              password : '', 
+              service:   '' 
+          }
         }
     }
 
     componentDidMount(){
       this.download();  
+      this.props.dispatch(OptionsActions.viewChanged('Logins')); 
     }
 
     download(){
-        this.props.dispatch(LoginsActions.download()); 
+      const {dispatch} = this.props;  
+      dispatch(OptionsActions.loading()); 
+      dispatch(LoginsActions.download())
+      .then(()=> {
+        dispatch(OptionsActions.loadingEnd()); 
+      });  
     }
 
     handleChange(field){ 
@@ -46,7 +53,6 @@ class Logins extends React.Component {
     render() {
         return (
         <div className="modal-container">  
-          {/*<Spinner/> */}
           <NewLoginCard open={this.props.modal_open} login={this.state.login}/>
           <LoginsList logins={this.props.logins}/>
           <Footer/> 

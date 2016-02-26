@@ -2,6 +2,7 @@
 import React from 'react'; 
 import {connect} from 'react-redux'; 
 import * as ProfileActions from '../actions/ProfileActions' 
+import * as OptionsActions from '../actions/OptionsActions' 
 import {Jumbotron} from 'react-bootstrap' 
 
 const mapStateToProps = (state) => ({
@@ -12,10 +13,16 @@ class Profile extends React.Component {
 
     componentDidMount(){
       this.getUserInfo();  
+      this.props.dispatch(OptionsActions.viewChanged('Profile')); 
     }
 
     getUserInfo(){
-      this.props.dispatch(ProfileActions.getUserInfo());  
+      const {dispatch} = this.props; 
+      dispatch(OptionsActions.loading()); 
+      dispatch(ProfileActions.getUserInfo())  
+      .then(()=> {
+        dispatch(OptionsActions.loadingEnd());  
+      }); 
     }
 
     render() {

@@ -27,6 +27,7 @@ var api = require("./routes/api")(passport);
 var client = require("./routes/client"); 
 
 app.listen(port); 
+console.log("Server started on port: " + port)
 app.use('/', client); 
 app.use('/api', api); 
 

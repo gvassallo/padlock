@@ -101,10 +101,10 @@ body {
     text-align: center; 
     paddint-top: 100px; 
 }
-.glyphicon-spin {
-    font-size: 200px; 
+.fa-spin {
+    font-size: 150px; 
     -webkit-animation: spin 1000ms infinite linear;
-    animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite cubic-bezier(.6,.04,.98,.34);  
 }
 @-webkit-keyframes spin {
     0% {

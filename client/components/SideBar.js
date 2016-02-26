@@ -3,6 +3,8 @@ import { Link } from 'react-router'
 import {LinkContainer } from 'react-router-bootstrap'
 import {Button} from 'react-bootstrap'
 import HeaderBar from './HeaderBar'
+import Spinner from './Spinner' 
+
 class SideBar extends React.Component{
 
     render(){
@@ -33,6 +35,7 @@ class SideBar extends React.Component{
         </div> 
         <div className="content-wrapper">  
           <HeaderBar/> 
+          <Spinner/>
           {this.props.children} 
         </div> 
       </div> 

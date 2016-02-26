@@ -3,9 +3,9 @@ import ProfileService from '../services/ProfileService'
 
 export function getUserInfo() {
     return dispatch => {
-      ProfileService.getUserInfo() 
+      return ProfileService.getUserInfo() 
         .then((data) => {
-          dispatch(receiveUserInfo(data))
+          return dispatch(receiveUserInfo(data))
       })
       .catch( e=> {console.log(e.message)}); 
     }

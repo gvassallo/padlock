@@ -19,15 +19,9 @@ router.route('/css/style.css')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/dist/css/style.css"));             
         }); 
-router.route('/img/*')
-        .get((req, res) => {
-        res.sendFile(path.join(__dirname, "../../client/dist/img/spinner-img.png"));             
-        }); 
-// router.route('/fonts#<{(|')
-//         .get((req, res) => {
-//         res.sendFile(path.join(__dirname, "../../node_modules/font-awesome/fonts"));             
-//         }); 
+
 router.use('/fonts', 
           express.static(path.join(__dirname, "../../node_modules/font-awesome/fonts"))); 
+
 
 module.exports = router; 

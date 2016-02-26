@@ -2,7 +2,9 @@ import * as types from '../constants/ActionTypes'
 
 const initialstate = {
     modal_open: false, 
-    login_card_open: false 
+    login_card_open: false, 
+    current_view: 'Logins', 
+    loading: false 
 }
 
 export default function modal(state=initialstate, action){
@@ -23,6 +25,18 @@ export default function modal(state=initialstate, action){
     case types.LOGIN_CARD_CLOSE:
       return Object.assign({}, state, {
           login_card_open: false 
+      }); 
+    case types.VIEW_CHANGED: 
+      return Object.assign({}, state, {
+          current_view: action.view 
+      }); 
+    case types.LOADING: 
+      return Object.assign({}, state, {
+          loading: true 
+      }); 
+    case types.LOADING_END: 
+      return Object.assign({}, state, {
+          loading: false 
       }); 
     default: 
       return state; 

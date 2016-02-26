@@ -32,7 +32,7 @@ class HeaderBar extends React.Component {
         <Navbar.Header>
           <div className="title"> 
           <Navbar.Brand>
-            Padlock
+            {this.props.current_view}  
           </Navbar.Brand>
         </div> 
         </Navbar.Header>
@@ -54,6 +54,8 @@ class HeaderBar extends React.Component {
 
 const mapStateToProps = (state) => ({
     user : state.auth.user,
-    token: state.auth.token 
+    token: state.auth.token, 
+    current_view: state.options.current_view
 });
+
 export default connect(mapStateToProps)(HeaderBar); 

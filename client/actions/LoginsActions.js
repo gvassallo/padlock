@@ -3,10 +3,10 @@ import LoginsService from '../services/LoginsService'
 
 export function download() {
     return dispatch => {
-        LoginsService.download()
+        return LoginsService.download()
             .then(data => {
                 if(data.length > 0) 
-                dispatch(receiveLoginsList(data)); 
+                  return dispatch(receiveLoginsList(data)); 
             })
             .catch( e=> {console.log(e.message)}); 
         }

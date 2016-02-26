@@ -10,3 +10,6 @@ export const MODAL_OPEN = 'MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE'; 
 export const LOGIN_CARD_OPEN = 'LOGIN_CARD_OPEN'; 
 export const LOGIN_CARD_CLOSE = 'LOGIN_CARD_CLOSE'; 
+export const VIEW_CHANGED = 'VIEW_CHANGED'; 
+export const LOADING = 'LOADING'; 
+export const LOADING_END = 'LOADING_END'; 

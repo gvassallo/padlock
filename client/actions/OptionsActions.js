@@ -23,3 +23,22 @@ export function loginCardClose(){
       type: types.LOGIN_CARD_CLOSE
   }; 
 }
+
+export function viewChanged(view){
+  return {
+      type: types.VIEW_CHANGED, 
+      view: view 
+  }; 
+}
+
+export function loading(){
+  return {
+    type: types.LOADING
+  }; 
+}
+
+export function loadingEnd(){
+  return {
+    type: types.LOADING_END
+  }; 
+}
