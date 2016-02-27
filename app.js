@@ -5,10 +5,26 @@ var app = express();
 var path = require("path");
 var passport = require("passport"); 
 
+
 var bodyParser = require('body-parser');
 var compression = require('compression');
 var cookieParser = require('cookie-parser');
 // var session = require('express-session'); 
+
+//@TODO Separate client from backend!
+//For CLIENT development (Hot loading)  
+var webpack = require('webpack'); 
+var config = require('./webpack.config.js'); 
+
+var compiler = webpack(config);
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath
+}));
+
+app.use(require('webpack-hot-middleware')(compiler));
+
 
 // Instruct express to server up static assets
 app.use(compression());
@@ -26,10 +42,16 @@ require('./config/passport')(passport);
 var api = require("./routes/api")(passport); 
 var client = require("./routes/client"); 
 
-app.listen(port); 
-console.log("Server started on port: " + port)
 app.use('/', client); 
 app.use('/api', api); 
+
+app.listen(3000, 'localhost', function(err) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log('Listening at http://localhost:3000');
+});
 
 // Enable integration tests
 /* istanbul ignore else */

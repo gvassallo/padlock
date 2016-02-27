@@ -4,13 +4,19 @@ var path = require('path');
 module.exports = {
 
 devtool: 'eval',
-entry: './client/index.js',
-
+entry: [
+  'webpack-hot-middleware/client',
+  './client/index.js'
+], 
 output: {
-path: path.join(__dirname, 'client/dist/js'),
+    path: path.join(__dirname, 'client/dist/js'),
+    publicPath: 'http://localhost:3000/client/dist/js', 
     filename: 'bundle.js'
     },
-
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(), 
+      new webpack.NoErrorsPlugin()
+    ], 
     resolveLoader: {
       modulesDirectories: [
           path.join(__dirname, 'node_modules') 
@@ -21,9 +27,10 @@ path: path.join(__dirname, 'client/dist/js'),
         loaders: [
         {
             test: /\.js$/,
+            exclude: /node_modules/, 
             loader: 'babel-loader'
         }
-        ],
+        ]
     }
   
 };
