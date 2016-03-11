@@ -107,3 +107,4 @@ class NewLoginCard extends React.Component {
 }
 
 export default connect()(NewLoginCard); 
+// vim: set ft=javascript.jsx: 

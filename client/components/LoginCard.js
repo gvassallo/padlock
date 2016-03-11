@@ -175,3 +175,4 @@ class LoginCard extends React.Component {
 }
 
 export default connect()(LoginCard); 
+// vim: set ft=javascript.jsx: 

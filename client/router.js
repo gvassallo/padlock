@@ -50,3 +50,4 @@ class AppRouter extends React.Component{
 
 
 export default connect()(AppRouter); 
+// vim: set ft=javascript.jsx: 

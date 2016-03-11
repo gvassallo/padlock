@@ -50,3 +50,4 @@ class LoginsList extends React.Component{
 }
 
 export default connect(mapStateToProps)(LoginsList); 
+// vim: set ft=javascript.jsx: 

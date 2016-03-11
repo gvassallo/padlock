@@ -112,3 +112,4 @@ class Register extends React.Component {
 }; 
 
 export default connect()(Register); 
+// vim: set ft=javascript.jsx: 

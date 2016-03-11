@@ -1,12 +1,13 @@
+'use strict'; 
 var gulp = require('gulp'); 
 var nodemon = require('nodemon'); 
 var browserify = require('browserify');
-var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var util = require('gulp-util');
 var sass = require('gulp-sass'); 
 var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
+
 
 const paths = {
   bundle: 'app.js',
@@ -14,9 +15,9 @@ const paths = {
   srcCss: 'app/**/*.css',
   srcImg: 'app/images/**',
   dist: 'dist',
-distJs: 'client/dist/js',
+  distJs: 'client/dist/js',
   distImg: 'dist/images',
-distCss: 'client/dist/css'
+  distCss: 'client/dist/css'
 };
 
 gulp.task('server', function () {
@@ -27,7 +28,7 @@ gulp.task('server', function () {
         execMap : {
             'js' : 'node --harmony'
         }
-    })
+    }); 
 }); 
 
 gulp.task('browserify', function () {
@@ -36,7 +37,7 @@ gulp.task('browserify', function () {
         .bundle()
         .on('error', util.log)
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest(paths.distJs))
+        .pipe(gulp.dest(paths.distJs)); 
 });
 
 
@@ -89,10 +90,10 @@ gulp.task('styles', () => {
     .pipe(gulp.dest(paths.distCss));
 });
 
-gulp.task('icons', () => {
-  return gulp.src('node_modules/font-awesome/fonts/*')
-    .pipe(gulp.dest(path.join(config.destDir, '/fonts')));
-});
+// gulp.task('icons', () => {
+//   return gulp.src('node_modules/font-awesome/fonts#<{(|')
+//     .pipe(gulp.dest(path.join(config.destDir, '/fonts')));
+// });
 
 
 gulp.task('default', ['server']); 

@@ -15,3 +15,4 @@ ReactDOM.render(
     mountNode
 ); 
 
+// vim: set ft=javascript.jsx: 

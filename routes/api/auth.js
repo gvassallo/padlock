@@ -9,11 +9,10 @@ module.exports = (router, passport) => {
         res.json({
           user: req.user.user,
           token: req.user.token
-        });
+        }); 
       }
     );
 
-  
   router.route('/auth/register')
     .post(
       passport.authenticate('local-signup'),

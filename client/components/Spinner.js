@@ -28,3 +28,4 @@ const mapStateToProps = (state) => ({
 }); 
 
 export default connect(mapStateToProps)(Spinner); 
+// vim: set ft=javascript.jsx: 

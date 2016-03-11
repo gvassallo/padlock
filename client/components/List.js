@@ -28,3 +28,5 @@ class List extends React.Component {
 }; 
 
 export default List; 
+
+// vim: set ft=javascript.jsx: 

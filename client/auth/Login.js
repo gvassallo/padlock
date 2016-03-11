@@ -105,3 +105,4 @@ class Login extends React.Component {
 }; 
 
 export default connect()(Login);  
+// vim: set ft=javascript.jsx: 

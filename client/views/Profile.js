@@ -1,6 +1,6 @@
-'use strict'; 
-import React from 'react'; 
-import {connect} from 'react-redux'; 
+'use strict' 
+import React from 'react'
+import {connect} from 'react-redux'
 import * as ProfileActions from '../actions/ProfileActions' 
 import * as OptionsActions from '../actions/OptionsActions' 
 import {Jumbotron} from 'react-bootstrap' 
@@ -38,3 +38,4 @@ class Profile extends React.Component {
 }
 
 export default connect(mapStateToProps)(Profile);  
+// vim: set ft=javascript.jsx: 

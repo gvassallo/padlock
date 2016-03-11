@@ -2,22 +2,19 @@
 
 var express = require('express'); 
 var app = express(); 
-var path = require("path");
-var passport = require("passport"); 
-
+var passport = require('passport'); 
 
 var bodyParser = require('body-parser');
 var compression = require('compression');
-var cookieParser = require('cookie-parser');
+// var cookieParser = require('cookie-parser');
 // var session = require('express-session'); 
 
-//@TODO Separate client from backend!
+
 //For CLIENT development (Hot loading)  
 var webpack = require('webpack'); 
 var config = require('./webpack.config.js'); 
 
 var compiler = webpack(config);
-
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
@@ -39,13 +36,13 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 
-var api = require("./routes/api")(passport); 
-var client = require("./routes/client"); 
+var api = require('./routes/api')(passport); 
+var client = require('./routes/client'); 
 
 app.use('/', client); 
 app.use('/api', api); 
 
-app.listen(3000, 'localhost', function(err) {
+app.listen(port, 'localhost', function(err) {
   if (err) {
     console.log(err);
     return;
@@ -58,3 +55,4 @@ app.listen(3000, 'localhost', function(err) {
 if (process.env.NODE_ENV === 'test') {
   module.exports = app;
 }
+

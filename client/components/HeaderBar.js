@@ -59,3 +59,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(HeaderBar); 
+// vim: set ft=javascript.jsx: 
+

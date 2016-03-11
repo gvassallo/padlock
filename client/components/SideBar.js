@@ -45,3 +45,4 @@ class SideBar extends React.Component{
 }
 
 export default SideBar; 
+// vim: set ft=javascript.jsx: 

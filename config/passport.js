@@ -16,7 +16,7 @@ function getUser(user) {
     }
   }
   return u;
-}
+
 
 function generateToken(user, date, t) {
   let u = getUser(user);
@@ -43,7 +43,7 @@ module.exports = (passport) => {
         return User
            .generateHash(password)
            .then(hash => {
-            return User
+             return User
               .create({ fullName: req.body.fullname,
                         username: req.body.username,
                         email: email,

@@ -62,3 +62,4 @@ class Logins extends React.Component {
 }
 
 export default connect(mapStateToProps)(Logins); 
+// vim: set ft=javascript.jsx: 

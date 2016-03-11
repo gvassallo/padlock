@@ -20,3 +20,6 @@ class Footer extends React.Component {
 }
 
 export default Footer; 
+
+// vim: set ft=javascript.jsx: 
+

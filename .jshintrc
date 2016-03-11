@@ -1,0 +1,19 @@
+{
+  "node": true,
+  "esnext": true,
+  "eqeqeq": true,
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "immed": true,
+  "newcap": true,
+  "noarg": true,
+  "undef": true,
+  "unused": "vars",
+  "quotmark": "single",
+  "scripturl": true,
+  "strict": true,
+  "mocha": true,
+  "futurehostile": true,
+  "browser": true
+}

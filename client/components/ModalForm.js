@@ -36,3 +36,4 @@ class ModalForm extends React.Component {
     }
 }; 
 export default connect(mapStateToProps)(ModalForm); 
+// vim: set ft=javascript.jsx: 

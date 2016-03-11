@@ -23,3 +23,4 @@ export default class BaseForm extends React.Component {
     );
   }
 }
+// vim: set ft=javascript.jsx: 
