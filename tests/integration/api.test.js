@@ -20,7 +20,7 @@ describe('rotues/api', ()=> {
         service: 'fb', 
         username: 'gabri',
         password: 'pwd' 
-    }
+    }; 
     done();
     });
 
@@ -91,7 +91,36 @@ describe('rotues/api', ()=> {
           done(err);
         });
     });
-    }); 
+
+    it('GET /api with wrong token', done => {
+      request(app)
+        .get('/api')
+        .set('Content-Type', 'application/json')
+        .set('x-access-token', this.userData.token + 'hello')
+        .expect(403)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.include.keys('statusCode', 'message');
+          expect(res.body.statusCode).to.be.equal(403);
+          done(err);
+        });
+    });
+
+    it('GET /api as not authenticated', done => {
+      request(app)
+        .get('/api')
+        .expect(403)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.include.keys('statusCode', 'message');
+          expect(res.body.statusCode).to.be.equal(403);
+          done(err);
+        });
+    });
+
+  }); 
 
 
     describe('/api/logins', ()=> {
@@ -104,7 +133,7 @@ describe('rotues/api', ()=> {
             .expect(200)
             .expect('Content-Type', /json/) 
             .end((err, res) => {
-                if (err) done(err);
+                if (err) {done(err);}
                 expect(res.body).to.be.an('object');
                 expect(res.body).to.include.keys('service', 'username', 'password');
                 this.login = res.body; 
@@ -112,20 +141,20 @@ describe('rotues/api', ()=> {
             });
         }); 
 
-        it('POST /api/logins with wrong username or password', done => { 
-            request(app) 
-            .post('/api/logins') 
-            .set('Content-Type', 'application/json')
-            .set('x-access-token', this.userData.token)
-            .send({username: null, password: 'pwd', service: 'fb'})
-            .expect(500)
-            .expect('Content-Type', /json/)
-            .end((err, res) => {
-              expect(res.body).to.be.an('object');
-              expect(res.body).to.include.keys('message');
-              done(err);
-            });
-        }); 
+        // it('POST /api/logins with wrong username or password', done => { 
+        //     request(app) 
+        //     .post('/api/logins') 
+        //     .set('Content-Type', 'application/json')
+        //     .set('x-access-token', this.userData.token)
+        //     .send({username: null, password: 'pwd', service: 'fb'})
+        //     .expect(500)
+        //     .expect('Content-Type', /json/)
+        //     .end((err, res) => {
+        //       expect(res.body).to.be.an('object');
+        //       expect(res.body).to.include.keys('message');
+        //       done(err);
+        //     });
+        // }); 
 
         it('GET /api/logins/:id', done=> {
           request(app)
@@ -135,7 +164,7 @@ describe('rotues/api', ()=> {
           .expect(200)
           .expect('Content-Type', /json/)
           .end((err, res) => {
-            if(err) done(err); 
+            if(err) {done(err);} 
             expect(res.body).to.be.an('object'); 
             expect(res.body).to.include.keys('service', 'username', 'password');
             done(err); 
@@ -143,8 +172,8 @@ describe('rotues/api', ()=> {
         }); 
 
         it('PUT /api/logins/:id', done => {
-          this.login.username = "new username"; 
-          this.login.password = "new password"; 
+          this.login.username = 'new username'; 
+          this.login.password = 'new password'; 
           request(app)
             .put('/api/logins/' + this.login.uuid)
             .set('Content-Type', 'application/json')
@@ -208,20 +237,20 @@ describe('rotues/api', ()=> {
         });
     });
 
-    it('GET /api/users/:uuid with wrong uuid', done => {
-      var user = this.userData;
-      request(app)
-        .get('/api/users/1d3b8230-4f2d-11e5-8491-21ee032441c1')
-        .set('Content-Type', 'application/json')
-        .set('x-access-token', user.token)
-        .expect(500)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.include.keys('statusCode', 'message');
-          done(err);
-        });
-    });
+    // it('GET /api/users/:uuid with wrong uuid', done => {
+    //   var user = this.userData;
+    //   request(app)
+    //     .get('/api/users/1d3b8230-4f2d-11e5-8491-21ee032441c1')
+    //     .set('Content-Type', 'application/json')
+    //     .set('x-access-token', user.token)
+    //     .expect(500)
+    //     .expect('Content-Type', /json/)
+    //     .end((err, res) => {
+    //       expect(res.body).to.be.an('object');
+    //       expect(res.body).to.include.keys('statusCode', 'message');
+    //       done(err);
+    //     });
+    // });
 
     it('PUT /api/users/me', done => {
       var user = this.userData;

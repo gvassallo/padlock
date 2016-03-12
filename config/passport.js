@@ -7,6 +7,8 @@ var db = require('../models');
 var User = db.User;
 var config = require('./config');
 
+var NodeRSA = require('node-rsa');
+
 function getUser(user) {
   var u = user.toJSON();
   delete u.password;
@@ -16,7 +18,7 @@ function getUser(user) {
     }
   }
   return u;
-
+}
 
 function generateToken(user, date, t) {
   let u = getUser(user);
@@ -25,6 +27,12 @@ function generateToken(user, date, t) {
     expiresIn: config.expireTime
   });
   return user.createToken({ value: token }, { transaction: t });
+}
+
+function generatePrivateKey(user, t){
+  var key = new NodeRSA({b: 512});
+  key = key.exportKey('pkcs1'); 
+  return user.createKey({value: key}, {transaction: t}); 
 }
 
 module.exports = (passport) => {
@@ -51,7 +59,12 @@ module.exports = (passport) => {
                         { transaction: t });
             })
           .then(user => {
-            t.user = getUser(user);
+            t.user = user;
+            return generatePrivateKey(user, t);  
+          }) 
+          .then(() => {
+            var user = t.user; 
+            t.user = getUser(user); 
             return generateToken(user, Date.now(), t);
           })
           .then(token => {

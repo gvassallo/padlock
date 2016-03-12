@@ -19,10 +19,16 @@ describe('models/index', () => {
     done();
   });
 
+  it('return key model', done => {
+    expect(this.models.Key).to.be.ok;
+    done();
+  });
+
   it('return login model', done => {
     expect(this.models.Login).to.be.ok;
     done();
   });
+
 
   it('creates user model', done => {
     this.models.User
@@ -45,4 +51,10 @@ describe('models/index', () => {
       .error(error => done(error));
   });
 
+  it('creates key model', done => {
+    this.models.Key
+      .sync({ force: true })
+      .then(() => done())
+      .error(error => done(error));
+  });
 });

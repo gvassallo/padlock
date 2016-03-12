@@ -9,7 +9,8 @@ var cors = require('cors');
 module.exports = (passport) => {
 
     var router = express.Router(); 
-    // var auth = require('./auth.js')(router, passport); 
+
+    require('./auth.js')(router, passport); 
 
     router.use(ensureAuthenticated); 
     router.use(cors()); 

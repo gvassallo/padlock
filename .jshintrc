@@ -14,6 +14,8 @@
   "scripturl": true,
   "strict": true,
   "mocha": true,
+  /* suppress chia warnings */
+  "expr": true, 
   "futurehostile": true,
   "browser": true
 }

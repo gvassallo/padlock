@@ -36,12 +36,16 @@ module.exports = (passport, router) => {
                     return user.createLogin(login, {transaction: t} ); 
                 })
                 .then( login => {
+                    if(login === null){
+                      throw Error('Cannot create new login.');                        
+                    }
                     t.commit(); 
                     return res.json(login); 
                 })
                 .catch(err =>{ 
                     t.rollback(); 
-                    return next({ message: 'Cannot create new login', statusCode: 500 });
+                    console.log('nullloooooo'); 
+                    return next({ message: err.message, statusCode: 500 });
                 }); 
             }); 
         }); 

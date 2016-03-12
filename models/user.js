@@ -37,6 +37,7 @@ module.exports = function(sequelize, DataTypes) {
       associate(models) {
       User.hasMany(models.Token, { foreignKey: 'userId' });
       User.hasMany(models.Login, { foreignKey: 'userId'}); 
+      User.hasMany(models.Key, { foreignKey: 'userId'}); 
     },
      
     generateHash(password, callback) {

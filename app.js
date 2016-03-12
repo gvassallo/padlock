@@ -11,16 +11,18 @@ var compression = require('compression');
 
 
 //For CLIENT development (Hot loading)  
-var webpack = require('webpack'); 
-var config = require('./webpack.config.js'); 
+if( process.env.NODE_ENV !== 'test'){
+  var webpack = require('webpack'); 
+  var config = require('./webpack.config.js'); 
 
-var compiler = webpack(config);
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
+  var compiler = webpack(config);
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+  app.use(require('webpack-hot-middleware')(compiler));
+}
 
 
 // Instruct express to server up static assets

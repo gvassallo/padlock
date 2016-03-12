@@ -25,6 +25,7 @@
             "single"
         ], 
         "react/jsx-uses-vars": 2, 
-        "no-console": 0
+        "no-console": 0, 
+        "no-undef": 0
     }
 }
