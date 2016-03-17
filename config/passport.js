@@ -7,6 +7,10 @@ var db = require('../models');
 var User = db.User;
 var config = require('./config');
 
+var node_cryptojs = require('node-cryptojs-aes'); 
+var CryptoJS = node_cryptojs.CryptoJS; 
+var JsonFormatter = node_cryptojs.JsonFormatter; 
+
 var NodeRSA = require('node-rsa');
 
 function getUser(user) {
@@ -30,9 +34,18 @@ function generateToken(user, date, t) {
 }
 
 function generatePrivateKey(user, t){
+  // encode the master password in base 64
+  var pwd = new Buffer('master-pass'); 
+  pwd = pwd.toString('base64'); 
+  // create a RSA private key 
   var key = new NodeRSA({b: 512});
+  // export the key into a string 
   key = key.exportKey('pkcs1'); 
-  return user.createKey({value: key}, {transaction: t}); 
+  // encrypt the key using the master password 
+  var key_encrypted = CryptoJS.AES.encrypt(key, pwd, {format: JsonFormatter }); 
+  var key_encrypted_str = key_encrypted.toString(); 
+  // save on the database the encrypted private key 
+  return user.createKey({value: key_encrypted_str}, {transaction: t}); 
 }
 
 module.exports = (passport) => {
@@ -96,7 +109,7 @@ module.exports = (passport) => {
                    { transaction: t })
           .then((user) => {
             if (user === null) {
-              throw Error('User does not exist.');
+              throw new Error('User does not exist.');
             }
             that.user = user;
             return user.validPassword(password);

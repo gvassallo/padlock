@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router'
 import {LinkContainer } from 'react-router-bootstrap'
-import {Button} from 'react-bootstrap'
 import HeaderBar from './HeaderBar'
 import Spinner from './Spinner' 
+
 
 class SideBar extends React.Component{
 
@@ -19,14 +18,14 @@ class SideBar extends React.Component{
           <ul className="nav nav-sidebar">
             <li>
               <LinkContainer to="/">
-                <a href=""> 
+                <a href="" title="Logins"> 
                   <span className="fa fa-home"></span>
                 </a> 
               </LinkContainer> 
             </li>
             <li> 
               <LinkContainer to="/profile">
-                <a href="">
+                <a href="" title="Profile">
                   <span className="fa fa-user"></span>
                 </a> 
               </LinkContainer> 
@@ -36,12 +35,11 @@ class SideBar extends React.Component{
         <div className="content-wrapper">  
           <HeaderBar/> 
           <Spinner/>
-          {this.props.children} 
+          {this.props.children}
         </div> 
       </div> 
       );  
     }
-
 }
 
 export default SideBar; 

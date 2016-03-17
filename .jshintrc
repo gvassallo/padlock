@@ -16,6 +16,7 @@
   "mocha": true,
   /* suppress chia warnings */
   "expr": true, 
+  "asi": true, 
   "futurehostile": true,
   "browser": true
 }

@@ -19,7 +19,7 @@ if( process.env.NODE_ENV !== 'test'){
   app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath
-  }));
+  })); 
 
   app.use(require('webpack-hot-middleware')(compiler));
 }
@@ -27,7 +27,6 @@ if( process.env.NODE_ENV !== 'test'){
 
 // Instruct express to server up static assets
 app.use(compression());
-
 // Setup bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -51,7 +50,6 @@ app.listen(port, 'localhost', function(err) {
   }
   console.log('Listening at http://localhost:3000');
 });
-
 // Enable integration tests
 /* istanbul ignore else */
 if (process.env.NODE_ENV === 'test') {

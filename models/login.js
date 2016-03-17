@@ -3,6 +3,10 @@
 // var NodeRSA = bluebird.promisifyAll(require('node-rsa')); 
 var NodeRSA = require('node-rsa'); 
 
+var node_cryptojs = require('node-cryptojs-aes'); 
+var CryptoJS = node_cryptojs.CryptoJS; 
+var JsonFormatter = node_cryptojs.JsonFormatter; 
+
 module.exports = function(sequelize, DataTypes) {
   var Login = sequelize.define('Login', {
     uuid: {
@@ -28,16 +32,32 @@ module.exports = function(sequelize, DataTypes) {
           // associations can be defined here
           Login.belongsTo(models.User, {foreignKey: 'userId'}); 
         }, 
-        encryptPwd: function(password, pkcs1Key) { 
+        encryptPwd: function(password, key_encrypted_str) { 
+            // encode the master password in base64
+            var pwd = new Buffer('master-pass'); 
+            pwd = pwd.toString('base64');    
+            // decrypt the encrypted key using the master password 
+            var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, pwd, {format: JsonFormatter});  
+            // convert to Utf8 format unmasked data
+            var pkcs1Key_str = CryptoJS.enc.Utf8.stringify(pkcs1Key);
             var key = new NodeRSA();
-            key.importKey(pkcs1Key, 'pkcs1'); 
+            key.importKey(pkcs1Key_str, 'pkcs1'); 
+            // return the encrypted password 
             return key.encrypt(password, 'base64'); 
         }
     }, 
     instanceMethods: {
-        decryptPwd: function(pkcs1Key) {
-            var key = new NodeRSA(); 
-            key.importKey(pkcs1Key, 'pkcs1'); 
+        decryptPwd: function(key_encrypted_str) {
+            // encode the master password in base64
+            var pwd = new Buffer('master-pass'); 
+            pwd = pwd.toString('base64');    
+            // decrypt the encrypted key using the master password 
+            var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, pwd, {format: JsonFormatter});  
+            // convert to Utf8 format unmasked data
+            var pkcs1Key_str = CryptoJS.enc.Utf8.stringify(pkcs1Key);
+            var key = new NodeRSA();
+            key.importKey(pkcs1Key_str, 'pkcs1'); 
+            // return the decrypted password 
             return key.decrypt(this.password, 'utf8');  
         }
     }

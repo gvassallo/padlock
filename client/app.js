@@ -9,7 +9,7 @@ export default class App extends React.Component {
           <SideBar> 
               {this.props.children} 
             </SideBar>
-        </div>
+        </div> 
         )
     }
 }
