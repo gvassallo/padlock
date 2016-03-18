@@ -27,7 +27,7 @@ class AuthService {
       .post('/api/auth', user)
       .then(res => {
         if (res.status === 200) {
-          this.auth(res.data.user, res.data.token);
+          this.auth(res.data.user, res.data.token, user.password);
           return Promise.resolve(res.data);
         }
         throw new Error(res.message);
@@ -39,18 +39,21 @@ class AuthService {
       .post('/api/auth/register', user)
       .then(res => {
         if (res.status === 200) {
-          this.auth(res.data.user, res.data.token);
+          this.auth(res.data.user, res.data.token, user.password);
           return Promise.resolve(res.data);
         }
         throw new Error(res.message);
       });
   }
-
-  auth(user, token) {
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('token', token);
+  // TODO verify if sessionStorage is more appropriate 
+  auth(user, token, master) {
+    sejssionStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('master', master); 
     this.user = user;
     this.token = token;
+    // TODO do I need that ? 
+    this.master = master; 
   }
 
   isLoggedIn() {
@@ -58,8 +61,9 @@ class AuthService {
       return true;
     }
     try {
-      this.user = JSON.parse(localStorage.getItem('user'));
-      this.token = localStorage.getItem('token');
+      this.user = JSON.parse(sessionStorage.getItem('user'));
+      this.token = sessionStorage.getItem('token');
+      this.master = sessionStorage.getItem('master'); 
       return this.user && this.token;
     } catch (e) {
       return false;
@@ -67,11 +71,12 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('master'); 
     this.user = null;
     this.token = null;
-    
+    this.master = null; 
   }
 
   getUser() {
@@ -80,6 +85,10 @@ class AuthService {
 
   getToken() {
     return this.token;
+  }
+
+  getMaster(){
+    return this.master; 
   }
 }
 

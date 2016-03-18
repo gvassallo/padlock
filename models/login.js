@@ -32,12 +32,12 @@ module.exports = function(sequelize, DataTypes) {
           // associations can be defined here
           Login.belongsTo(models.User, {foreignKey: 'userId'}); 
         }, 
-        encryptPwd: function(password, key_encrypted_str) { 
+        encryptPwd: function(password, key_encrypted_str, master) { 
             // encode the master password in base64
-            var pwd = new Buffer('master-pass'); 
-            pwd = pwd.toString('base64');    
+            var master_64 = new Buffer(master); 
+            master_64 = master_64.toString('base64');    
             // decrypt the encrypted key using the master password 
-            var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, pwd, {format: JsonFormatter});  
+            var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, master_64, {format: JsonFormatter});  
             // convert to Utf8 format unmasked data
             var pkcs1Key_str = CryptoJS.enc.Utf8.stringify(pkcs1Key);
             var key = new NodeRSA();
@@ -47,12 +47,12 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, 
     instanceMethods: {
-        decryptPwd: function(key_encrypted_str) {
+        decryptPwd: function(key_encrypted_str, master) {
             // encode the master password in base64
-            var pwd = new Buffer('master-pass'); 
-            pwd = pwd.toString('base64');    
+            var master_64 = new Buffer(master); 
+            master_64 = master_64.toString('base64');    
             // decrypt the encrypted key using the master password 
-            var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, pwd, {format: JsonFormatter});  
+            var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, master_64, {format: JsonFormatter});  
             // convert to Utf8 format unmasked data
             var pkcs1Key_str = CryptoJS.enc.Utf8.stringify(pkcs1Key);
             var key = new NodeRSA();

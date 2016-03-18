@@ -33,16 +33,16 @@ function generateToken(user, date, t) {
   return user.createToken({ value: token }, { transaction: t });
 }
 
-function generatePrivateKey(user, t){
+function generatePrivateKey(user, master, t){
   // encode the master password in base 64
-  var pwd = new Buffer('master-pass'); 
-  pwd = pwd.toString('base64'); 
+  var master_64 = new Buffer(master); 
+  master_64 = master_64.toString('base64'); 
   // create a RSA private key 
   var key = new NodeRSA({b: 512});
   // export the key into a string 
   key = key.exportKey('pkcs1'); 
   // encrypt the key using the master password 
-  var key_encrypted = CryptoJS.AES.encrypt(key, pwd, {format: JsonFormatter }); 
+  var key_encrypted = CryptoJS.AES.encrypt(key, master_64, {format: JsonFormatter }); 
   var key_encrypted_str = key_encrypted.toString(); 
   // save on the database the encrypted private key 
   return user.createKey({value: key_encrypted_str}, {transaction: t}); 
@@ -73,7 +73,7 @@ module.exports = (passport) => {
             })
           .then(user => {
             t.user = user;
-            return generatePrivateKey(user, t);  
+            return generatePrivateKey(user, password, t);  
           }) 
           .then(() => {
             var user = t.user; 

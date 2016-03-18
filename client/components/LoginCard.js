@@ -39,10 +39,15 @@ class LoginCard extends React.Component {
       this.setState(this.state); 
     }
 
+    // TODO show loading  
     allowModification(event){
       event.preventDefault();
-      this.state.modify = true ; 
-      this.setState(this.state); 
+      LoginsService.getPassword(this.props.login)
+        .then(password => {
+          this.state.login.password = password; 
+          this.state.modify = true ; 
+          this.setState(this.state); 
+        }); 
     }
 
     deleteLogin(event){

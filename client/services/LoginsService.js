@@ -36,8 +36,9 @@ class LoginsService {
     }
 
     addNew(login){
+        var master = sessionStorage.getItem('master');
         return axios 
-        .post('/api/logins', login)
+        .post('/api/logins', {login: login, master: master})
         .then(res => {
             if(res.status === 200) {
                 return Promise.resolve(res.data); 
@@ -58,8 +59,9 @@ class LoginsService {
     }
 
     update(login){
+      var master = sessionStorage.getItem('master'); 
       return axios
-        .put('/api/logins/'+login.uuid, login)
+        .put('/api/logins/'+login.uuid,{login: login, master: master} )
         .then(res => {
             if(res.status === 200) {
                 return Promise.resolve(res.data); 
@@ -68,8 +70,9 @@ class LoginsService {
         }); 
     }
     getPassword(login){
+      var master = sessionStorage.getItem('master'); 
       return axios
-        .get('/api/logins/'+login.uuid)
+        .post('/api/logins/'+login.uuid, {master: master}) 
         .then(res=> {
           if(res.status ===200) {
             return Promise.resolve(res.data.password);  
