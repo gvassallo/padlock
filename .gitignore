@@ -6,5 +6,6 @@ client/dist
 *.swp
 coverage
 .vscode
+server.*
 
 
