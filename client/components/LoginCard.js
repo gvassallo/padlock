@@ -17,7 +17,8 @@ class LoginCard extends React.Component {
           password: '', 
           uuid: '' 
         }, 
-        reveal: false 
+      reveal: false, 
+      loading: false 
       }; 
     }
  
@@ -39,11 +40,13 @@ class LoginCard extends React.Component {
       this.setState(this.state); 
     }
 
-    // TODO show loading  
     allowModification(event){
       event.preventDefault();
+      this.state.loading = true; 
+      this.setState(this.state); 
       LoginsService.getPassword(this.props.login)
-        .then(password => {
+       .then(password => {
+          this.state.loading = false; 
           this.state.login.password = password; 
           this.state.modify = true ; 
           this.setState(this.state); 
@@ -156,8 +159,12 @@ class LoginCard extends React.Component {
                 <div className="card-block">
                   <Row> 
                     <Col xs={3} sm={3}> 
+                      {this.props.loading?(
+                      <ButtonInput bsStyle="primary" type="" value="Wait"/> 
+                      ):(
                       <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
-                    </Col> 
+                      )}
+                      </Col> 
                     <Col xs={4} sm={3}> 
                       <Button className="delete-link" bsStyle="danger" onClick={this.deleteLogin.bind(this)}>Delete</Button>
                     </Col> 
@@ -166,7 +173,10 @@ class LoginCard extends React.Component {
                 ):(
                 <div className="card-block">
                   <Button  className="" onClick={this.allowModification.bind(this)}>
+                    {this.state.loading ? (                 
+                    <div>Wait</div> ):(
                     <span className="fa fa-edit"/> 
+                    )}
                   </Button>
                 </div>)}
               </form> 

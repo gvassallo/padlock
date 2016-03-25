@@ -1,23 +1,21 @@
 import React from 'react' 
 import {connect} from 'react-redux' 
-import {Modal} from 'react-bootstrap' 
 
 class Spinner extends React.Component {
 
     render(){
       return (
-        <div> 
-          <Modal 
-            show={this.props.loading} 
-            bsSize="small"
-            container={this}
-            aria-labelledby="contained-modal-title">
-            <Modal.Body>
-              <center> 
-                <h3>Loading</h3>
-              </center> 
-            </Modal.Body>
-          </Modal>       
+        <div className="spinner"> 
+          {this.props.loading? (
+          <div className="sk-folding-cube">
+            <div className="sk-cube1 sk-cube"></div>
+            <div className="sk-cube2 sk-cube"></div>
+            <div className="sk-cube4 sk-cube"></div>
+            <div className="sk-cube3 sk-cube"></div>
+          </div>
+          ) : (
+          <div></div>
+          )} 
         </div> 
       ); 
     }

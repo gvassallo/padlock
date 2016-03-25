@@ -6,6 +6,9 @@ var passport = require('passport');
 
 var bodyParser = require('body-parser');
 var compression = require('compression');
+var fs = require('fs'); 
+var https = require('https'); 
+
 // var cookieParser = require('cookie-parser');
 // var session = require('express-session'); 
 
@@ -43,13 +46,26 @@ var client = require('./routes/client');
 app.use('/', client); 
 app.use('/api', api); 
 
-app.listen(port, 'localhost', function(err) {
+// var options = {
+//   key  : fs.readFileSync('server.key'),
+//   cert : fs.readFileSync('server.crt')  
+// }; 
+//
+// https.createServer(options, app).listen(port, (err) =>{
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+//   console.log('Listening at http://localhost:3000');
+// });
+app.listen(port, (err) => {
   if (err) {
     console.log(err);
     return;
   }
   console.log('Listening at http://localhost:3000');
-});
+}); 
+
 // Enable integration tests
 /* istanbul ignore else */
 if (process.env.NODE_ENV === 'test') {

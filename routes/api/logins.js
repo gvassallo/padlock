@@ -87,7 +87,6 @@ module.exports = (passport, router) => {
         Login 
           .destroy({ where: { userId: req.decoded.uuid, uuid: req.params.id }})
           .then(() => res.json({}))
-          .catch(()=> next({message: 'Login not exist', statusCode: 500})); 
       })
       .put((req, res, next)=>{
         var master = req.body.master; 

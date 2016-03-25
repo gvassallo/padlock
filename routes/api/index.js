@@ -15,25 +15,25 @@ module.exports = (passport) => {
     router.use(ensureAuthenticated); 
     router.use(cors()); 
     
-    require('./logins.js')(passport, router); 
-    require('./users.js')(passport, router);     
-
     router.route('/')
       .get((req, res) => {
         console.log(req.headers);
         res.json({ statusCode: 200, message: 'Valid token. Enjoy the router.' });
       });
+
+    require('./logins.js')(passport, router); 
+    require('./users.js')(passport, router);     
     
     // fallback
-    router.use((err, req, res) => {
-        res
-          .status(err.statusCode || 500)
-          .json({
-            statusCode: err.statusCode || 500,
-            message: err.message
-          });
-    });
-    
+  router.use((err, req, res, next) => {
+    res
+      .status(err.statusCode || 500)
+      .json({
+        statusCode: err.statusCode || 500,
+        message: err.message
+      });
+  });
+
     return router; 
 }; 
 
@@ -41,9 +41,7 @@ module.exports = (passport) => {
 function ensureAuthenticated(req, res, next) {
   // check header or url parameters or post parameters for token
   var token = req.headers['x-access-token'] || req.headers['X-Access-Token'] ||
-              req.body.token || req.query.token;
-
-
+    req.body.token || req.query.token;
   // decode token
   if (token) {
     // verifies secret and checks exp
@@ -57,7 +55,6 @@ function ensureAuthenticated(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         // Check if it's present in Token model
-        // TODO: integrate redis db for faster token match
         Token
           .findOne({ where: { value: token, userId: decoded.uuid }})
           .then(token => {
@@ -74,7 +71,6 @@ function ensureAuthenticated(req, res, next) {
           });
       }
     });
-
   } else {
     // if there is no token, return an error
     return res.status(403).send({

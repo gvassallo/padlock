@@ -7,43 +7,40 @@ module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
 
     uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
     },
-
     username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     },
-
     fullName: DataTypes.STRING,
-
     email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
         isEmail: true,
         notEmpty: true
-        }
+      }
     },
     password: DataTypes.STRING 
-    }, 
+  }, 
 
-    {
+  {
     classMethods: {
       associate(models) {
-      User.hasMany(models.Token, { foreignKey: 'userId' });
-      User.hasMany(models.Login, { foreignKey: 'userId'}); 
-      User.hasMany(models.Key, { foreignKey: 'userId'}); 
-    },
-     
-    generateHash(password, callback) {
+        User.hasMany(models.Token, { foreignKey: 'userId' });
+        User.hasMany(models.Login, { foreignKey: 'userId'}); 
+        User.hasMany(models.Key, { foreignKey: 'userId'}); 
+      },
+
+      generateHash(password, callback) {
         return bcrypt.genSaltAsync(10)
-                     .then(salt => bcrypt.hashAsync(password, salt));
-    } 
+          .then(salt => bcrypt.hashAsync(password, salt));
+      } 
 
     }, 
     instanceMethods: {

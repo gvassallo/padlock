@@ -29,7 +29,10 @@ class AppRouter extends React.Component{
     alreadyLogged(nextState, replace) {
         let nextPath = nextState.location.pathname;
         if (AuthService.isLoggedIn() && (nextPath === '/login' || nextPath === '/register')) {
-            this.context.router.replace('/');
+            replace({ 
+              pathname: '/', 
+              state: {nextPathname: nextState.location.pathname }
+            });
         }
     }
 

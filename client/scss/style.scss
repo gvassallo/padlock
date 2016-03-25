@@ -1,38 +1,49 @@
 @import 'settings'; 
 @import 'bootstrap'; 
 @import 'font-awesome'; 
+@import 'spinners/11-folding-cube'; 
 
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #DADFE1; 
 }
+
 //LOGIN FORM 
 /* Portrait and Landscape */
 .login-form {
-  margin-top: 100px; 
+  margin-top: 30px; 
 }
 .register-form {
-  margin-top: 100px; 
+  margin-top: 30px; 
 }
-@media only screen 
-  and (min-device-width: 300px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
-  .login-form {
-    margin-top: 0; 
-  }
-  .register-form {
-    margin-top: 0; 
-  }
-}
+
+// @media only screen 
+//   and (min-device-width: 300px) 
+//   and (max-device-width: 667px) 
+//   and (-webkit-min-device-pixel-ratio: 2) { 
+//   .login-form {
+//     margin-top: 0; 
+//   }
+//   .register-form {
+//     margin-top: 0; 
+//   }
+// }
 // HEADERBAR
 .header span{
     font-size: 18px;
+    color: white; 
 }
 .navbar{
   z-index: 0; 
 }
 .title{
   padding-left: 60px; 
+}
+.navbar-default {
+    background-color: #F64747; 
+    .navbar-brand {
+      color: white;
+    }
 }
 // SIDEBAR
 .page-with-sidebar{
@@ -56,7 +67,10 @@ body {
 .logo span{
   margin-top: 5px; 
   font-size: 40px; 
-  color: #3688e4; 
+  color: #dadfe1; 
+}
+.nav > li > a:hover, .nav > li > a:focus{
+    background-color: transparent; 
 }
 .nav-sidebar{
   margin-top: 35px; 
@@ -66,9 +80,14 @@ body {
   overflow: hidden;
   a {
     text-align: center;  
-    color: #c5d0de;
+    color: #FFF;
+    &:hover{
+      color: #F64747;   
+    }
+    &:active{
+      color: #F64747; 
+    }
   }
-
   span {
     font-size: 20px; 
   }
@@ -98,55 +117,18 @@ body {
 }
 // SPINNER
 .spinner {
-    text-align: center; 
-    paddint-top: 100px; 
-    background-color: blue; 
-    // position: absolute;
-    // top: 0; 
-    // left: 0;
-    // width: 100%;
-    // height: 100%;
-    // background: rgba(255,255,255,0.9);
-    // zIndex: 1000;
+  position: absolute; 
+  z-index: 100; 
+  margin-right: auto; 
+  margin-left: auto; 
+  left: 0; 
+  right: 0; 
 }
-.fa-spin {
-    font-size: 150px; 
-    -webkit-animation: spin 1000ms infinite linear;
-    animation: spin 1000ms infinite cubic-bezier(.6,.04,.98,.34);  
-}
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}
-//LOGIN CARD
-// .login-card-form {
-// }
-.bar{
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background: #757575;
-  width: 100%;
-  height: 1px;
-}
-.delete-link {
-  // margin-left: 1.35em; 
-  // color: #FF5323;
+//PADLOCK TEXT 
+.padlock{
+    display: block; 
+    margin-right: auto; 
+    margin-left: auto; 
+    width: 200px; 
 }
 

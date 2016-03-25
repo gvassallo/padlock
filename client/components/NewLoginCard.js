@@ -58,7 +58,12 @@ class NewLoginCard extends React.Component {
             <Modal.Body>
               <div className="card">
                 <div className="card-block">
-                  <form onSubmit={this.addNewLogin.bind(this)} action='' className="login-card-form"> 
+                  <form 
+                    onSubmit={this.addNewLogin.bind(this)} 
+                    action='' 
+                    className='login-card-form'
+                    autoComplete='off'
+                  > 
                     <section>
                       <Row>
                         <Col xs={4} sm={4}>

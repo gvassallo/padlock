@@ -32,7 +32,7 @@ class Register extends React.Component {
       const { dispatch } = this.props; 
       event.preventDefault();
       dispatch(AuthActions.register(this.state)) 
-      .catch(e=>{
+      .catch((err)=>{
         this.state.loading = false; 
         this.state.alertShow = true; 
         this.setState(this.state); 
@@ -59,7 +59,11 @@ class Register extends React.Component {
         return (
         <div className="register-form">
           <BaseForm>  
-            <form onSubmit={this.register.bind(this)} action=''>
+            <div className='panel-heading panel-heading-dark'>
+              <span style={{color: 'white', fontSize: '16px'}}>Register</span>
+            </div>
+            <div className='panel-body'>
+            <form onSubmit={this.register.bind(this)} action='' autoComplete='off'>
               <Row> 
                 <Col sm={4} md={4}>
                   <label>Username</label>
@@ -104,12 +108,13 @@ class Register extends React.Component {
                 <Button bsStyle='primary' block>Login</Button>
               </LinkContainer>
             </div>
+            </div> 
           </BaseForm> 
           {this.showAlert()}
         </div>
         ); 
     }
-}; 
+} 
 
 export default connect()(Register); 
 // vim: set ft=javascript.jsx: 

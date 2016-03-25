@@ -33,7 +33,7 @@ class LoginsList extends React.Component{
       return(
       <div className="login-list"> 
         <ListGroup> 
-          { this.props.logins.map(listValue => {
+          {this.props.logins.map(listValue => {
           return <ListGroupItem 
                     key={listValue.uuid}
                     header={listValue.service}

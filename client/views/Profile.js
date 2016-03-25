@@ -24,13 +24,22 @@ class Profile extends React.Component {
         dispatch(OptionsActions.loadingEnd());  
       }); 
     }
-
+    getDate(){  
+      var d = new Date(this.props.profile.createdAt); 
+      return d.getUTCMonth() + '/' + d.getUTCDate() + '/' + d.getFullYear() ;  
+    }
     render() {
       return (
         <Jumbotron> 
           <div className="vertical-center"> 
-            <h3> {this.props.profile.fullName}</h3> 
-            <p>@{this.props.profile.username}.</p> 
+            <h2> {this.props.profile.fullName}</h2> 
+            <p>
+              <span style={{fontSize: '16px'}}> 
+                @{this.props.profile.username} • Member since {this.getDate()}
+                <br/>
+                {this.props.profile.email} 
+              </span> 
+            </p> 
           </div> 
         </Jumbotron> 
         ); 
