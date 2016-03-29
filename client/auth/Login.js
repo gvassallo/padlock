@@ -57,7 +57,7 @@ class Login extends React.Component {
         return (
         <div className="login-form">
           <BaseForm> 
-            <div className='panel-heading panel-heading-dark'>
+            <div className='panel-heading'>
               <span style={{color: 'white', fontSize: '16px'}}>Login</span>
             </div>
             <div className='panel-body'>
@@ -85,12 +85,12 @@ class Login extends React.Component {
                 <hr/>
                 <section>
                   <Row>
-                    <Col sm={4} xs={4} smOffset={4} xsOffset={4}> 
+                    <Col sm={4}  smOffset={4} > 
                       <LinkContainer to='/register'>
                         <Button bsStyle='primary' block>Register</Button>
                       </LinkContainer>
                     </Col>
-                    <Col sm={4} xs={4}>
+                    <Col sm={4}>
                       {this.state.loading?(
                         <ButtonInput type="submit" value="Wait" disabled/>  
                       ):(

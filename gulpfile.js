@@ -79,8 +79,9 @@ gulp.task('styles', () => {
     .pipe(sass({
       errLogToConsole: true,
       includePaths: [
-        'node_modules/bootstrap-sass/assets/stylesheets', 
-        'node_modules/font-awesome/scss', 
+        // 'node_modules/bootstrap-sass/assets/stylesheets', 
+        'node_modules/bootstrap-sass/assets/stylesheets',
+        'node_modules/font-awesome', 
         'node_modules/spinkit/scss'
       ]
     }))

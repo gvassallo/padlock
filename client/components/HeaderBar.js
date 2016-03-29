@@ -36,7 +36,6 @@ class HeaderBar extends React.Component {
           </Navbar.Brand>
         </div> 
         </Navbar.Header>
-        <Navbar.Collapse> 
           <Nav pullRight>  
               <NavItem eventKey={1} onClick={this.open.bind(this)}> 
                   <span className="fa fa-plus"/>
@@ -45,7 +44,6 @@ class HeaderBar extends React.Component {
                   <span className="fa fa-sign-out log-out"/>
               </NavItem> 
           </Nav>
-        </Navbar.Collapse> 
       </Navbar>
     </div>
     ); 

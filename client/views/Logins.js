@@ -5,7 +5,6 @@ import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 import { Grid, Row, Col, ListGroup, ListGroupItem, Input, ButtonInput, Button} from 'react-bootstrap'  
 import  BaseForm  from '../auth/BaseForm'
-import ModalForm from '../components/ModalForm'
 import NewLoginCard from '../components/NewLoginCard'
 import LoginsList from '../components/LoginsList' 
 import Footer from '../components/Footer'
@@ -55,7 +54,13 @@ class Logins extends React.Component {
         <div className="modal-container">  
           <NewLoginCard open={this.props.modal_open} login={this.state.login}/>
           <LoginsList logins={this.props.logins}/>
-          <Footer/> 
+          <hr/>
+          <center> 
+          <p> 
+            ©2016 Gabriele Vassallo 
+          </p> 
+          </center>
+           
         </div> 
         ); 
     }

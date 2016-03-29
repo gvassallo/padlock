@@ -59,7 +59,7 @@ class Register extends React.Component {
         return (
         <div className="register-form">
           <BaseForm>  
-            <div className='panel-heading panel-heading-dark'>
+            <div className='panel-heading'>
               <span style={{color: 'white', fontSize: '16px'}}>Register</span>
             </div>
             <div className='panel-body'>
