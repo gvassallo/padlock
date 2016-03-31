@@ -2,7 +2,6 @@
 .DS_Store
 node_modules 
 client/bundle.js
-client/dist 
 *.swp
 coverage
 .vscode
