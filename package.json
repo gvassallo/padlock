@@ -71,7 +71,7 @@
     "eslint-plugin-node": "^1.0.0",
     "eslint-plugin-react": "^4.2.1",
     "fs": "0.0.2",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-babel": "^5.2.1",
     "gulp-concat": "^2.5.2",
     "gulp-exec": "^2.1.2",
