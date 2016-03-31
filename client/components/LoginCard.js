@@ -117,14 +117,13 @@ class LoginCard extends React.Component {
           container={this}
           bsSize="small"
           aria-labelledby="contained-modal-title">
-        <Modal.Header closeButton>
-          <h4 className="card-title">
-            <center>{this.state.login.service}</center>
-          </h4>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="card">
-            <div className="card-block">
+          <div className="panel">
+            <div className="panel-heading"> 
+              <h3 className="card-title">
+                <center>{this.state.login.service}</center>
+              </h3>
+            </div>
+            <div className="panel-body">
               <form onSubmit={this.saveChanges.bind(this)} action='' className="login-card-form"> 
                 <section>
                   <Row>
@@ -171,7 +170,7 @@ class LoginCard extends React.Component {
                   </Row> 
                 </div>
                 ):(
-                <div className="card-block">
+                <div className="">
                   <Button  className="" onClick={this.allowModification.bind(this)}>
                     {this.state.loading ? (                 
                     <div>Wait</div> ):(
@@ -182,7 +181,6 @@ class LoginCard extends React.Component {
               </form> 
             </div>
           </div>
-        </Modal.Body>
        </Modal>       
       </div> 
       );  
