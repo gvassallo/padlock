@@ -13,9 +13,8 @@ var https = require('https');
 // var session = require('express-session'); 
 
 
-//
 //For CLIENT development (Hot loading)  
-if( process.env.NODE_ENV ==! 'test' | process.env.NODE_ENV ==! 'production'){
+if(process.env.NODE_ENV === undefined ){
   var webpack = require('webpack'); 
   var config = require('./webpack.config.js'); 
 
