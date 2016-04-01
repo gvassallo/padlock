@@ -69,7 +69,7 @@
     "browserify": "^12.0.1",
     "chai": "^3.4.1",
     "css-loader": "^0.23.1",
-    "eslint": "^2.4.0",
+    "eslint": "^2.5.3",
     "eslint-plugin-node": "^1.0.0",
     "eslint-plugin-react": "^4.2.1",
     "fs": "0.0.2",
