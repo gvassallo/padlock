@@ -7,7 +7,7 @@ var util = require('gulp-util');
 var sass = require('gulp-sass'); 
 var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
-
+var xunit = require('xunit-file'); 
 
 const paths = {
   bundle: 'app.js',
@@ -56,18 +56,18 @@ gulp.task('test', () => {
         'tests/integration/*.test.js'
       ], { read: false })
         .pipe(mocha({
-          reporter: 'spec',
+          reporter: xunit 
         }))
         .on('error', (err) => {
           console.log(err.message);
           process.exit(1);
         })
         .pipe(istanbul.writeReports())
-        .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 }}))
-        .once('error', (err) => {
-          console.log(err.message);
-          process.exit(1);
-        })
+        // .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 }}))
+        // .once('error', (err) => {
+        //   console.log(err.message);
+        //   process.exit(1);
+        // })
         .once('end', () => {
           process.exit(0);
         });

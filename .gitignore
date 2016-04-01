@@ -6,5 +6,7 @@ client/bundle.js
 coverage
 .vscode
 server.*
+xunit.xml
+
 
 
