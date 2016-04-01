@@ -1,0 +1,8 @@
+#!/bin/sh
+ssh gvassallo@212.24.98.185 << EOF 
+    cd ~/padlock
+    git pull 
+    npm install
+    NODE_ENV='production' forever restartall
+exit 
+EOF 
