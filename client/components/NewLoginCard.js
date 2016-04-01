@@ -65,7 +65,7 @@ class NewLoginCard extends React.Component {
                     className='login-card-form'
                     autoComplete='off'
                   > 
-                  {/*  <section>
+                   <section>
                       <Row>
                         <Col xs={4} sm={4}>
                           <label className="text-muted">service</label> 
@@ -97,25 +97,7 @@ class NewLoginCard extends React.Component {
                             onChange={this.handleChange('password')}/>
                         </Col> 
                       </Row>
-                    </section>*/}
-                      <TextField
-                        style={{fontSize: "14px"}}
-                        floatingLabelText="Service"
-                        rows={1}
-                        onChange={this.handleChange('service')}
-                      />
-                      <TextField
-                        style={{fontSize: "14px"}}
-                        floatingLabelText="Username"
-                        rows={1}
-                        onChange={this.handleChange('username')}
-                      />
-                      <TextField
-                        style={{fontSize: "14px"}}
-                        floatingLabelText="Password"
-                        rows={1}
-                        onChange={this.handleChange('password')}
-                      />
+                    </section>
                   <hr/>
                   <div className="card-block">
                     <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
