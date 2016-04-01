@@ -57,6 +57,7 @@ class LoginCard extends React.Component {
       event.preventDefault();  
       const {dispatch} = this.props; 
       dispatch(LoginsActions.deleteLogin(this.props.login)); 
+      dispatch(LoginsActions.download()); 
       this.close(); 
     }
 
