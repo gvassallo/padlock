@@ -23,7 +23,7 @@ export function addNew(login){
 }
 export function deleteLogin(login){
     return dispatch => {
-        LoginsService.delete(login)
+        return LoginsService.delete(login)
           .then(data => {
             dispatch(download()); 
           })
