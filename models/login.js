@@ -22,7 +22,10 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     service: {
       type: DataTypes.STRING, 
-      allowNull: false 
+      allowNull: false, 
+      validate: {
+        len: [2, 30] 
+      }
     }
   }, {
     classMethods: {

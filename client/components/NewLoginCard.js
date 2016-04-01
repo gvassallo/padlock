@@ -14,23 +14,27 @@ class NewLoginCard extends React.Component {
         login: {
           service: '', 
           username: '', 
-          password: '', 
-          uuid: '' 
+          password: '' 
         }, 
       }; 
     }
-    componentDidMount(){
-      if(this.props.create) this.state.modify = true; 
-      this.state.login.uuid = this.props.login.uuid;  
-    }
 
     close(){
+      this.state = {
+        login: {
+          service: '', 
+          username: '', 
+          password: '' 
+        }, 
+      }; 
+      console.log(this.state); 
+      this.setState(this.state); 
       this.props.dispatch(OptionsActions.modalClose()); 
     }
 
     handleChange(field){
       return (event) => {
-        this.props.login[field] = event.target.value; 
+        this.state.login[field] = event.target.value; 
         this.setState(this.state); 
       }
     }
@@ -38,75 +42,76 @@ class NewLoginCard extends React.Component {
     addNewLogin(event){
       event.preventDefault();
       const {dispatch} = this.props; 
-      dispatch(LoginsActions.addNew(this.props.login));         
-      dispatch(OptionsActions.modalClose());
+      dispatch(LoginsActions.addNew(this.state.login))
+        .then(()=> this.close())
+        .catch(err => alert('Service cannot remain empty!')); 
     }
 
     render(){
       return(
       <div> 
-            <Modal 
-              show={this.props.open} 
-              onHide={this.close.bind(this)}
-              container={this}
-              bsSize="small"
-              aria-labelledby="contained-modal-title">
-            <Modal.Header closeButton>
-              <h4 className="card-title">
-                <center>Create new login</center>
-              </h4>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="card">
-                <div className="card-block">
-                  <form 
-                    onSubmit={this.addNewLogin.bind(this)} 
-                    action='' 
-                    className='login-card-form'
-                    autoComplete='off'
-                  > 
-                   <section>
-                      <Row>
-                        <Col xs={4} sm={4}>
-                          <label className="text-muted">service</label> 
-                        </Col>
-                        <Col xs={8} sm={8}>
-                          <Input type="text" 
-                            onChange={this.handleChange('service')}/>
-                        </Col>
-                      </Row>
-                      </section>
-                    <section>
-                      <Row>
-                        <Col xs={4} sm={4}>
-                          <label className="text-muted">username</label> 
-                        </Col>
-                        <Col xs={8} sm={8}>
-                          <Input type="text" 
-                            onChange={this.handleChange('username')}/>
-                        </Col> 
-                      </Row>
-                    </section>
-                    <section>
-                      <Row>
-                        <Col xs={4} sm={4}>
-                          <label className="text-muted">password</label> 
-                        </Col>
-                        <Col xs={8} sm={8}>
-                          <Input type="text"
-                            onChange={this.handleChange('password')}/>
-                        </Col> 
-                      </Row>
-                    </section>
-                  <hr/>
-                  <div className="card-block">
-                    <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
-                  </div>
-                </form> 
+        <Modal 
+          show={this.props.open} 
+          onHide={this.close.bind(this)}
+          container={this}
+          bsSize="small"
+          aria-labelledby="contained-modal-title">
+        <Modal.Header closeButton>
+          <h4 className="card-title">
+            <center>Create new login</center>
+          </h4>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="card">
+            <div className="card-block">
+              <form 
+                onSubmit={this.addNewLogin.bind(this)} 
+                action='' 
+                className='login-card-form'
+                autoComplete='off'
+              > 
+               <section>
+                  <Row>
+                    <Col xs={4} sm={4}>
+                      <label className="text-muted">service</label> 
+                    </Col>
+                    <Col xs={8} sm={8}>
+                      <Input type="text" 
+                        onChange={this.handleChange('service')}/>
+                    </Col>
+                  </Row>
+                  </section>
+                <section>
+                  <Row>
+                    <Col xs={4} sm={4}>
+                      <label className="text-muted">username</label> 
+                    </Col>
+                    <Col xs={8} sm={8}>
+                      <Input type="text" 
+                        onChange={this.handleChange('username')}/>
+                    </Col> 
+                  </Row>
+                </section>
+                <section>
+                  <Row>
+                    <Col xs={4} sm={4}>
+                      <label className="text-muted">password</label> 
+                    </Col>
+                    <Col xs={8} sm={8}>
+                      <Input type="text"
+                        onChange={this.handleChange('password')}/>
+                    </Col> 
+                  </Row>
+                </section>
+              <hr/>
+              <div className="card-block">
+                <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
               </div>
-              </div>
-            </Modal.Body>
-           </Modal>       
+            </form> 
+          </div>
+          </div>
+        </Modal.Body>
+       </Modal>       
       </div> 
       );  
     }

@@ -34,10 +34,10 @@ class LoginCard extends React.Component {
     }
 
     close(){
-      this.props.dispatch(OptionsActions.loginCardClose()); 
       this.state.modify = false; 
       this.state.reveal = false; 
       this.setState(this.state); 
+      this.props.dispatch(OptionsActions.loginCardClose()); 
     }
 
     allowModification(event){
@@ -57,8 +57,8 @@ class LoginCard extends React.Component {
       event.preventDefault();  
       const {dispatch} = this.props; 
       dispatch(LoginsActions.deleteLogin(this.props.login)); 
-      dispatch(LoginsActions.download()); 
-      this.close(); 
+      this.setState(this.state);
+      // this.close(); 
     }
 
     saveChanges(event){
@@ -67,6 +67,7 @@ class LoginCard extends React.Component {
       dispatch(LoginsActions.updateLogin(this.props.login)); 
       this.state.modify = false ; 
       this.setState(this.state); 
+      // this.close(); 
     }
 
     revealPassword(event){

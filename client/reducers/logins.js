@@ -23,6 +23,16 @@ export default function logins(state = initialstate, action ) {
     case types.RESET_LOGINS_LIST: 
         return Object.assign({}, state, {list:[]}); 
 
+    case types.DELETE_LOGIN: 
+        var index = state.list.findIndex(elem => action.login.uuid === elem.uuid) ; 
+        state.list.splice(index, 1); 
+        return state;  
+
+    case types.UPDATE_LOGIN: 
+        var index = state.list.findIndex(elem => action.login.uuid === elem.uuid) ; 
+        state.list[index] = action.login; 
+        return state;  
+
     default :
         return state; 
     }
