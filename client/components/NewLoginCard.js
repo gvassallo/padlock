@@ -4,8 +4,7 @@ import {Modal, Button, ButtonInput, Row, Col, Grid, Input, Form,DropdownButton, 
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 import LoginsService from '../services/LoginsService'
-import TextField from 'material-ui/lib/text-field'; 
-
+import TextField from 'material-ui/lib/text-field'
 
 class NewLoginCard extends React.Component {
     constructor(){
@@ -16,7 +15,8 @@ class NewLoginCard extends React.Component {
           username: '', 
           password: '' 
         }, 
-        loading: false
+        loading: false, 
+        snackbarOpen: false
       }; 
     }
 
@@ -46,9 +46,17 @@ class NewLoginCard extends React.Component {
       this.setState(this.state); 
       const {dispatch} = this.props; 
       dispatch(LoginsActions.addNew(this.state.login))
-        .then(()=> this.close())
-        .catch(err => alert('Service cannot remain empty!')); 
+        .then(()=> {
+          dispatch(OptionsActions.snackBarOpen('New login created!')); 
+          this.close(); 
+        })
+        .catch(err => {
+          console.log(err); 
+          alert('Service cannot remain empty!'); 
+          this.close(); 
+        }); 
     }
+
 
     render(){
       return(
@@ -109,7 +117,7 @@ class NewLoginCard extends React.Component {
               <hr/>
               <div className="card-block">
                 {this.state.loading? (
-                <Button bsStyle="secondary" disabled>Wait</Button> 
+                <Button bsStyle="default" disabled>Wait</Button> 
                 ):(
                 <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
                 )} 

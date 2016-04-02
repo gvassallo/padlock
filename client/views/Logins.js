@@ -7,8 +7,7 @@ import { Grid, Row, Col, ListGroup, ListGroupItem, Input, ButtonInput, Button} f
 import  BaseForm  from '../auth/BaseForm'
 import NewLoginCard from '../components/NewLoginCard'
 import LoginsList from '../components/LoginsList' 
-import Footer from '../components/Footer'
-import {ProgressBar} from 'react-bootstrap' 
+import Snackbar from '../components/SnackBar' 
 
 const mapStateToProps = (state) => ({
     logins : state.logins.list, 
@@ -23,7 +22,8 @@ class Logins extends React.Component {
               username : '', 
               password : '', 
               service:   '' 
-          }
+          }, 
+          snackbarOpen: false 
         }
     }
 
@@ -48,7 +48,6 @@ class Logins extends React.Component {
         }; 
     }
 
-
     render() {
         return (
         <div className="modal-container">  
@@ -60,7 +59,7 @@ class Logins extends React.Component {
             ©2016 Gabriele Vassallo 
           </p> 
           </center>
-           
+          <Snackbar/> 
         </div> 
         ); 
     }

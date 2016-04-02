@@ -85,17 +85,17 @@ class Login extends React.Component {
                 <hr/>
                 <section>
                   <Row>
-                    <Col sm={4}  smOffset={4} > 
-                      <LinkContainer to='/register'>
-                        <Button bsStyle='primary' block>Register</Button>
-                      </LinkContainer>
-                    </Col>
-                    <Col sm={4}>
+                    <Col sm={4} smOffset={4}>
                       {this.state.loading?(
                         <ButtonInput type="submit" value="Wait " disabled/>  
                       ):(
                         <ButtonInput type="submit" value="Login" block/>  
                       )}
+                    </Col>
+                    <Col sm={4}> 
+                      <LinkContainer to='/register'>
+                        <Button bsStyle='primary' block>Register</Button>
+                      </LinkContainer>
                     </Col>
                   </Row>
                 </section>

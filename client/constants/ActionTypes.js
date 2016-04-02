@@ -15,3 +15,5 @@ export const LOGIN_CARD_CLOSE = 'LOGIN_CARD_CLOSE';
 export const VIEW_CHANGED = 'VIEW_CHANGED'; 
 export const LOADING = 'LOADING'; 
 export const LOADING_END = 'LOADING_END'; 
+export const SNACK_BAR_OPEN = 'SNACK_BAR_OPEN'; 
+export const SNACK_BAR_CLOSE = 'SNACK_BAR_CLOSE'; 

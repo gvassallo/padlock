@@ -4,7 +4,9 @@ const initialstate = {
     modal_open: false, 
     login_card_open: false, 
     current_view: 'Logins', 
-    loading: false 
+    loading: false, 
+    snackbarOpen: true, 
+    message: ''
 }
 
 export default function modal(state=initialstate, action){
@@ -37,6 +39,15 @@ export default function modal(state=initialstate, action){
     case types.LOADING_END: 
       return Object.assign({}, state, {
           loading: false 
+      }); 
+    case types.SNACK_BAR_OPEN: 
+      return Object.assign({}, state, {
+        snackbarOpen: true, 
+        message: action.message
+      }); 
+    case types.SNACK_BAR_CLOSE: 
+      return Object.assign({}, state, {
+        snackbarOpen: false 
       }); 
     default: 
       return state; 

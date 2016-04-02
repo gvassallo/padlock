@@ -43,7 +43,18 @@ export function loadingEnd(){
   }; 
 }
 
+export function snackBarOpen(message){
+  return {
+    type: types.SNACK_BAR_OPEN, 
+    message: message 
+  }; 
+}
 
+export function snackBarClose(){
+  return {
+    type: types.SNACK_BAR_CLOSE
+  }; 
+}
 
 
 
