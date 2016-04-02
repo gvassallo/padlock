@@ -27,7 +27,6 @@ class NewLoginCard extends React.Component {
           password: '' 
         }, 
       }; 
-      console.log(this.state); 
       this.setState(this.state); 
       this.props.dispatch(OptionsActions.modalClose()); 
     }

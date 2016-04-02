@@ -56,18 +56,21 @@ class LoginCard extends React.Component {
     deleteLogin(event){
       event.preventDefault();  
       const {dispatch} = this.props; 
-      dispatch(LoginsActions.deleteLogin(this.props.login)); 
-      this.setState(this.state);
-      // this.close(); 
+      dispatch(LoginsActions.deleteLogin(this.props.login))
+      .then(()=> {
+        dispatch(OptionsActions.loginCardClose());  
+      }); 
     }
 
     saveChanges(event){
       event.preventDefault();
       const {dispatch} = this.props; 
-      dispatch(LoginsActions.updateLogin(this.props.login)); 
-      this.state.modify = false ; 
-      this.setState(this.state); 
-      // this.close(); 
+      dispatch(LoginsActions.updateLogin(this.props.login))
+        .then(()=> {
+          this.state.modify = false ; 
+          this.setState(this.state); 
+          dispatch(OptionsActions.loginCardClose()); 
+        });
     }
 
     revealPassword(event){
