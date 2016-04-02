@@ -4,7 +4,13 @@ import Snackbar from 'material-ui/lib/snackbar'
 import * as OptionsActions from '../actions/OptionsActions'
 
 class MySnackBar extends React.Component {
-
+  constructor(){
+    super(); 
+    this.style = {
+      backgroundColor: '#44A1A0', 
+      textAlign: 'center'
+    }; 
+  }
   handleRequestClose(){
     this.props.dispatch(OptionsActions.snackBarClose()); 
   }; 
@@ -17,6 +23,7 @@ class MySnackBar extends React.Component {
           message={this.props.message} 
           autoHideDuration={3000}
           onRequestClose={this.handleRequestClose.bind(this)}
+          bodyStyle={this.style} 
         />
       </div>
     );

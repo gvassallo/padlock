@@ -61,6 +61,7 @@ class LoginCard extends React.Component {
         this.state.modify = false; 
         this.state.reveal = false; 
         this.setState(this.state); 
+        dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' deleted!')); 
         dispatch(OptionsActions.loginCardClose());  
       }); 
     }
@@ -72,6 +73,7 @@ class LoginCard extends React.Component {
         .then(()=> {
           this.state.modify = false ; 
           this.setState(this.state); 
+          dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' updated!')); 
           dispatch(OptionsActions.loginCardClose()); 
         });
     }

@@ -37,18 +37,28 @@ class Login extends React.Component {
          }); 
     }
 
+    handleAlertDismiss(){
+      this.setState({
+        alertShow: false
+      }); 
+    }
+
     showAlert(){
+      var style = {
+        marginRight: '10px', 
+        marginLeft: '10px',
+      }; 
       if(this.state.alertShow){
         return (
           <Row> 
-            <Col sm={6} smOffset={3} md={4} mdOffset={4}>
-              <Alert bsStyle="danger"> 
+            <Alert bsStyle="danger" 
+              style={style} 
+              onDismiss={this.handleAlertDismiss.bind(this)} > 
                 <center>
                   <h4>Holy shit!</h4>
-                  <p>Username/Email or Password are wrong, idiot!</p>
+                  <p>Change a few things up and try submitting again</p>
                 </center>
               </Alert> 
-            </Col>
           </Row>);
       }
     }
@@ -62,6 +72,9 @@ class Login extends React.Component {
             </div>
             <div className='panel-body'>
               <form onSubmit={this.login.bind(this)} action='' autoComplete='off'> 
+                <section> 
+                  {this.showAlert()} 
+                </section> 
                 <section>
                   <Row>
                     <Col sm={4} md={4}>
@@ -102,7 +115,6 @@ class Login extends React.Component {
               </form> 
             </div>
           </BaseForm> 
-          {this.showAlert()} 
         </div>
         ); 
     }

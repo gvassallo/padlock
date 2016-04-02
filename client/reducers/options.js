@@ -6,7 +6,7 @@ const initialstate = {
     current_view: 'Logins', 
     loading: false, 
     snackbarOpen: true, 
-    message: ''
+    message: 'Welcome back!'
 }
 
 export default function modal(state=initialstate, action){
