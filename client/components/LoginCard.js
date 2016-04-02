@@ -58,6 +58,9 @@ class LoginCard extends React.Component {
       const {dispatch} = this.props; 
       dispatch(LoginsActions.deleteLogin(this.props.login))
       .then(()=> {
+        this.state.modify = false; 
+        this.state.reveal = false; 
+        this.setState(this.state); 
         dispatch(OptionsActions.loginCardClose());  
       }); 
     }

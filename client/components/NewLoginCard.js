@@ -16,6 +16,7 @@ class NewLoginCard extends React.Component {
           username: '', 
           password: '' 
         }, 
+        loading: false
       }; 
     }
 
@@ -27,6 +28,7 @@ class NewLoginCard extends React.Component {
           password: '' 
         }, 
       }; 
+      this.state.loading = false; 
       this.setState(this.state); 
       this.props.dispatch(OptionsActions.modalClose()); 
     }
@@ -40,6 +42,8 @@ class NewLoginCard extends React.Component {
 
     addNewLogin(event){
       event.preventDefault();
+      this.state.loading = true; 
+      this.setState(this.state); 
       const {dispatch} = this.props; 
       dispatch(LoginsActions.addNew(this.state.login))
         .then(()=> this.close())
@@ -104,7 +108,11 @@ class NewLoginCard extends React.Component {
                 </section>
               <hr/>
               <div className="card-block">
+                {this.state.loading? (
+                <Button bsStyle="secondary" disabled>Wait</Button> 
+                ):(
                 <ButtonInput bsStyle="primary" type="submit" value="Save"/> 
+                )} 
               </div>
             </form> 
           </div>
