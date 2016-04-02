@@ -92,7 +92,7 @@ class Login extends React.Component {
                     </Col>
                     <Col sm={4}>
                       {this.state.loading?(
-                        <ButtonInput type="submit" value="Wait" disabled/>  
+                        <ButtonInput type="submit" value="Wait " disabled/>  
                       ):(
                         <ButtonInput type="submit" value="Login" block/>  
                       )}
