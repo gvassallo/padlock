@@ -46,19 +46,6 @@ var client = require('./routes/client');
 app.use('/', client); 
 app.use('/api', api); 
 
-// var options = {
-//   key  : fs.readFileSync('server.key'),
-//   cert : fs.readFileSync('server.crt')  
-// }; 
-//
-// https.createServer(options, app).listen(port, (err) =>{
-//   if (err) {
-//     console.log(err);
-//     return;
-//   }
-//   console.log('Listening at http://localhost:3000');
-// });
-
 app.listen(port, (err) => {
   if (err) {
     console.log(err);
