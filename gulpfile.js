@@ -1,4 +1,3 @@
-'use strict'; 
 var gulp = require('gulp'); 
 var nodemon = require('nodemon'); 
 var browserify = require('browserify');
@@ -13,10 +12,8 @@ const paths = {
   bundle: 'app.js',
   srcJsx: 'client/index.js',
   srcCss: 'app/**/*.css',
-  srcImg: 'app/images/**',
   dist: 'dist',
   distJs: 'client/dist/js',
-  distImg: 'dist/images',
   distCss: 'client/dist/css'
 };
 
@@ -63,11 +60,11 @@ gulp.task('test', () => {
           process.exit(1);
         })
         .pipe(istanbul.writeReports())
-        // .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 }}))
-        // .once('error', (err) => {
-        //   console.log(err.message);
-        //   process.exit(1);
-        // })
+        .pipe(istanbul.enforceThresholds({ thresholds: { global: 50 }}))
+        .once('error', (err) => {
+          console.log(err.message);
+          process.exit(1);
+        })
         .once('end', () => {
           process.exit(0);
         });
@@ -79,7 +76,6 @@ gulp.task('styles', () => {
     .pipe(sass({
       errLogToConsole: true,
       includePaths: [
-        // 'node_modules/bootstrap-sass/assets/stylesheets', 
         'node_modules/bootstrap-sass/assets/stylesheets',
         'node_modules/font-awesome', 
         'node_modules/spinkit/scss'
@@ -91,11 +87,5 @@ gulp.task('styles', () => {
     })
     .pipe(gulp.dest(paths.distCss));
 });
-
-// gulp.task('icons', () => {
-//   return gulp.src('node_modules/font-awesome/fonts#<{(|')
-//     .pipe(gulp.dest(path.join(config.destDir, '/fonts')));
-// });
-
 
 gulp.task('default', ['server']); 

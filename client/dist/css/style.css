@@ -7954,8 +7954,11 @@ button.close {
     opacity: 0; } }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #DADFE1; }
+
+input:disabled {
+  color: inherit; }
 
 /* Portrait and Landscape */
 .login-form {

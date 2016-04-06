@@ -1,6 +1,7 @@
 import React from 'react'; 
 import {ListGroup, ListGroupItem} from 'react-bootstrap' 
-import LoginCard from './LoginCard'
+// import LoginCard from './LoginCard'
+import LoginCard from './test'
 import {connect} from 'react-redux'
 import * as OptionsActions from '../actions/OptionsActions'
 

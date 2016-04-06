@@ -6,8 +6,6 @@ var passport = require('passport');
 
 var bodyParser = require('body-parser');
 var compression = require('compression');
-var fs = require('fs'); 
-var https = require('https'); 
 
 // var cookieParser = require('cookie-parser');
 // var session = require('express-session'); 
