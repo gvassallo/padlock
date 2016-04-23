@@ -23,6 +23,7 @@ module.exports = (passport) => {
 
     require('./logins.js')(passport, router); 
     require('./users.js')(passport, router);     
+    require('./groups.js')(passport, router);     
     
     // fallback
   router.use((err, req, res, next) => {

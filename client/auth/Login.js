@@ -46,7 +46,7 @@ class Login extends React.Component {
     showAlert(){
       var style = {
         marginRight: '10px', 
-        marginLeft: '10px',
+        marginLeft: '10px'
       }; 
       if(this.state.alertShow){
         return (

@@ -53,7 +53,8 @@ gulp.task('test', () => {
         'tests/integration/*.test.js'
       ], { read: false })
         .pipe(mocha({
-          reporter: xunit 
+          // reporter: xunit 
+          reporter: 'spec' 
         }))
         .on('error', (err) => {
           console.log(err.message);

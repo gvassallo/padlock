@@ -29,6 +29,15 @@ describe('models/index', () => {
     done();
   });
 
+  it('return Group model', done => {
+    expect(this.models.Group).to.be.ok;
+    done();
+  });
+
+  it('return UserGroup model', done => {
+    expect(this.models.UserGroup).to.be.ok;
+    done();
+  });
 
   it('creates user model', done => {
     this.models.User
@@ -57,4 +66,19 @@ describe('models/index', () => {
       .then(() => done())
       .error(error => done(error));
   });
+
+  it('creates group model', done => {
+    this.models.Group
+      .sync({ force: true })
+      .then(() => done())
+      .error(error => done(error));
+  });
+
+  it('creates usergroup model', done => {
+    this.models.UserGroup
+      .sync({ force: true })
+      .then(() => done())
+      .error(error => done(error));
+  });
+
 });

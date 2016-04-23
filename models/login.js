@@ -30,6 +30,11 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
+        Login.belongsToMany(models.Group, {
+          through: models.LoginGroup,
+          foreignKey: 'userId',
+          as: 'groups'
+        });
         // associations can be defined here
         Login.belongsTo(models.User, {foreignKey: 'userId'}); 
       }, 

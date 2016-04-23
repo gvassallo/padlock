@@ -1,6 +1,7 @@
-import React from 'react' 
-import {connect} from 'react-redux' 
-import {Modal} from 'react-bootstrap' 
+import React from 'react'; 
+import {connect} from 'react-redux' ; 
+import {Modal} from 'react-bootstrap'; 
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
 import CardMedia from 'material-ui/lib/card/card-media';
@@ -110,7 +111,7 @@ class LoginCard extends React.Component {
           aria-labelledby="contained-modal-title">
          <Card>
             <CardMedia>
-              <img src="http://im.ziffdavisinternational.com/t/ign_it/screenshot/default/netflix-logo_wkms.1920.jpg"
+              <img src="/img/image.png"
                 height='150px'/>
             </CardMedia>
             <CardTitle title={this.state.login.service} style={{left: '10px'}}/> 

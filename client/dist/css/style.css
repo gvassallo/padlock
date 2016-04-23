@@ -7957,9 +7957,6 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: #DADFE1; }
 
-input:disabled {
-  color: inherit; }
-
 /* Portrait and Landscape */
 .login-form {
   margin-top: 30px; }
@@ -8054,3 +8051,24 @@ input:disabled {
   margin-right: auto;
   margin-left: auto;
   width: 200px; }
+
+.example-enter {
+  opacity: 0.01; }
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in; }
+
+.example-leave {
+  opacity: 1; }
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in; }
+
+.example-appear {
+  opacity: 0.01; }
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in; }

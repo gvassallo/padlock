@@ -21,6 +21,9 @@ describe('rotues/api', ()=> {
       username: 'gabri',
       password: 'pwd' 
     }; 
+    this.group = {
+      name: 'Legion of Whom'
+    }
     done();
   });
 
@@ -232,6 +235,57 @@ describe('rotues/api', ()=> {
         });
     });
 
+  }); 
+
+  describe('/api/groups', () => {
+    // TODO
+    it('GET /api/groups is empty', done => {
+      request(app)
+        .get('/api/groups')
+        .set('Content-Type', 'application/json')
+        .set('x-access-token', this.userData.token)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          console.log(res.body); 
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.length(0);
+          done(err);
+        });
+    });
+
+    it('POST /api/groups', done => {
+      var group = this.group;
+      request(app)
+        .post('/api/groups')
+        .set('Content-Type', 'application/json')
+        .set('x-access-token', this.userData.token)
+        .send(group)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          console.log(res.body); 
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.include.keys('uuid', 'name');
+          group.uuid = res.body.uuid;
+          done(err);
+        });
+    });
+
+    it('POST /api/groups fake group', done => {
+      request(app)
+        .post('/api/groups')
+        .set('Content-Type', 'application/json')
+        .set('x-access-token', this.userData.token)
+        .send({})
+        .expect(500)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.include.keys('message');
+          done(err);
+        });
+    });
   }); 
 
   describe('/api/users', () => {
