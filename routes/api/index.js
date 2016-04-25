@@ -17,7 +17,6 @@ module.exports = (passport) => {
     
     router.route('/')
       .get((req, res) => {
-        console.log(req.headers);
         res.json({ statusCode: 200, message: 'Valid token. Enjoy the router.' });
       });
 

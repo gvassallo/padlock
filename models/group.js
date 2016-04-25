@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
           as: 'logins',
           foreignKey: 'groupId'
         });
+        Group.hasMany(models.Login, {foreignKey: 'groupId'}); 
       }
     }
   });

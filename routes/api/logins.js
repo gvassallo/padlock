@@ -3,7 +3,8 @@
 var db = require('../../models'); 
 var Login = db.Login ; 
 var User = db.User; 
-var Key = db.Key; 
+var PublicKey = db.PublicKey; 
+var PrivateKey = db.PrivateKey; 
 
 module.exports = (passport, router) => {
     
@@ -28,14 +29,12 @@ module.exports = (passport, router) => {
         }) 
         .post((req, res, next) => {
             var login = req.body.login; 
-            var master = req.body.master; 
-            
             db.sequelize.transaction({autocommit: false})
             .then(t => {
-              return Key
+              return PublicKey
                 .findOne({where: {userId: req.decoded.uuid}, transaction: t})
                 .then(key => {
-                  login.password = Login.encryptPwd(login.password, key.value, master); 
+                  login.password = Login.encryptPwd(login.password, key.value); 
                   return login.password; 
                 })
                 .then((pwd)=> {
@@ -67,7 +66,7 @@ module.exports = (passport, router) => {
       .post((req, res, next) => {
         var key_encrypted; 
         var master = req.body.master;         
-        return Key
+        return PrivateKey
           .findOne({where: {userId: req.decoded.uuid}})
           .then(key =>{
             key_encrypted = key;  
@@ -90,16 +89,16 @@ module.exports = (passport, router) => {
       })
       .put((req, res, next)=>{
         var master = req.body.master; 
-        var key_encrypted; 
+        var publicKey; 
         var req_login = req.body.login; 
-        return Key
+        return PublicKey
           .findOne({where: {userId: req.decoded.uuid}})
           .then(key => {
-            key_encrypted = key;  
+            publicKey = key;  
             return Login.findById(req.params.id);
           })
           .then(login => {
-            req_login.password = Login.encryptPwd(req_login.password, key_encrypted.value, master);              
+            req_login.password = Login.encryptPwd(req_login.password, publicKey.value);              
             return login
             .updateAttributes({ 
               username: req_login.username, 

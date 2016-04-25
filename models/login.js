@@ -4,6 +4,7 @@ var NodeRSA = require('node-rsa');
 var node_cryptojs = require('node-cryptojs-aes'); 
 var CryptoJS = node_cryptojs.CryptoJS; 
 var JsonFormatter = node_cryptojs.JsonFormatter; 
+var randtoken = require('rand-token'); 
 
 module.exports = function(sequelize, DataTypes) {
   var Login = sequelize.define('Login', {
@@ -26,39 +27,35 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         len: [2, 30] 
       }
-    }
+    }, 
+    groupToken:{
+      type: DataTypes.STRING,
+      allowNull: true 
+    } 
   }, {
     classMethods: {
       associate: function(models) {
-        Login.belongsToMany(models.Group, {
-          through: models.LoginGroup,
-          foreignKey: 'userId',
-          as: 'groups'
-        });
         // associations can be defined here
         Login.belongsTo(models.User, {foreignKey: 'userId'}); 
+        Login.belongsTo(models.Group, {foreignKey: 'groupId'}); 
       }, 
-      encryptPwd: function(password, key_encrypted_str, master) { 
-        // encode the master password in base64
-        var master_64 = new Buffer(master); 
-        master_64 = master_64.toString('base64');    
-        // decrypt the encrypted key using the master password 
-        var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, master_64, {format: JsonFormatter});  
-        // convert to Utf8 format unmasked data
-        var pkcs1Key_str = CryptoJS.enc.Utf8.stringify(pkcs1Key);
+      encryptPwd: function(password, publicKey) { 
         var key = new NodeRSA();
-        key.importKey(pkcs1Key_str, 'pkcs1'); 
+        key.importKey(publicKey, 'pkcs1-public-pem'); 
         // return the encrypted password 
         return key.encrypt(password, 'base64'); 
+      }, 
+      genToken: function(){
+        return randtoken.generate(16);  
       }
     }, 
     instanceMethods: {
-      decryptPwd: function(key_encrypted_str, master) {
+      decryptPwd: function(privateKey_encrypted_str, master) {
         // encode the master password in base64
         var master_64 = new Buffer(master); 
         master_64 = master_64.toString('base64');    
         // decrypt the encrypted key using the master password 
-        var pkcs1Key = CryptoJS.AES.decrypt(key_encrypted_str, master_64, {format: JsonFormatter});  
+        var pkcs1Key = CryptoJS.AES.decrypt(privateKey_encrypted_str, master_64, {format: JsonFormatter});  
         // convert to Utf8 format unmasked data
         var pkcs1Key_str = CryptoJS.enc.Utf8.stringify(pkcs1Key);
         var key = new NodeRSA();

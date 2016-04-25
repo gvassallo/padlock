@@ -19,8 +19,13 @@ describe('models/index', () => {
     done();
   });
 
-  it('return key model', done => {
-    expect(this.models.Key).to.be.ok;
+  it('return private key model', done => {
+    expect(this.models.PrivateKey).to.be.ok;
+    done();
+  });
+
+  it('return public key model', done => {
+    expect(this.models.PublicKey).to.be.ok;
     done();
   });
 
@@ -60,8 +65,15 @@ describe('models/index', () => {
       .error(error => done(error));
   });
 
-  it('creates key model', done => {
-    this.models.Key
+  it('creates private key model', done => {
+    this.models.PrivateKey
+      .sync({ force: true })
+      .then(() => done())
+      .error(error => done(error));
+  });
+
+  it('creates public key model', done => {
+    this.models.PublicKey
       .sync({ force: true })
       .then(() => done())
       .error(error => done(error));

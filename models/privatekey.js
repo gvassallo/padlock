@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var privatekey = sequelize.define('PrivateKey', {
+  var PrivateKey = sequelize.define('PrivateKey', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,

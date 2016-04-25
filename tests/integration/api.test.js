@@ -45,7 +45,6 @@ describe('rotues/api', ()=> {
           done(err);
         });
     });
-
     it('POST /api/auth with username', done => {
       var user = this.userData;
       request(app)
@@ -125,11 +124,12 @@ describe('rotues/api', ()=> {
 
     it('POST /api/logins with new Login', done => { 
       var user = this.userData; 
+      var password = this.login.password; 
       request(app) 
         .post('/api/logins') 
         .set('Content-Type', 'application/json')
         .set('x-access-token', user.token)
-        .send({login: this.login, master: user.password})
+        .send({login: this.login})
         .expect(200)
         .expect('Content-Type', /json/) 
         .end((err, res) => {
@@ -137,11 +137,12 @@ describe('rotues/api', ()=> {
           expect(res.body).to.be.an('object');
           expect(res.body).to.include.keys('service', 'username', 'password');
           this.login = res.body; 
+          this.login.password = password; 
           done(err);
         });
     }); 
 
-    it('POST /api/logins with wrong username or password', done => { 
+    it('POST /api/logins with service null', done => { 
       request(app) 
         .post('/api/logins') 
         .set('Content-Type', 'application/json')
@@ -156,7 +157,7 @@ describe('rotues/api', ()=> {
         });
     }); 
 
-    it('POST /api/logins/:id', done => {
+    it('POST /api/logins/:id to GET the login encrypted', done => {
       request(app)
         .post('/api/logins/' + this.login.uuid) 
         .set('Content-Type', 'application/json')
@@ -168,6 +169,7 @@ describe('rotues/api', ()=> {
           if(err) {done(err);} 
           expect(res.body).to.be.an('object'); 
           expect(res.body).to.include.keys('service', 'username', 'password');
+          expect(res.body.password).to.eql(this.login.password); 
           done(err); 
         }); 
     }); 
@@ -209,7 +211,7 @@ describe('rotues/api', ()=> {
         .put('/api/logins/' + this.login.uuid)
         .set('Content-Type', 'application/json')
         .set('x-access-token', this.userData.token)
-        .send({login: this.login, master: this.userData.password})
+        .send({login: this.login})
         .expect(200)
         .expect('Content-Type', /json/) 
         .end((err, res) => {
@@ -247,7 +249,6 @@ describe('rotues/api', ()=> {
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
-          console.log(res.body); 
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.length(0);
           done(err);
@@ -264,7 +265,6 @@ describe('rotues/api', ()=> {
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
-          console.log(res.body); 
           expect(res.body).to.be.an('object');
           expect(res.body).to.include.keys('uuid', 'name');
           group.uuid = res.body.uuid;
@@ -286,7 +286,417 @@ describe('rotues/api', ()=> {
           done(err);
         });
     });
-  }); 
+
+    describe('/api/groups/:uuid', () => {
+
+      it('GET /api/groups/:uuid', done => {
+        var group = this.group;
+        request(app)
+          .get('/api/groups/' + group.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('uuid', 'name', 'members');
+            expect(res.body.uuid).to.be.equal(group.uuid);
+            for (var user of res.body.members) {
+              expect(user).to.include.keys('username', 'email', 'uuid');
+              expect(user).to.not.include.keys('UserGroup', 'password');
+            }
+          })
+          .end(done);
+      });
+
+      it('GET /api/groups/:uuid with wrong uuid', done => {
+        request(app).get('/api/groups/' + '6d953b00-4f2c-11e5-ac6d-df4c81dc95fa')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(404)
+          .expect('Content-Type', /json/)
+          .expect(res => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('message');
+          })
+          .end(done);
+      });
+
+      it('GET /api/groups/:uuid/members', done => {
+        request(app)
+          .get('/api/groups/' + this.group.uuid + '/members')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('array');
+            expect(res.body).to.have.length(0);
+            done(err);
+          });
+      });
+
+      it('PUT /api/groups/:uuid/members', done => {
+        request(app)
+          .put('/api/groups/' + this.group.uuid + '/members')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send(this.userData)
+          .expect(200)
+          .end((err, res) => {
+            done(err);
+          });
+      });
+
+      it('PUT /api/groups/:uuid/members', done => {
+        request(app)
+          .put('/api/groups/' + this.group.uuid + '/members')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send(this.userData)
+          .expect(200)
+          .end((err, res) => {
+            done(err);
+          });
+      });
+
+      it('PUT /api/groups/:uuid/members with wrong email', done => {
+        request(app)
+          .put('/api/groups/' + this.group.uuid + '/members')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({ email: 'no@email.com' })
+          .expect(404)
+          .end((err, res) => {
+            expect(res.body).to.include.keys('statusCode', 'message');
+            expect(res.body.message).to.match(/[Uu]ser[\S\s]+not found/g);
+            done(err);
+          });
+      });
+
+      it('PUT /api/groups/:uuid/members with wrong group uuid', done => {
+        request(app)
+          .put('/api/groups/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa/members')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send(this.userData)
+          .expect(404)
+          .end((err, res) => {
+            expect(res.body).to.include.keys('statusCode', 'message');
+            expect(res.body.message).to.match(/[Gg]roup[\S\s]+not found/);
+            done(err);
+          });
+      });
+
+      it('GET /api/groups/:uuid/members', done => {
+        request(app)
+          .get('/api/groups/' + this.group.uuid + '/members')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('array');
+            expect(res.body).to.have.length(1);
+            for (var user of res.body) {
+              expect(user).to.include.keys('username', 'email', 'uuid');
+              expect(user).to.not.contain.any.keys('UserGroup', 'password');
+            }
+            done(err);
+          });
+      });
+
+      it('GET /api/groups/:uuid', done => {
+        var group = this.group;
+        request(app)
+          .get('/api/groups/' + group.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('uuid', 'name', 'members');
+            expect(res.body.uuid).to.be.equal(group.uuid);
+            expect(res.body.members).to.have.length.at.least(1);
+            for (var user of res.body.members) {
+              expect(user).to.include.keys('username', 'email', 'uuid');
+              expect(user).to.not.contain.any.keys('UserGroup', 'password');
+            }
+            done(err);
+          });
+      });
+    });
+
+    describe('/api/groups/:uuid/logins', () => {
+       
+      it('POST /api/groups/:uuid/logins', done => {
+        var newlogin = {
+          service: 'new service', 
+          username: 'user', 
+          password: 'pass' 
+        }; 
+        request(app)
+          .post('/api/groups/'+ this.group.uuid + '/logins')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({login: newlogin}) 
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            // TODO change 
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('service', 'username', 'password');
+            this.login = res.body; 
+            this.login.password = newlogin.password; 
+            console.log(this.login); 
+            done(err);
+          });
+      }); 
+
+      it('GET /api/groups/:uuid/logins', done =>  {
+        request(app)
+          .get('/api/groups/'+this.group.uuid+'/logins')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(200) 
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('array');
+            expect(res.body).to.have.length.at.least(1);
+            for (var login of res.body) {
+              expect(login).to.include.keys('username', 'password', 'service', 'uuid');
+            }
+            done(err);
+          }); 
+      }); 
+
+      it('POST /api/groups/:uuid/logins with wrong group id', done => {
+        var newlogin = {
+          service: 'new service', 
+          username: 'user', 
+          password: 'pass' 
+        }; 
+        request(app)
+          .post('/api/groups/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa/logins')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({login: newlogin}) 
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('POST /api/groups/:uuid/logins with wrong login', done => {
+        var fakelogin = {
+           password: 'aaa'
+        }; 
+        request(app)
+          .post('/api/groups/'+ this.group.uuid + '/logins')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({login: fakelogin}) 
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('GET /api/groups/:uuid/logins with wrong group id', done =>  {
+        request(app)
+          .get('/api/groups/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa/logins')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('POST /api/groups/:uuid/logins/:loginId', done => {
+        request(app)
+          .post('/api/groups/'+ this.group.uuid + '/logins/'+this.login.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({master: this.userData.password})
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object'); 
+            expect(res.body).to.include.keys('service', 'username', 'password');
+            expect(res.body.password).to.eql(this.login.password); 
+            done(err); 
+          });
+      }); 
+
+      it('POST /api/groups/:uuid/logins/:loginId with wrong group id', done => {
+        request(app)
+          .post('/api/groups/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa/logins/'+this.login.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({master: this.userData.password})
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('POST /api/groups/:uuid/logins/:loginId with wrong login id', done => {
+        request(app)
+          .post('/api/groups/'+this.group.uuid+'/logins/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({master: this.userData.password})
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('POST /api/groups/:uuid/logins/:loginId with wrong master pass', done => {
+        request(app)
+          .post('/api/groups/'+ this.group.uuid + '/logins/' + this.login.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({master: 'wrong master'})
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('PUT /api/groups/:uuid/logins/:loginId', done => {
+        this.login.username = 'Jessicaaaaaa'; 
+        this.login.password = 'ur still a lil bitch'; 
+        request(app)
+          .put('/api/groups/'+ this.group.uuid + '/logins/'+this.login.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({master: this.userData.password, login: this.login})
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object'); 
+            expect(res.body).to.include.keys('service', 'username', 'password');
+            expect(res.body.username).to.be.eql(this.login.username); 
+            done(err); 
+          });
+      }); 
+
+      it('PUT /api/groups/:uuid/logins/:loginId with wrong group id', done => {
+        this.login.username = 'Jessicaaaaaa'; 
+        this.login.password = 'ur still a lil bitch'; 
+        request(app)
+          .put('/api/groups/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa/logins/'+this.login.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({master: this.userData.password, login: this.login})
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('PUT /api/groups/:uuid/logins/:loginId with wrong login id', done => {
+        this.login.username = 'Jessicaaaaaa'; 
+        this.login.password = 'ur still a lil bitch'; 
+        request(app)
+          .put('/api/groups/'+ this.group.uuid + '/logins/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({login: this.login})
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('PUT /api/groups/:uuid/logins/:loginId with wrong login', done => {
+        this.login.username = 'Jessicaaaaaa'; 
+        this.login.password = 'ur still a lil bitch'; 
+        request(app)
+          .put('/api/groups/'+ this.group.uuid + '/logins/'+this.login.uuid) 
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send({})
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      }); 
+
+      it('DELETE /api/groups/:uuid/logins/:loginId', done => {
+        request(app)
+          .del('/api/groups/'+ this.group.uuid + '/logins/' + this.login.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.be.empty;
+            done(err);
+          });
+      });
+
+      it('DELETE /api/groups/:uuid/logins/:loginId with wrong group id', done => {
+        request(app)
+          .del('/api/groups/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa/logins/'+this.login.uuid)
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      });
+      
+      it('DELETE /api/groups/:uuid/logins/:loginId with wrong login id', done => {
+        request(app)
+          .del('/api/groups/'+ this.group.uuid + '/logins/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .expect(500)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.include.keys('statusCode', 'message');
+            done(err);
+          });
+      });
+
+    }); 
+  });
 
   describe('/api/users', () => {
     it('GET /api/users/me', done => {
@@ -353,5 +763,7 @@ describe('rotues/api', ()=> {
         });
     });
   });
+
+
 });     
 
