@@ -18,6 +18,12 @@ module.exports = (passport, router) => {
               return user.getLogins({ transaction: t });
             })
             .then(logins => {
+              logins = logins.filter((login)=> {
+                if (login.groupId === null){
+                  return true;               
+                }else 
+                  return false; 
+              }); 
               t.commit();
               return res.json(logins);
             })

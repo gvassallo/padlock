@@ -11,6 +11,7 @@ import SideBar from './components/SideBar'
 import { connect } from 'react-redux' 
 import Logins from './views/Logins'
 import Profile from './views/Profile' 
+import Groups from './views/Groups' 
 
 class AppRouter extends React.Component{
 
@@ -43,6 +44,7 @@ class AppRouter extends React.Component{
             <Route path='/' component={App} onEnter={this.requireAuth.bind(this)}> 
               <IndexRoute component={Logins}/> 
               <Route path='/profile' component={Profile} /> 
+              <Route path='/groups' component={Groups} /> 
             </Route> 
             <Route path='login' component={Login} onEnter={this.alreadyLogged}/> 
             <Route path='register' component={Register} onEnter={this.alreadyLogged}/> 

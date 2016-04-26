@@ -23,6 +23,13 @@ class SideBar extends React.Component{
                 </a> 
               </LinkContainer> 
             </li>
+            <li>
+              <LinkContainer to="/groups">
+                <a href="" title="Groups"> 
+                  <span className="fa fa-users"></span>
+                </a> 
+              </LinkContainer> 
+            </li>
             <li> 
               <LinkContainer to="/profile">
                 <a href="" title="Profile">

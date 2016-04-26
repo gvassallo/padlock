@@ -10,15 +10,20 @@ router.route('/')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/index.html"));
         }); 
-router.route('/login')
-        .get((req, res) => {
-          res.sendFile(path.join(__dirname, "../../client/index.html"));
-        }); 
 router.route('/register')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/index.html"));
         }); 
+
+router.route('/login')
+        .get((req, res) => {
+        res.sendFile(path.join(__dirname, "../../client/index.html"));
+        }); 
 router.route('/profile')
+        .get((req, res) => {
+        res.sendFile(path.join(__dirname, "../../client/index.html"));
+        }); 
+router.route('/groups')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/index.html"));
         }); 
@@ -37,4 +42,8 @@ router.route('/img/*')
 router.use('/fonts', 
           express.static(path.join(__dirname, "../../node_modules/font-awesome/fonts"))); 
 
+// router.route('/')
+//         .get((req, res) => {
+//         res.sendFile(path.join(__dirname, "../../client/index.html"));
+//         }); 
 module.exports = router; 

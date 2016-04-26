@@ -28,9 +28,16 @@ module.exports = (passport, router) => {
         Group
           .create(group, {transaction: t}) 
           .then(group => {
-            t.commit(); 
-            res.json(group); 
+            this.group = group; 
+            return User.findById(req.decoded.uuid, {transaction: t})
           }) 
+          .then(user => {
+            return this.group.addMember(user, {transaction: t}); 
+          })
+          .then(() => {
+            t.commit(); 
+            return res.json(this.group); 
+          })
           .catch(err => {
             t.rollback(); 
             next(err);  
@@ -78,9 +85,14 @@ module.exports = (passport, router) => {
             }
           ]}, {transaction: t})
           .then(group => {
-              t.commit(); 
-              res.json(group.members);
-          }); 
+            t.commit(); 
+            res.json(group.members);
+          }) 
+          .catch(err => {
+            t.rollback(); 
+            next({message: err.message, statusCode: 500}); 
+          })
+
       }); 
     })
     .put((req, res, next) => {
@@ -93,7 +105,7 @@ module.exports = (passport, router) => {
               throw Error('User not found. Wrong email or username.');
             } else {
               this.user = user;
-              return Group.findOne({ where: { uuid: req.params.uuid } });
+              return Group.findOne({ where: { uuid: req.params.uuid } }, {transaction: t});
             }
           })
           .then(group => {
@@ -101,11 +113,18 @@ module.exports = (passport, router) => {
               throw Error('Group not found. Wrong id.');
             } else {
               this.group = group;
-              return group.addMember(this.user);
+              return group.addMember(this.user, {transaction: t});
             }
           })
           .then(() => {
             t.commit(); 
+            // var newMember = {
+            //    email : this.user.email, 
+            //    fullName : this.user.fullName, 
+            //    email: this.user.email, 
+            //    uuid: this.user.uuid 
+            // }; 
+            // this.group.newMember = newMember; 
             res.json(this.group); 
           }) 
           .catch(err => {
@@ -197,7 +216,6 @@ module.exports = (passport, router) => {
           }); 
         }); 
       }); 
-      
 
     router.route('/groups/:uuid/logins/:loginId')
     .post((req, res, next) => {

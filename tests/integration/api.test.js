@@ -331,7 +331,7 @@ describe('rotues/api', ()=> {
           .expect('Content-Type', /json/)
           .end((err, res) => {
             expect(res.body).to.be.an('array');
-            expect(res.body).to.have.length(0);
+            expect(res.body).to.have.length(1);
             done(err);
           });
       });
@@ -341,38 +341,13 @@ describe('rotues/api', ()=> {
           .put('/api/groups/' + this.group.uuid + '/members')
           .set('Content-Type', 'application/json')
           .set('x-access-token', this.userData.token)
-          .send(this.userData)
+          .send(this.userData)  
           .expect(200)
           .end((err, res) => {
             done(err);
           });
       });
 
-      it('PUT /api/groups/:uuid/members', done => {
-        request(app)
-          .put('/api/groups/' + this.group.uuid + '/members')
-          .set('Content-Type', 'application/json')
-          .set('x-access-token', this.userData.token)
-          .send(this.userData)
-          .expect(200)
-          .end((err, res) => {
-            done(err);
-          });
-      });
-
-      it('PUT /api/groups/:uuid/members with wrong email', done => {
-        request(app)
-          .put('/api/groups/' + this.group.uuid + '/members')
-          .set('Content-Type', 'application/json')
-          .set('x-access-token', this.userData.token)
-          .send({ email: 'no@email.com' })
-          .expect(404)
-          .end((err, res) => {
-            expect(res.body).to.include.keys('statusCode', 'message');
-            expect(res.body.message).to.match(/[Uu]ser[\S\s]+not found/g);
-            done(err);
-          });
-      });
 
       it('PUT /api/groups/:uuid/members with wrong group uuid', done => {
         request(app)
@@ -384,6 +359,24 @@ describe('rotues/api', ()=> {
           .end((err, res) => {
             expect(res.body).to.include.keys('statusCode', 'message');
             expect(res.body.message).to.match(/[Gg]roup[\S\s]+not found/);
+            done(err);
+          });
+      });
+
+      it('PUT /api/groups/:uuid/members with wrong user', done => {
+        var fakeuser = {
+           email: 'wrong@wrong.com'
+        }; 
+        request(app)
+          .put('/api/groups/6d953b00-4f2c-11e5-ac6d-df4c81dc95fa/members')
+          .set('Content-Type', 'application/json')
+          .set('x-access-token', this.userData.token)
+          .send(this.fakeuser)
+          .expect(404)
+          .end((err, res) => {
+            expect(res.body).to.be.an('Object'); 
+            expect(res.body).to.include.keys('statusCode', 'message');
+            expect(res.body.message).to.match(/[Uu]ser not found/);
             done(err);
           });
       });
@@ -449,7 +442,6 @@ describe('rotues/api', ()=> {
             expect(res.body).to.include.keys('service', 'username', 'password');
             this.login = res.body; 
             this.login.password = newlogin.password; 
-            console.log(this.login); 
             done(err);
           });
       }); 
