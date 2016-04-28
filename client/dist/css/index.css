@@ -5832,7 +5832,7 @@ button.close {
 
 .fa {
   display: inline-block;
-  font: normal normal normal 14px / 1 FontAwesome;
+  font: normal normal normal 14px/1 FontAwesome;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -7960,7 +7960,6 @@ body {
 li {
   list-style-type: none; }
 
-/* Portrait and Landscape */
 .login-form {
   margin-top: 30px; }
 
@@ -8054,9 +8053,3 @@ li {
   margin-right: auto;
   margin-left: auto;
   width: 200px; }
-
-.create-menu-element:hover {
-  background-color: #F64747; }
-
-.create-menu-element span:hover {
-  color: white; }

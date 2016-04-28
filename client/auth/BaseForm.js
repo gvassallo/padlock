@@ -9,7 +9,7 @@ export default class BaseForm extends React.Component {
       <div> 
       <Grid>
         <Row>
-          <Col sm={6} smOffset={3} md={4} mdOffset={4} >
+          <Col sm={6} smOffset={3} md={6} mdOffset={3} >
             <img src="img/padlock.png" className="padlock"/> 
             <br/> 
             <br/> 

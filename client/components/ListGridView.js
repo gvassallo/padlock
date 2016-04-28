@@ -6,7 +6,11 @@ class ListGridView extends React.Component{
   constructor(){
     super(); 
   }
-  
+
+  handleClick(listValue){
+    console.log(listValue);  
+  }
+
   render(){
     return (
       <div> 
@@ -14,6 +18,7 @@ class ListGridView extends React.Component{
         return <ListGridItem 
                   name={listValue.name} 
                   key={listValue.uuid} 
+                  onClick={this.handleClick.bind(this,listValue)}
                 />; 
           })}
      </div> 

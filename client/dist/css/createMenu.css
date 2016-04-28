@@ -1,0 +1,28 @@
+.create-menu {
+  width: 300px;
+  color: grey;
+  padding-top: 10px; }
+  .create-menu hr {
+    margin-top: 10px;
+    margin-bottom: 10px; }
+
+.create-menu-item {
+  padding: 6px 10px 10px; }
+  .create-menu-item:hover {
+    background-color: #F64747; }
+    .create-menu-item:hover span {
+      color: white; }
+  .create-menu-item a {
+    color: black;
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none; }
+  .create-menu-item span {
+    display: block;
+    font-size: 13px;
+    color: grey;
+    font-weight: 400; }
+  .create-menu-item li {
+    text-align: left; }

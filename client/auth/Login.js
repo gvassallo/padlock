@@ -3,6 +3,7 @@ import React from 'react';
 import { Input, ButtonInput, Button, Alert, Row, Col } from 'react-bootstrap'; 
 import {LinkContainer} from 'react-router-bootstrap'; 
 import { connect } from 'react-redux'; 
+import {Link} from 'react-router'; 
 import * as AuthAction  from '../actions/AuthActions'; 
 import BaseForm from './BaseForm'
 
@@ -68,29 +69,31 @@ class Login extends React.Component {
         <div className="login-form">
           <BaseForm> 
             <div className='panel-heading'>
-              <span style={{color: 'white', fontSize: '16px'}}>Login</span>
+              <span style={{color: 'white', fontSize: '16px'}}>Login to Your Account</span>
             </div>
             <div className='panel-body'>
+              <small>Welcome to your Padlock account. Please login or <Link to="/register">register a new account.</Link></small>
+              <br/><br/><br/> 
               <form onSubmit={this.login.bind(this)} action='' autoComplete='off'> 
                 <section> 
                   {this.showAlert()} 
                 </section> 
                 <section>
                   <Row>
-                    <Col sm={4} md={4}>
-                      <label>Username</label>
+                    <Col sm={5} md={5}>
+                      <div style={{textAlign: 'right'}}><label>Username</label></div>
                     </Col>
-                    <Col sm={8} md={8}>
+                    <Col sm={6} md={6}>
                       <Input type="text" onChange={this.handleChange('username')} placeholder="Enter name" />
                     </Col>
                   </Row>
                 </section> 
                 <section>
                   <Row>
-                    <Col sm={4} md={4}>
-                      <label>Password</label>
+                    <Col sm={5} md={5}>
+                      <div style={{textAlign: 'right'}}><label>Password</label></div>
                     </Col>
-                    <Col sm={8} md={8}>
+                    <Col sm={6} md={6}>
                       <Input type="password" onChange={this.handleChange('password')} placeholder="Enter password" />
                     </Col>
                   </Row>
@@ -98,18 +101,15 @@ class Login extends React.Component {
                 <hr/>
                 <section>
                   <Row>
+                    <center> 
                     <Col sm={4} smOffset={4}>
                       {this.state.loading?(
-                        <ButtonInput type="submit" value="Wait " disabled/>  
+                        <ButtonInput type="submit" value="Wait " bsStyle="danger" disabled/>  
                       ):(
-                        <ButtonInput type="submit" value="Login" block/>  
+                        <ButtonInput type="submit" value="Login" bsStyle="primary" block/>  
                       )}
                     </Col>
-                    <Col sm={4}> 
-                      <LinkContainer to='/register'>
-                        <Button bsStyle='primary' block>Register</Button>
-                      </LinkContainer>
-                    </Col>
+                    </center> 
                   </Row>
                 </section>
               </form> 

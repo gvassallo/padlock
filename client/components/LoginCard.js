@@ -94,7 +94,7 @@ class LoginCard extends React.Component {
           <Input type="password"
             value="password"
             onChange={this.handleChange('password')} 
-            buttonAfter={this.getDrowpDown()}
+            buttonAfter={this.getDropDown()}
             readOnly/>
         ); 
       }else if(!this.state.modify && this.state.reveal){ 
@@ -112,7 +112,7 @@ class LoginCard extends React.Component {
       }
     }
 
-    getDrowpDown(){
+    getDropDown(){
       return(
       <DropdownButton pullRight title="" id="input-dropdown-addon">
         <MenuItem key="1" onClick={this.revealPassword.bind(this)}>Reveal Password</MenuItem>

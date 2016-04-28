@@ -1,15 +1,11 @@
-@import 'settings'; 
-@import 'bootstrap'; 
-@import 'font-awesome'; 
-@import 'spinners/11-folding-cube'; 
-
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #DADFE1; 
 }
-
+li {
+  list-style-type: none 
+}
 //LOGIN FORM 
-/* Portrait and Landscape */
 .login-form {
   margin-top: 30px; 
 }
@@ -17,17 +13,6 @@ body {
   margin-top: 30px; 
 }
 
-// @media only screen 
-//   and (min-device-width: 300px) 
-//   and (max-device-width: 667px) 
-//   and (-webkit-min-device-pixel-ratio: 2) { 
-//   .login-form {
-//     margin-top: 0; 
-//   }
-//   .register-form {
-//     margin-top: 0; 
-//   }
-// }
 // HEADERBAR
 .header span{
     font-size: 18px;
@@ -131,3 +116,4 @@ body {
     margin-left: auto; 
     width: 200px; 
 }
+

@@ -1,13 +1,13 @@
 import React from 'react'; 
 
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Dropdown, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap'; 
 import { connect } from 'react-redux'; 
 import {browserHistory} from 'react-router' 
+import CreateMenu from './CreateMenu' 
 import * as AuthActions from '../actions/AuthActions' 
 import * as LoginsActions from '../actions/LoginsActions'
-import * as OptionsActions from '../actions/OptionsActions'
 
 class HeaderBar extends React.Component {
 
@@ -18,11 +18,11 @@ class HeaderBar extends React.Component {
         dispatch(LoginsActions.resetLoginsList()); 
     }
 
-    open(event){
-        event.preventDefault();
-        const { dispatch } = this.props; 
-        dispatch(OptionsActions.modalOpen()); 
-        browserHistory.push('/');  
+
+    getPlus(){
+      return (
+        <span className="fa fa-plus"/> 
+      ); 
     }
 
     render() {
@@ -37,12 +37,12 @@ class HeaderBar extends React.Component {
         </div> 
         </Navbar.Header>
           <Nav pullRight>  
-              <NavItem eventKey={1} onClick={this.open.bind(this)}> 
-                  <span className="fa fa-plus"/>
-              </NavItem> 
-              <NavItem eventKey={2} onClick={this.logout.bind(this)}> 
-                  <span className="fa fa-sign-out log-out"/>
-              </NavItem> 
+            <NavDropdown eventKey={1} id='create-dropdown' title={this.getPlus()} noCaret>
+              <CreateMenu/>               
+            </NavDropdown>
+            <NavItem eventKey={2} onClick={this.logout.bind(this)}> 
+                <span className="fa fa-sign-out log-out"/>
+            </NavItem> 
           </Nav>
       </Navbar>
     </div>
