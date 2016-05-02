@@ -8,8 +8,8 @@ module.exports = (router, passport) => {
       (req, res) => {
         res.json({
           user: req.user.user,
-          token: req.user.token 
-        }); 
+          token: req.user.token
+        });
       }
     );
 

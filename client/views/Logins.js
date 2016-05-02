@@ -4,10 +4,8 @@ import {connect} from 'react-redux'
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 import { Grid, Row, Col, ListGroup, ListGroupItem, Input, ButtonInput, Button} from 'react-bootstrap'  
-import  BaseForm  from '../auth/BaseForm'
-import NewLoginCard from '../components/NewLoginCard'
+import BaseForm  from '../auth/BaseForm'
 import LoginsList from '../components/LoginsList' 
-import Snackbar from '../components/SnackBar' 
 
 const mapStateToProps = (state) => ({
     logins : state.logins.list, 
@@ -22,8 +20,7 @@ class Logins extends React.Component {
               username : '', 
               password : '', 
               service:   '' 
-          }, 
-          snackbarOpen: false 
+          } 
         }
     }
 
@@ -51,7 +48,6 @@ class Logins extends React.Component {
     render() {
         return (
         <div className="modal-container">  
-          <NewLoginCard open={this.props.modal_open} login={this.state.login}/>
           <LoginsList logins={this.props.logins}/>
           <hr/>
           <center> 
@@ -59,7 +55,6 @@ class Logins extends React.Component {
             ©2016 Gabriele Vassallo 
           </p> 
           </center>
-          <Snackbar/> 
         </div> 
         ); 
     }

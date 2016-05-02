@@ -73,7 +73,7 @@ gulp.task('test', () => {
 });
 
 gulp.task('styles', () => {
-    return gulp.src('client/scss/**/*.scss')
+    return gulp.src('client/scss/index.scss')
     .pipe(sass({
       errLogToConsole: true,
       includePaths: [

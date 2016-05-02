@@ -1,9 +1,10 @@
 import React from 'react'; 
 import {ListGroup, ListGroupItem} from 'react-bootstrap' 
 // import LoginCard from './LoginCard'
-import LoginCard from './test'
+import LoginCard from './LoginCard'
 import {connect} from 'react-redux'
 import * as OptionsActions from '../actions/OptionsActions'
+import {If, Then} from 'react-if' 
 
 const mapStateToProps = (state) => ({
     login_card_open : state.options.login_card_open  
@@ -22,11 +23,9 @@ class LoginsList extends React.Component{
       }; 
     }
 
-    handleClick(listValue){
-      this.state.login.service = listValue.service; 
-      this.state.login.username= listValue.username; 
-      this.state.login.password= listValue.password; 
-      this.state.login.uuid = listValue.uuid; 
+    handleClick(login){
+      this.state.login = login; 
+      this.setState(this.state); 
       this.props.dispatch(OptionsActions.loginCardOpen()); 
     }
 
@@ -44,7 +43,11 @@ class LoginsList extends React.Component{
             </ListGroupItem>;
           })}
         </ListGroup> 
-        <LoginCard open={this.props.login_card_open} login={this.state.login}/>
+        <If condition={this.props.login_card_open}> 
+          <Then> 
+            <LoginCard open={this.props.login_card_open} login={this.state.login}/>
+          </Then> 
+        </If> 
       </div> 
       ); 
     }

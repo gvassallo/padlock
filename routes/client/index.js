@@ -31,9 +31,9 @@ router.route('/js/app.js')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/dist/js/bundle.js"));             
         }); 
-router.route('/css/style.css')
+router.route('/css/index.css')
         .get((req, res) => {
-        res.sendFile(path.join(__dirname, "../../client/dist/css/style.css"));             
+        res.sendFile(path.join(__dirname, "../../client/dist/css/index.css"));             
         }); 
 router.route('/img/*')
         .get((req, res) => {

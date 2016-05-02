@@ -13,10 +13,10 @@ ReactDOM.render(
     <Provider store={store}> 
       <div> 
         <AppRouter/>
-{/*<DevTools/>  */} 
+        {/*<DevTools/> */} 
       </div> 
     </Provider>, 
     mountNode
 ); 
-
 // vim: set ft=javascript.jsx: 
+// <DevTools/> 

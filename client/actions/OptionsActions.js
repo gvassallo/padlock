@@ -24,6 +24,18 @@ export function loginCardClose(){
   }; 
 }
 
+export function dropdownOpen(){
+  return {
+      type: types.DROPDOWN_OPEN
+  }; 
+}
+
+export function dropdownClose(){
+  return {
+      type: types.DROPDOWN_CLOSE
+  }; 
+}
+
 export function viewChanged(view){
   return {
       type: types.VIEW_CHANGED, 

@@ -1,0 +1,28 @@
+.login-card{
+  position: absolute; 
+  display: block; 
+  top: 52px; 
+  right: 0; 
+  z-index: 13; 
+  box-shadow: 0 10px 10px 0 #ddd;
+  height: 100%; 
+}
+
+.login-card-header{
+  a{
+    text-decoration: none; 
+    cursor: pointer; 
+    padding: 30px 20px; 
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    font-size: 17px;
+    color: black; 
+  }
+}
+
+.login-card-body{
+  width: 320px;
+  height: 100%;    
+}
