@@ -6,6 +6,7 @@ import * as OptionsActions from '../actions/OptionsActions'
 import { Grid, Row, Col, ListGroup, ListGroupItem, Input, ButtonInput, Button} from 'react-bootstrap'  
 import BaseForm  from '../auth/BaseForm'
 import LoginsList from '../components/LoginsList' 
+require('../scss/components/LoginCard.scss');
 
 const mapStateToProps = (state) => ({
     logins : state.logins.list, 
@@ -47,7 +48,7 @@ class Logins extends React.Component {
 
     render() {
         return (
-        <div className="modal-container">  
+        <div className="flex-container">  
           <LoginsList logins={this.props.logins}/>
           <hr/>
           <center> 

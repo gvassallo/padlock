@@ -133,15 +133,14 @@ class LoginCard extends React.Component {
 
     render(){
       return(
-        <div className="login-card"> 
-          <div className="panel">
-            <div className="panel-heading login-card-header"> 
+        <div className="login-card flex-item"> 
+          <div>
+            <div className="login-card-header"> 
               <h3>
                 {this.state.login.service}
               </h3>
-              <a className='fa fa-close' onClick={this.close.bind(this)}/> 
             </div>
-            <div className="panel-body login-card-body">
+            <div className="login-card-body">
               <form onSubmit={this.saveChanges.bind(this)} action='' className="login-card-form"> 
                 <Row>
                   <Col xs={4} sm={4}>

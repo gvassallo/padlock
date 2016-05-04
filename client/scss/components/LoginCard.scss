@@ -1,11 +1,7 @@
 .login-card{
-  position: absolute; 
-  display: block; 
-  top: 52px; 
-  right: 0; 
-  z-index: 13; 
-  box-shadow: 0 10px 10px 0 #ddd;
-  height: 100%; 
+  padding: 55px 10px 0 20px ; 
+  background: white; 
+  height: 100%;
 }
 
 .login-card-header{
@@ -24,5 +20,4 @@
 
 .login-card-body{
   width: 320px;
-  height: 100%;    
 }

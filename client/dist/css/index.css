@@ -7953,6 +7953,9 @@ button.close {
     transform: perspective(140px) rotateY(180deg);
     opacity: 0; } }
 
+html {
+  height: 100%; }
+
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #DADFE1;
