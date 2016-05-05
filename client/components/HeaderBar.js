@@ -10,6 +10,7 @@ import * as AuthActions from '../actions/AuthActions'
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 
+require('../scss/components/HeaderBar.scss'); 
 class HeaderBar extends React.Component {
 
     logout(event) {
@@ -40,12 +41,8 @@ class HeaderBar extends React.Component {
       return (
         <div className="header">
           <Navbar fixedTop fluid>
-            <Navbar.Header>
-              <div className="title"> 
-              <Navbar.Brand>
-                {this.props.current_view}  
-              </Navbar.Brand>
-            </div> 
+            <Navbar.Header style={{textAlign:'center'}}>
+              <span className='header-logo'/> 
             </Navbar.Header>
               <Nav pullRight>  
                 <NavDropdown 

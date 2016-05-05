@@ -8033,7 +8033,8 @@ li {
   padding-top: 0px; }
 
 .content-wrapper {
-  width: 100%; }
+  width: 100%;
+  padding-top: 100px; }
 
 .vertical-center {
   text-align: center;
@@ -8057,3 +8058,7 @@ li {
   margin-right: auto;
   margin-left: auto;
   width: 200px; }
+
+.login-list {
+  padding-left: 50px;
+  padding-right: 50px; }

@@ -19,8 +19,8 @@ li {
 
 // HEADERBAR
 .header span{
-    font-size: 18px;
-    color: white; 
+  font-size: 18px;
+  color: white; 
 }
 .navbar{
   z-index: 8; 
@@ -29,10 +29,10 @@ li {
   padding-left: 60px; 
 }
 .navbar-default {
-    background-color: #F64747; 
-    .navbar-brand {
-      color: white;
-    }
+  background-color: #F64747; 
+  .navbar-brand {
+    color: white;
+  }
 }
 // SIDEBAR
 .page-with-sidebar{
@@ -59,7 +59,7 @@ li {
   color: #dadfe1; 
 }
 .nav > li > a:hover, .nav > li > a:focus{
-    background-color: transparent; 
+  background-color: transparent; 
 }
 .nav-sidebar{
   margin-top: 35px; 
@@ -91,7 +91,8 @@ li {
 }
 
 .content-wrapper {
-    width: 100%;    
+  width: 100%;    
+  padding-top: 100px; 
 }
 .vertical-center{
   text-align: center; 
@@ -115,8 +116,12 @@ li {
 }
 //PADLOCK TEXT 
 .padlock{
-    display: block; 
-    margin-right: auto; 
-    margin-left: auto; 
-    width: 200px; 
+  display: block; 
+  margin-right: auto; 
+  margin-left: auto; 
+  width: 200px; 
+}
+.login-list{
+  padding-left: 50px; 
+  padding-right: 50px; 
 }

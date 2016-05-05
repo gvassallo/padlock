@@ -8,21 +8,21 @@ var cors = require('cors');
 
 module.exports = (passport) => {
 
-    var router = express.Router(); 
+  var router = express.Router(); 
 
-    require('./auth.js')(router, passport); 
+  require('./auth.js')(router, passport); 
 
-    router.use(ensureAuthenticated); 
-    router.use(cors()); 
-    
-    router.route('/')
-      .get((req, res) => {
-        res.json({ statusCode: 200, message: 'Valid token. Enjoy the router.' });
-      });
+  router.use(ensureAuthenticated); 
+  router.use(cors()); 
+  
+  router.route('/')
+    .get((req, res) => {
+      res.json({ statusCode: 200, message: 'Valid token. Enjoy the router.' });
+    });
 
-    require('./logins.js')(passport, router); 
-    require('./users.js')(passport, router);     
-    require('./groups.js')(passport, router);     
+  require('./logins.js')(passport, router); 
+  require('./users.js')(passport, router);     
+  require('./groups.js')(passport, router);     
     
     // fallback
   router.use((err, req, res, next) => {
@@ -34,7 +34,7 @@ module.exports = (passport) => {
       });
   });
 
-    return router; 
+  return router; 
 }; 
 
 // Middleware functions

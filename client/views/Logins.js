@@ -48,7 +48,8 @@ class Logins extends React.Component {
 
     render() {
         return (
-        <div className="flex-container">  
+        <div>  
+          <h4 style={{paddingLeft: '50px'}}>My Logins</h4> 
           <LoginsList logins={this.props.logins}/>
           <hr/>
           <center> 
