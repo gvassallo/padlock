@@ -1,9 +1,9 @@
 'use strict'; 
 import React from 'react'
 import {connect} from 'react-redux'
-// import * as ProfileActions from '../actions/ProfileActions' 
 import * as OptionsActions from '../actions/OptionsActions' 
 import * as GroupsActions from '../actions/GroupsActions' 
+// import * as ProfileActions from '../actions/ProfileActions' 
 import ListGridView from '../components/ListGridView' 
 import ListGridItem from '../components/ListGridItem' 
 

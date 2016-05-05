@@ -3,8 +3,7 @@ import {connect} from 'react-redux'
 import {Input, Button} from 'react-bootstrap' 
 import * as GroupActions from '../actions/GroupsActions' 
 import * as OptionsActions from '../actions/OptionsActions'
-
-require('../scss/components/CreateMenu.scss'); 
+import '../scss/components/CreateMenu.scss' 
 
 class NewGroup extends React.Component{
   constructor(){

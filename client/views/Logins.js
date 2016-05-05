@@ -1,12 +1,11 @@
 import React from 'react'
-// import List from './List' 
 import {connect} from 'react-redux' 
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 import { Grid, Row, Col, ListGroup, ListGroupItem, Input, ButtonInput, Button} from 'react-bootstrap'  
 import BaseForm  from '../auth/BaseForm'
 import LoginsList from '../components/LoginsList' 
-require('../scss/components/LoginCard.scss');
+import '../scss/components/LoginCard.scss'
 
 const mapStateToProps = (state) => ({
     logins : state.logins.list, 
@@ -14,52 +13,52 @@ const mapStateToProps = (state) => ({
 });
 
 class Logins extends React.Component {
-    constructor(){
-        super(); 
-        this.state = {
-          login : {
-              username : '', 
-              password : '', 
-              service:   '' 
-          } 
-        }
+  constructor(){
+    super(); 
+    this.state = {
+      login : {
+        username : '', 
+        password : '', 
+        service:   '' 
+      } 
     }
+  }
 
-    componentDidMount(){
-      this.download();  
-      this.props.dispatch(OptionsActions.viewChanged('Logins')); 
-    }
+  componentDidMount(){
+    this.download();  
+    this.props.dispatch(OptionsActions.viewChanged('Logins')); 
+  }
 
-    download(){
-      const {dispatch} = this.props;  
-      dispatch(OptionsActions.loading()); 
-      dispatch(LoginsActions.download())
-      .then(()=> {
-        dispatch(OptionsActions.loadingEnd()); 
-      });  
-    }
+  download(){
+    const {dispatch} = this.props;  
+    dispatch(OptionsActions.loading()); 
+    dispatch(LoginsActions.download())
+    .then(()=> {
+      dispatch(OptionsActions.loadingEnd()); 
+    });  
+  }
 
-    handleChange(field){ 
-        return (event) => {
-            this.state.login[field] = event.target.value; 
-            this.setState(this.state); 
-        }; 
-    }
+  handleChange(field){ 
+    return (event) => {
+      this.state.login[field] = event.target.value; 
+      this.setState(this.state); 
+    }; 
+  }
 
-    render() {
-        return (
-        <div>  
-          <h4 style={{paddingLeft: '50px'}}>My Logins</h4> 
-          <LoginsList logins={this.props.logins}/>
-          <hr/>
-          <center> 
+  render() {
+    return (
+      <div>  
+        <h4 style={{paddingLeft: '50px'}}>My Logins</h4> 
+        <LoginsList logins={this.props.logins}/>
+        <hr/>
+        <center> 
           <p> 
             ©2016 Gabriele Vassallo 
           </p> 
-          </center>
-        </div> 
-        ); 
-    }
+        </center>
+      </div> 
+    ); 
+  }
 }
 
 export default connect(mapStateToProps)(Logins); 

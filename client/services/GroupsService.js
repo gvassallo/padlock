@@ -23,7 +23,7 @@ class GroupsService {
       return Promise.reject(error);
     });
   }
-  
+
   downloadGroups(){
     return axios
       .get('/api/groups')
@@ -92,7 +92,7 @@ class GroupsService {
         throw new Error(res.message); 
       }); 
   }
-  
+
   getPassword(group, login){
     var master = sessionStorage.getItem('master'); 
     return axios
@@ -104,7 +104,7 @@ class GroupsService {
         throw new Error(res.message); 
       }); 
   }
-  
+
   updateLoginToGroup(group, login){
     return axios
       .put('/api/groups/'+group.uuid+'/logins/'+login.uuid, {login: login})

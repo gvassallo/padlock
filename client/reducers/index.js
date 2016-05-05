@@ -6,11 +6,11 @@ import options from './options'
 import groups from './groups' 
 
 const rootReducer = combineReducers({
-    auth , 
-    logins, 
-    profile, 
-    groups, 
-    options
+  auth , 
+  logins, 
+  profile, 
+  groups, 
+  options
 }); 
 
 export default rootReducer; 

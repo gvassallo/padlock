@@ -34,7 +34,7 @@ export function updateLogin(login){
   return dispatch => {
     return LoginsService.update(login)
       .then((login) => {
-          dispatch(update(login)); 
+        dispatch(update(login)); 
       }) 
     .catch( e=> {console.log(e.message)}); 
   }

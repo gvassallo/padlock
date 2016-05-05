@@ -1,39 +1,39 @@
 import * as types from '../constants/ActionTypes' 
 
 const initialstate = {
-    list: [] 
+  list: [] 
 }
 
 export default function logins(state = initialstate, action ) {
 
-    switch(action.type) {
+  switch(action.type) {
 
     case types.RECEIVE_LOGINS_LIST: 
-        return Object.assign({}, state, {
-            list: [...action.logins] 
-        }); 
+      return Object.assign({}, state, {
+        list: [...action.logins] 
+      }); 
 
     case types.RECEIVE_NEW_LOGIN: 
-        return Object.assign({}, state, {
-            list: [
-                ...state.list, action.login
-            ]
-        }); 
+      return Object.assign({}, state, {
+        list: [
+          ...state.list, action.login
+        ]
+      }); 
 
     case types.RESET_LOGINS_LIST: 
-        return Object.assign({}, state, {list:[]}); 
+      return Object.assign({}, state, {list:[]}); 
 
     case types.DELETE_LOGIN: 
-        var index = state.list.findIndex(elem => action.login.uuid === elem.uuid) ; 
-        state.list.splice(index, 1); 
-        return state;  
+      var index = state.list.findIndex(elem => action.login.uuid === elem.uuid) ; 
+      state.list.splice(index, 1); 
+      return state;  
 
     case types.UPDATE_LOGIN: 
-        var index = state.list.findIndex(elem => action.login.uuid === elem.uuid) ; 
-        state.list[index] = action.login; 
-        return state;  
+      var index = state.list.findIndex(elem => action.login.uuid === elem.uuid) ; 
+      state.list[index] = action.login; 
+      return state;  
 
     default :
-        return state; 
-    }
+      return state; 
+  }
 }

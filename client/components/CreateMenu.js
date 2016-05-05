@@ -1,12 +1,10 @@
 import React from 'react' 
+import {connect} from 'react-redux' 
+import {If , Then, Else} from 'react-if' 
 import NewGroup from './NewGroup' 
 import NewLoginCard from './NewLoginCard' 
-import {connect} from 'react-redux' 
-import {browserHistory} from 'react-router' 
-import {If , Then, Else} from 'react-if' 
 import * as OptionsActions from '../actions/OptionsActions'
-
-require('../scss/components/CreateMenu.scss'); 
+import '../scss/components/CreateMenu.scss'
 
 class CreateMenu extends React.Component{
   constructor(){
@@ -104,6 +102,5 @@ class CreateMenu extends React.Component{
   }
 }
 export default connect()(CreateMenu); 
-
-
+ 
 // vim: set ft=javascript.jsx: 

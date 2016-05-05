@@ -12,10 +12,10 @@ export function downloadGroups(){
 
 export function createGroup(name){
   return dispatch => {
-     return GroupsService.createGroup(name)
-       .then(data => {
-          return dispatch(newGroup(data));
-       }); 
+    return GroupsService.createGroup(name)
+      .then(data => {
+        return dispatch(newGroup(data));
+      }); 
   }; 
 }
 
@@ -30,11 +30,11 @@ export function getMembers(group){
 
 export function addMemberToGroup(group, email){
   return dispatch => {
-     return GroupsService.addMemberToGroup(group, email)
-       .then(() => {
-          //TODO check if it's correct 
-          return dispatch(this.getMembers(group)); 
-       }); 
+    return GroupsService.addMemberToGroup(group, email)
+      .then(() => {
+        //TODO check if it's correct 
+        return dispatch(this.getMembers(group)); 
+      }); 
   }; 
 }
 
@@ -48,20 +48,20 @@ export function getLoginsFromGroup(group){
 }
 
 export function addNewLoginToGroup(group, login){
-   return dispatch => {
-      return GroupsService.addLoginToGroup(group, login)
-        .then(data => {
-          return dispatch(receiveNewLoginForGroup(group, data)); 
-        }); 
-   }; 
+  return dispatch => {
+    return GroupsService.addLoginToGroup(group, login)
+      .then(data => {
+        return dispatch(receiveNewLoginForGroup(group, data)); 
+      }); 
+  }; 
 }
 
 export function deleteLoginFromGroup(group, login){
   return dispatch => {
-     return GroupsService.deleteLoginFromGroup(group, login)
-       .then(() => {
-          return dispatch(removeLoginFromGroup(group, login));   
-       }); 
+    return GroupsService.deleteLoginFromGroup(group, login)
+      .then(() => {
+        return dispatch(removeLoginFromGroup(group, login));   
+      }); 
   }; 
 }
 
@@ -69,7 +69,7 @@ export function updateLoginToGroup(group, login){
   return dispatch => {
     return GroupsService.updateLoginToGroup(group, login)
       .then((data) => {
-         return dispatch(receiveUpdatedLoginForGroup(group, data));  
+        return dispatch(receiveUpdatedLoginForGroup(group, data));  
       }); 
   }; 
 }
@@ -81,10 +81,10 @@ export function getPassword(group, login){
     return dispatch => {
       return GroupsService.getPassword(group, login)
         .then((password) => {
-           login.password = password;  
-           return dispatch(receivePasswordFromGroup(group, login));  
+          login.password = password;  
+          return dispatch(receivePasswordFromGroup(group, login));  
         }); 
-  }; 
+    }; 
   }else{
     return dispatch(receivePasswordFromGroup(group, login)); 
   }
@@ -99,8 +99,8 @@ function receiveGroupsList(data){
 
 function newGroup(group){
   return {
-     type: types.NEW_GROUP_CREATED, 
-     group  
+    type: types.NEW_GROUP_CREATED, 
+    group  
   }; 
 }
 
@@ -114,7 +114,7 @@ function receiveMembers(group, members){
 
 function receiveNewMember(){
   return {
-     type: types.RECEIVE_NEW_MEMBER 
+    type: types.RECEIVE_NEW_MEMBER 
   }; 
 }
 
@@ -127,11 +127,11 @@ function receiveLoginFromGroup(group, logins){
 }
 
 function receiveNewLoginForGroup(group, login){
-   return {
-      type: types.RECEIVE_NEW_LOGIN_FOR_GROUP, 
-      group, 
-      login
-   }; 
+  return {
+    type: types.RECEIVE_NEW_LOGIN_FOR_GROUP, 
+    group, 
+    login
+  }; 
 }
 
 function removeLoginFromGroup(group, login){
@@ -143,11 +143,11 @@ function removeLoginFromGroup(group, login){
 }
 
 function receiveUpdatedLoginForGroup(group, login){
-   return {
-      type: types.RECEIVE_UPDATED_LOGIN_FOR_GROUP,
-      group, 
-      login 
-   }; 
+  return {
+    type: types.RECEIVE_UPDATED_LOGIN_FOR_GROUP,
+    group, 
+    login 
+  }; 
 }
 function receivePasswordFromGroup(group, login){
   return {

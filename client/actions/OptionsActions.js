@@ -2,44 +2,44 @@ import * as types from '../constants/ActionTypes'
 
 export function modalOpen(){
   return {
-      type: types.MODAL_OPEN
+    type: types.MODAL_OPEN
   }; 
 }
 
 export function modalClose(){
   return {
-      type: types.MODAL_CLOSE
+    type: types.MODAL_CLOSE
   }; 
 }
 
 export function loginCardOpen(){
   return {
-      type: types.LOGIN_CARD_OPEN
+    type: types.LOGIN_CARD_OPEN
   }; 
 }
 
 export function loginCardClose(){
   return {
-      type: types.LOGIN_CARD_CLOSE
+    type: types.LOGIN_CARD_CLOSE
   }; 
 }
 
 export function dropdownOpen(){
   return {
-      type: types.DROPDOWN_OPEN
+    type: types.DROPDOWN_OPEN
   }; 
 }
 
 export function dropdownClose(){
   return {
-      type: types.DROPDOWN_CLOSE
+    type: types.DROPDOWN_CLOSE
   }; 
 }
 
 export function viewChanged(view){
   return {
-      type: types.VIEW_CHANGED, 
-      view: view 
+    type: types.VIEW_CHANGED, 
+    view: view 
   }; 
 }
 

@@ -1,10 +1,10 @@
 import * as types from '../constants/ActionTypes'  
 
 const initialstate = {
-    username: null, 
-    fullName: null, 
-    email: null, 
-    createdAt: null 
+  username: null, 
+  fullName: null, 
+  email: null, 
+  createdAt: null 
 
 }
 
