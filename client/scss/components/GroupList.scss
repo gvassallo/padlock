@@ -1,0 +1,18 @@
+.groups{
+  position: absolute; 
+  top: 55px; 
+  left: 0; 
+  z-index: 10;
+  width: 300px; 
+  border-radius: 3px;
+  background: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .4);
+}
+.group-list{
+  padding: 20px 10px 10px 10px; 
+}
+
+.group-list-cell{
+  padding-top: 2px; 
+  padding-bottom: 2px; 
+}

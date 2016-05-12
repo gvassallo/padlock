@@ -1,15 +1,33 @@
-import React from 'react'; 
-import { connect } from 'react-redux'; 
-import { Link, browserHistory } from 'react-router';
-import { Navbar, Nav, NavItem, Dropdown, NavDropdown, MenuItem } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap'; 
+import React from 'react' 
+import { connect } from 'react-redux' 
+import { Link, browserHistory } from 'react-router'
+import {If, Then} from 'react-if' 
+import { Navbar, Nav, NavItem, Dropdown, NavDropdown, MenuItem, Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import CreateMenu from './CreateMenu' 
+import GroupList from './GroupList' 
 import * as AuthActions from '../actions/AuthActions' 
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
+import * as GroupsActions from '../actions/GroupsActions'
 import '../scss/components/HeaderBar.scss'
 
 class HeaderBar extends React.Component {
+  constructor(){
+    super(); 
+    this.state = {
+      groupsOpen: false, 
+      groupsLoaded: false
+    }; 
+  }
+
+  componentDidMount(){
+    if(!this.state.groupsLoaded){
+      this.props.dispatch(GroupsActions.downloadGroups()); 
+      this.state.groupsLoaded = true; 
+      this.setState(this.state); 
+    }
+  }
 
   logout(event) {
     event.preventDefault();
@@ -34,13 +52,31 @@ class HeaderBar extends React.Component {
     ); 
   }
 
+  openGroupsList(event){
+    event.preventDefault(); 
+    this.setState({
+      groupsOpen: !this.state.groupsOpen
+    }); 
+  }
+
   render() {
     return (
       <div className="header">
         <Navbar fixedTop fluid>
-          <Navbar.Header style={{textAlign:'center'}}>
-            <span className='header-logo'/> 
-          </Navbar.Header>
+          <Nav pullLeft>
+            <div className="header-groups-button">        
+              <Button onClick={this.openGroupsList.bind(this)} disabled={!this.state.groupsLoaded}> 
+                <span style={{color: 'white'}}> 
+                  Groups
+                </span> 
+              </Button> 
+            </div> 
+            <div className='header-logo'> 
+              <Link to='/'>
+                <img src='/img/padlock.png'/>  
+              </Link>
+            </div> 
+          </Nav>
             <Nav pullRight>  
               <NavDropdown 
                 eventKey={1} 
@@ -57,6 +93,9 @@ class HeaderBar extends React.Component {
               </NavItem> 
             </Nav>
         </Navbar>
+        <If condition={this.state.groupsOpen}> 
+          <Then><GroupList groups={this.props.groups}/></Then> 
+        </If> 
       </div>
     ); 
   }
@@ -65,6 +104,7 @@ class HeaderBar extends React.Component {
 const mapStateToProps = (state) => ({
   user : state.auth.user,
   token: state.auth.token, 
+  groups: state.groups.list, 
   dropdown_open: state.options.dropdown_open, 
   current_view: state.options.current_view
 });

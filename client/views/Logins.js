@@ -25,8 +25,7 @@ class Logins extends React.Component {
   }
 
   componentDidMount(){
-    this.download();  
-    this.props.dispatch(OptionsActions.viewChanged('Logins')); 
+    this.download();
   }
 
   download(){
@@ -48,7 +47,9 @@ class Logins extends React.Component {
   render() {
     return (
       <div>  
-        <h4 style={{paddingLeft: '50px'}}>My Logins</h4> 
+        <h4 style={{paddingLeft: '50px'}}>
+          <span className='fa fa-lock'/> My Logins
+        </h4> 
         <LoginsList logins={this.props.logins}/>
         <hr/>
         <center> 

@@ -18,11 +18,6 @@ module.exports = (sequelize, DataTypes) => {
           as: 'members',
           foreignKey: 'groupId'
         });
-        Group.belongsToMany(models.Login, {
-          through: models.LoginGroup,
-          as: 'logins',
-          foreignKey: 'groupId'
-        });
         Group.hasMany(models.Login, {foreignKey: 'groupId'}); 
       }
     }

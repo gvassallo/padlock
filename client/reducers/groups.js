@@ -9,11 +9,13 @@ export default function groups(state = initialstate, action){
   switch(action.type) {
 
     case types.RECEIVE_GROUPS_LIST: 
+      action.groups.forEach(group => {group.logins=[]});
       return Object.assign({}, state, {
         list: [...action.groups] 
       }); 
 
     case types.NEW_GROUP_CREATED: 
+      action.group.logins = [];  
       return Object.assign({}, state, {
         list: [
           ...state.list, action.group

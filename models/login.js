@@ -37,7 +37,6 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         Login.belongsTo(models.User, {foreignKey: 'userId'}); 
-        Login.belongsTo(models.Group, {foreignKey: 'groupId'}); 
       }, 
       encryptPwd: function(password, publicKey) { 
         var key = new NodeRSA();

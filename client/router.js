@@ -11,7 +11,7 @@ import { auth } from './actions/AuthActions'
 import SideBar from './components/SideBar'
 import Logins from './views/Logins'
 import Profile from './views/Profile' 
-import Groups from './views/Groups' 
+import Group from './views/Group'
 
 class AppRouter extends React.Component{
 
@@ -42,8 +42,8 @@ class AppRouter extends React.Component{
       <Router router={AppRouter} history={browserHistory}>
         <Route path='/' component={App} onEnter={this.requireAuth.bind(this)}> 
           <IndexRoute component={Logins}/> 
-          <Route path='/profile' component={Profile} /> 
-          <Route path='/groups' component={Groups} /> 
+          <Route path='/profile' component={Profile}/> 
+          <Route path='/g/:groupId' component={Group}/>
         </Route> 
         <Route path='login' component={Login} onEnter={this.alreadyLogged}/> 
         <Route path='register' component={Register} onEnter={this.alreadyLogged}/> 

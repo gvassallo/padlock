@@ -1,5 +1,4 @@
 import React from 'react' 
-import {Row, Col} from 'react-bootstrap' 
 
 class GroupCell extends React.Component{
   constructor(){
@@ -12,6 +11,9 @@ class GroupCell extends React.Component{
 
   render(){
     return (
+      <div className='group-list-cell'> 
+        {this.props.name}
+      </div> 
     ); 
   }
 }

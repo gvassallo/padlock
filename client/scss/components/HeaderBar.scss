@@ -1,3 +1,26 @@
+.navbar{
+  position: relative; 
+  padding-top: 0;
+}
+
 .header-logo{
-  background-image: url('/img/padlock.png'); 
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -50px !important;  /* 50% of your logo width */
+  display: block;
+  img{
+    width: 120px;
+    padding-top: 8px; 
+  }
+}
+
+.header-groups-button{
+  padding-top: 8px;
+  button{
+    background-color: transparent; 
+    &:hover{
+      background-color: transparent;
+    }
+  }
 }
