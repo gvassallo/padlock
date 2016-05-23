@@ -42,7 +42,10 @@ export default function groups(state = initialstate, action){
       if (state.list[index].logins === undefined) 
         state.list[index].logins = new Array(); 
       state.list[index].logins.push(action.login); 
-      return state; 
+      /* workaround to make it work */
+      return Object.assign({}, state, {
+        list: [...state.list]
+      });
 
     case types.RECEIVE_LOGINS_FROM_GROUP: 
       var index = state.list
@@ -67,6 +70,7 @@ export default function groups(state = initialstate, action){
       return state; 
 
     case types.DELETE_LOGIN_FROM_GROUP: 
+      console.log('delete');
       var gindex = state.list
         .findIndex(elem => action.group.uuid === elem.uuid) ; 
       var lindex = state.list[gindex].logins

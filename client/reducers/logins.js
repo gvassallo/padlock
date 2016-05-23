@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes' 
 
 const initialstate = {
-  list: [] 
+  list: [], 
+  password: ''
 }
 
 export default function logins(state = initialstate, action ) {
@@ -32,6 +33,10 @@ export default function logins(state = initialstate, action ) {
       var index = state.list.findIndex(elem => action.login.uuid === elem.uuid) ; 
       state.list[index] = action.login; 
       return state;  
+
+    case types.RECEIVE_PASSWORD: 
+      return Object.assign({}, state, 
+        {password: action.password});
 
     default :
       return state; 

@@ -23,7 +23,7 @@ router.route('/profile')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/index.html"));
         }); 
-router.route('/groups')
+router.route('/g/*')
         .get((req, res) => {
         res.sendFile(path.join(__dirname, "../../client/index.html"));
         }); 

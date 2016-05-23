@@ -46,6 +46,16 @@ export function resetLoginsList(){
   };
 }
 
+export function getPassword(login){
+  return dispatch => {
+    return LoginsService.getPassword(login)
+      .then((password) => {
+        dispatch(receivePassword(password));
+      })
+      .catch( e=> {console.log(e.message)});
+  }
+}
+
 function receiveLoginsList(logins){
   return {
     type: types.RECEIVE_LOGINS_LIST, 
@@ -72,4 +82,11 @@ function update(login){
     type: types.UPDATE_LOGIN, 
     login 
   }; 
+}
+
+function receivePassword(password){
+  return {
+    type: types.RECEIVE_PASSWORD, 
+    password 
+  };
 }

@@ -30,6 +30,11 @@ class LoginsList extends React.Component{
     dispatch(OptionsActions.loginCardOpen());
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
+    console.log('hei'); 
+  }
+
   onSetSidebarOpen(open) {
     const {dispatch} = this.props;
     if(open)
@@ -39,12 +44,7 @@ class LoginsList extends React.Component{
   }
 
   render(){
-    //temporary fix  
-    var sidebarContent = //Every time the component is mounted 
-      <If condition={this.props.login_card_open}><Then> 
-        <LoginCard login={this.state.login}/> 
-      </Then></If>;
-
+    var sidebarContent = <LoginCard login={this.state.login} update={this.state.sidebarOpen} />; 
     return(
     <div className="login-list"> 
       <Sidebar sidebar={sidebarContent} 
@@ -68,7 +68,11 @@ class LoginsList extends React.Component{
           </ListGroupItem>;
         })}
       </ListGroup> 
-    </div>  
+      {/*<If condition={this.props.login_card_open}> 
+        <Then> 
+        </Then> 
+      </If> */}
+      </div>  
     ); 
   }
 }

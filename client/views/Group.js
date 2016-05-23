@@ -24,6 +24,7 @@ class Groups extends React.Component {
   }
   //to update the view when an other group is selected
   componentWillReceiveProps(nextPros){
+    console.log('Group receives props');
     this.update(nextPros); 
   }
 

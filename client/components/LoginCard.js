@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Modal, Button, ButtonInput, Row, Col, Input, DropdownButton, MenuItem} from 'react-bootstrap'
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
+import * as GroupsActions from '../actions/GroupsActions'
 import LoginsService from '../services/LoginsService'
 require('../scss/components/LoginCard.scss'); 
 
@@ -15,7 +16,8 @@ class LoginCard extends React.Component {
         service: '', 
         username: '', 
         password: '', 
-        uuid: '' 
+        uuid: '', 
+        groupId: ''
       }, 
     reveal: false, 
     loading: false 
@@ -23,16 +25,18 @@ class LoginCard extends React.Component {
   }
 
   componentDidMount(){
+    console.log('mount');
     this.state.login=this.props.login;  
     this.setState(this.state); 
   }
 
-  componentWillReceiveProps(nextProps){
-    this.state.login = nextProps.login;   
-    this.state.modify = false; 
-    this.state.reveal = false; 
-    this.setState(this.state); 
-  }
+  // componentWillReceiveProps(nextProps){
+  //   // console.log('receive props');
+  //   this.state.login = nextProps.login;   
+  //   this.state.modify = false; 
+  //   this.state.reveal = false; 
+  //   this.setState(this.state); 
+  // }
 
   handleChange(field){
     return (event) => {
@@ -41,58 +45,74 @@ class LoginCard extends React.Component {
     }
   }
 
-  close(){
-    this.state.modify = false; 
-    this.state.reveal = false; 
-    this.setState(this.state); 
-    this.props.dispatch(OptionsActions.loginCardClose()); 
-  }
-
   allowModification(event){
     event.preventDefault();
     this.state.loading = true; 
     this.setState(this.state); 
-    LoginsService.getPassword(this.props.login)
-     .then(password => {
+    const {dispatch} = this.props;
+    dispatch(LoginsActions.getPassword(this.props.login))
+     .then(() => {
         this.state.loading = false; 
-        this.state.login.password = password; 
         this.state.modify = true ; 
         this.setState(this.state); 
-      }); 
+      }) 
+    .catch(err => console.log(err));
   }
 
   deleteLogin(event){
     event.preventDefault();  
     const {dispatch} = this.props; 
-    dispatch(LoginsActions.deleteLogin(this.props.login))
-    .then(()=> {
-      this.state.modify = false; 
-      this.state.reveal = false; 
-      this.setState(this.state); 
-      dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' deleted!')); 
-      dispatch(OptionsActions.loginCardClose());  
-    }); 
+    if(this.props.login.groupId!== null){
+      var group = {uuid: this.props.login.groupId};
+      dispatch(GroupsActions.deleteLoginFromGroup(group, this.props.login))
+      .then(()=> {
+        dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' deleted!')); 
+        dispatch(OptionsActions.loginCardClose());  
+        this.state.modify = false; 
+        this.state.reveal = false; 
+        this.setState(this.state); 
+      }); 
+    }else {
+      dispatch(LoginsActions.deleteLogin(this.props.login))
+      .then(()=> {
+        dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' deleted!')); 
+        dispatch(OptionsActions.loginCardClose());  
+        this.state.modify = false; 
+        this.state.reveal = false; 
+        this.setState(this.state); 
+      }); 
+    }
   }
 
   saveChanges(event){
     event.preventDefault();
     const {dispatch} = this.props; 
-    dispatch(LoginsActions.updateLogin(this.props.login))
-      .then(()=> {
-        this.state.modify = false ; 
-        this.setState(this.state); 
-        dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' updated!')); 
-      });
+    if(this.props.login.groupId!== undefined){
+      var group = {uuid: this.props.login.groupId};
+      dispatch(GroupsActions.updateLoginToGroup(group, this.props.login))
+        .then(()=> {
+          this.state.modify = false ; 
+          this.setState(this.state); 
+          dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' updated!')); 
+        });
+    }else {
+      dispatch(LoginsActions.updateLogin(this.props.login))
+        .then(()=> {
+          this.state.modify = false ; 
+          this.setState(this.state); 
+          dispatch(OptionsActions.snackBarOpen('Login: \''+ this.props.login.service+ '\' updated!')); 
+        });
+    }
   }
 
   revealPassword(event){
-      event.preventDefault(); 
-      LoginsService.getPassword(this.props.login)
-        .then(password => {
-          this.state.login.password = password; 
-          this.state.reveal = true; 
-          this.setState(this.state); 
-        }); 
+    event.preventDefault(); 
+    const {dispatch} = this.props;
+    dispatch(LoginsActions.getPassword(this.props.login))
+      .then(password => {
+        this.state.reveal = true; 
+        this.setState(this.state); 
+      }); 
   }
 
   getPasswordField(){
@@ -107,13 +127,13 @@ class LoginCard extends React.Component {
     }else if(!this.state.modify && this.state.reveal){ 
       return(
         <Input type="text"
-          value={this.state.login.password}
+          value={this.props.revealed_password}
           onChange={this.handleChange('password')} readOnly/>
       ); 
     }else {
       return(
         <Input type="text"
-          value={this.state.login.password}
+          value={this.props.revealed_password}
           onChange={this.handleChange('password')}/>
       );  
     }
@@ -215,5 +235,9 @@ class LoginCard extends React.Component {
   }
 }
 
-export default connect()(LoginCard); 
+const mapStateToProps = (state) => ({
+  revealed_password: state.logins.password 
+});
+
+export default connect(mapStateToProps)(LoginCard); 
 // vim: set ft=javascript.jsx: 
