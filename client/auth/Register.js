@@ -1,6 +1,7 @@
 import React from 'react' 
 import { Input, ButtonInput, Button, Row, Col, Alert } from 'react-bootstrap' 
 import { LinkContainer } from 'react-router-bootstrap'
+import { Link } from 'react-router'
 import * as AuthActions from '../actions/AuthActions' 
 import { connect } from 'react-redux' 
 import BaseForm from './BaseForm' 
@@ -74,52 +75,63 @@ class Register extends React.Component {
               <span style={{color: 'white', fontSize: '16px'}}>Register</span>
             </div>
             <div className='panel-body'>
-            <form onSubmit={this.register.bind(this)} action='' autoComplete='off'>
-              {this.showAlert()}
-              <Row> 
-                <Col sm={4} md={4}>
-                  <label>Username</label>
-                </Col>
-                <Col sm={8} md={8}>
-                  <Input type='text' onChange={this.handleChange('username')}/>
-                </Col>
-              </Row> 
-              <Row> 
-                <Col sm={4} md={4}>
-                  <label>Email</label>
-                </Col>
-                <Col sm={8} md={8}>
-                  <Input type='text' onChange={this.handleChange('email')}/>
-                </Col>
-              </Row> 
-              <Row> 
-                <Col sm={4} md={4}>
-                  <label>Password</label>
-                </Col>
-                <Col sm={8} md={8}>
-                  <Input type='password' onChange={this.handleChange('password')}/>
-                </Col>
-              </Row> 
-              <Row> 
-                <Col sm={4} md={4}>
-                  <label>Full Name</label>
-                </Col>
-                <Col sm={8} md={8}>
-                  <Input type='text' onChange={this.handleChange('fullname')}/>
-                </Col>
-              </Row> 
-              {this.state.loading?(
-              <ButtonInput type='submit' value='Wait' disabled/>
-              ):(
-              <ButtonInput type='submit' value='Register' block />
-              )} 
-            </form>
-            <div className='pt-lg text-center'>
-              <p>Already have an account?</p>
-              <LinkContainer to='/login'>
-                <Button bsStyle='primary' block>Login</Button>
-              </LinkContainer>
-            </div>
+              <small>Already have an account? Go to the <Link to='/login'>login</Link> page!</small>
+              <br/><br/><br/> 
+              <form onSubmit={this.register.bind(this)} action='' autoComplete='off'>
+                {this.showAlert()}
+                <Row> 
+                  <Col sm={5} md={5}>
+                    <div style={{textAlign: 'right'}}>
+                      <label>Username</label>
+                    </div>
+                  </Col>
+                  <Col sm={6} md={6}>
+                    <Input type='text' onChange={this.handleChange('username')}/>
+                  </Col>
+                </Row> 
+                <Row> 
+                  <Col sm={5} md={5}>
+                    <div style={{textAlign: 'right'}}>
+                      <label>Email</label>
+                    </div>
+                  </Col>
+                  <Col sm={6} md={6}>
+                    <Input type='text' onChange={this.handleChange('email')}/>
+                  </Col>
+                </Row> 
+                <Row> 
+                  <Col sm={5} md={5}>
+                    <div style={{textAlign: 'right'}}>
+                      <label>Password</label>
+                    </div>
+                  </Col>
+                  <Col sm={6} md={6}>
+                    <Input type='password' onChange={this.handleChange('password')}/>
+                  </Col>
+                </Row> 
+                <Row> 
+                  <Col sm={5} md={5}>
+                    <div style={{textAlign: 'right'}}>
+                      <label>Full Name</label>
+                    </div>
+                  </Col>
+                  <Col sm={6} md={6}>
+                    <Input type='text' onChange={this.handleChange('fullname')}/>
+                  </Col>
+                </Row> 
+                <hr/>
+                <Row>
+                  <Col sm={4} smOffset={4}>
+                    <center> 
+                      {this.state.loading?(
+                      <ButtonInput type='submit' value='Wait' disabled/>
+                      ):(
+                      <ButtonInput type='submit' bsStyle="primary" value='Register' block />
+                      )} 
+                    </center> 
+                  </Col>
+                </Row> 
+              </form>
             </div> 
           </BaseForm> 
         </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Modal, Button, ButtonInput, Row, Col, Input, DropdownButton, MenuItem} from 'react-bootstrap'
+import {If, Then, Else} from 'react-if'
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 import * as GroupsActions from '../actions/GroupsActions'
@@ -25,18 +26,9 @@ class LoginCard extends React.Component {
   }
 
   componentDidMount(){
-    console.log('mount');
     this.state.login=this.props.login;  
     this.setState(this.state); 
   }
-
-  // componentWillReceiveProps(nextProps){
-  //   // console.log('receive props');
-  //   this.state.login = nextProps.login;   
-  //   this.state.modify = false; 
-  //   this.state.reveal = false; 
-  //   this.setState(this.state); 
-  // }
 
   handleChange(field){
     return (event) => {
@@ -54,6 +46,7 @@ class LoginCard extends React.Component {
      .then(() => {
         this.state.loading = false; 
         this.state.modify = true ; 
+        this.state.login.password = this.props.revealed_password;
         this.setState(this.state); 
       }) 
     .catch(err => console.log(err));
@@ -87,7 +80,7 @@ class LoginCard extends React.Component {
   saveChanges(event){
     event.preventDefault();
     const {dispatch} = this.props; 
-    if(this.props.login.groupId!== undefined){
+    if(this.props.login.groupId!== null){
       var group = {uuid: this.props.login.groupId};
       dispatch(GroupsActions.updateLoginToGroup(group, this.props.login))
         .then(()=> {
@@ -109,34 +102,32 @@ class LoginCard extends React.Component {
     event.preventDefault(); 
     const {dispatch} = this.props;
     dispatch(LoginsActions.getPassword(this.props.login))
-      .then(password => {
+      .then(() => {
+        this.state.login.password = this.props.revealed_password;
         this.state.reveal = true; 
         this.setState(this.state); 
       }); 
   }
 
   getPasswordField(){
-    if(!this.state.modify && !this.state.reveal) {
-      return(
+    return(
+      <If condition={!this.state.modify && !this.state.reveal}><Then> 
         <Input type="password"
           value="password"
           onChange={this.handleChange('password')} 
           buttonAfter={this.getDropDown()}
-          readOnly/>
-      ); 
-    }else if(!this.state.modify && this.state.reveal){ 
-      return(
+          readOnly/></Then>
+      <Else><If condition={!this.state.modify && this.state.reveal}><Then>
         <Input type="text"
-          value={this.props.revealed_password}
+          value={this.state.login.password}
           onChange={this.handleChange('password')} readOnly/>
-      ); 
-    }else {
-      return(
+      </Then><Else> 
         <Input type="text"
-          value={this.props.revealed_password}
+          value={this.state.login.password}
           onChange={this.handleChange('password')}/>
-      );  
-    }
+        </Else> 
+      </If></Else>
+      </If>);
   }
 
   getDropDown(){

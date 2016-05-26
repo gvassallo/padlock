@@ -30,7 +30,7 @@ class Logins extends React.Component {
 
   download(){
     const {dispatch} = this.props;  
-    dispatch(OptionsActions.loading()); 
+    dispatch(OptionsActions.loading());
     dispatch(LoginsActions.download())
     .then(()=> {
       dispatch(OptionsActions.loadingEnd()); 

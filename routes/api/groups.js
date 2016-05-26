@@ -1,8 +1,10 @@
 'use strict';
 
 var db = require('../../models'); 
+var Promise = require('bluebird');
 var Group = db.Group;
 var User = db.User;
+var UserGroup = db.UserGroup;
 var PublicKey = db.PublicKey; 
 var PrivateKey = db.PrivateKey; 
 var Login = db.Login; 
@@ -118,13 +120,6 @@ module.exports = (passport, router) => {
           })
           .then(() => {
             t.commit(); 
-            // var newMember = {
-            //    email : this.user.email, 
-            //    fullName : this.user.fullName, 
-            //    email: this.user.email, 
-            //    uuid: this.user.uuid 
-            // }; 
-            // this.group.newMember = newMember; 
             res.json(this.group); 
           }) 
           .catch(err => {
@@ -132,6 +127,61 @@ module.exports = (passport, router) => {
             next({ statusCode: 404, message: err.message });
           });
         }); 
+    });
+
+  router.route('/groups/:uuid/members/:userId')
+    .delete((req, res, next) => {
+      db.sequelize.transaction({autocommit: false})
+        .then(t => {
+          return User
+            .findOne({ where: { uuid: req.params.userId }}, {transaction: t}) 
+            .then(user => {
+              if (user === null) {
+                throw Error('User not found. Wrong userId.');
+              } else {
+                this.user = user;
+              return Group
+                .findOne({
+                  where: { 
+                    uuid: req.params.uuid
+                  }, 
+                  include: [{
+                    model: User,
+                    as: 'members',
+                    where: {uuid: req.params.userId}, 
+                    attributes: ['uuid'],
+                    through: { attributes: [] }
+                  }]
+                }, {transaction: t});}
+            })
+            .then( group => {
+              if (group === null) {
+                throw Error('Group not found.');
+              } 
+              this.group = group; 
+              return Login.destroy({
+                where: {
+                  userId: req.params.userId, 
+                  groupId: req.params.uuid
+                }}, {transaction: t})
+            })
+            .then(() => {
+              return UserGroup.destroy({
+                where: {
+                  userId: req.params.userId, 
+                  groupId: req.params.uuid
+                }}, {transaction: t
+              });
+            })
+            .then(()=> {
+              t.commit(); 
+              return res.json({});
+            })
+            .catch(err => {
+              t.rollback(); 
+              next({ statusCode: 404, message: err.message });
+            });
+        })
     });
     
     router.route('/groups/:uuid/logins')
@@ -175,10 +225,11 @@ module.exports = (passport, router) => {
         }); 
       }) 
       .post((req, res, next) => {
-        var login = req.body.login; 
-        login.groupId = req.params.uuid; 
+        var _login = req.body.login; 
+        var originalLogin; //login to be returned
+        _login.groupId = req.params.uuid; 
         db.sequelize.transaction({autocommit: false})
-        .then(t => {
+        .then( t => {
           Group 
           .findOne({ where: { uuid: req.params.uuid }, include: [
              {
@@ -188,29 +239,32 @@ module.exports = (passport, router) => {
                through: { attributes: [] }
              }
           ]}, {transaction: t})
-          .then(group => {
+          .then( group => {
             if(group === null){
               throw Error('Group not found. Wrong id.');
             }
-            login.groupToken = Login.genToken(); 
-            group.members.map( user => {
-              PublicKey
+            _login.groupToken = Login.genToken(); 
+            return Promise.map(group.members,  user => {
+              return PublicKey
                 .findOne({ where: { userId: user.uuid }}, {transaction: t})
-                .then( key => {
-                  login.password = Login.encryptPwd(login.password, key.value)
-                  return user.createLogin(req.body.login, {transaction: t}) 
-                    .then( login => {
-                      t.commit(); 
-                      return res.json(login);    
-                    }) 
-                    .catch(err => {
-                      t.rollback(); 
-                      return next({ message: err.message, statusCode: 500 });
-                    }); 
-                }); 
+                .then( publicKey => {
+                  var newLogin = JSON.parse(JSON.stringify(_login));
+                  newLogin.password = Login.encryptPwd(newLogin.password, publicKey.value)
+                  return user.createLogin(newLogin, {transaction: t});
+                }) 
+                .then( login => {
+                  //return only the login created by the current user 
+                  if(login.userId === req.decoded.uuid)
+                    originalLogin = login; 
+                  return;  
+                }) 
+            })
+            .then( () => {
+              t.commit(); 
+              return res.json(originalLogin);
             });
           }) 
-          .catch(err => {
+          .catch( err => {
             t.rollback(); 
             return next({ message: err.message, statusCode: 500 });
           }); 
@@ -259,20 +313,19 @@ module.exports = (passport, router) => {
       }); 
     }) 
     .put((req, res, next) => {
-      var newlogin = req.body.login; 
-      var publicKey; 
+      var _login = req.body.login; 
+      var updatedLogin; 
       db.sequelize.transaction({autocommit: false})
       .then( t => {
         Login
           .findOne({where: {uuid: req.params.loginId}}, {transaction: t}) 
           .then(login => {
-            newlogin.groupToken = login.groupToken; 
+            _login.groupToken = login.groupToken; 
             return Group 
               .findOne({ where: { uuid: req.params.uuid }, include: [
                  {
                    model: User,
                    as: 'members',
-                   where: {uuid: req.decoded.uuid}, 
                    attributes: ['uuid'],
                    through: { attributes: [] }
                  }
@@ -282,34 +335,38 @@ module.exports = (passport, router) => {
           if(group === null) {
             throw Error('Group not found. Wrong id.');
           }
-          group.members.map( user => {
-            PublicKey
+          return Promise.map(group.members,  user => {
+            let publicKey;
+            return PublicKey
               .findOne({where: {userId: user.uuid}, transaction: t})
               .then(key => {
-                publicKey = key; 
+                publicKey = key;
                 return Login.findOne({ 
                   where: {
-                    groupToken: newlogin.groupToken, 
+                    groupToken: _login.groupToken, 
                     userId: user.uuid
                   }} , {transaction: t})
               })
               .then(login => {
-                newlogin.password = Login.encryptPwd(newlogin.password, publicKey.value);    
+                var updatedPassword = Login.encryptPwd(_login.password, publicKey.value)
                 return login
                 .updateAttributes({ 
-                  username: newlogin.username, 
-                  password: newlogin.password
-                }, {transaction: t})
-                .then(login => {
-                  t.commit(); 
-                  // TODO check if it's correct 
-                  if(login.userId === req.decoded.uuid){
-                    return res.json(login); 
-                  }
-                })
+                  username: _login.username, 
+                  password: updatedPassword 
+                }, {transaction: t});
               })
+              .then(login => {
+                if(login.userId === req.decoded.uuid){
+                  updatedLogin = login;  
+                }
+                return;
+              })
+            })
+            .then( () => {
+              t.commit(); 
+              return res.json(updatedLogin);
+            });
           })
-        })
         .catch(err =>{
            t.rollback(); 
            next({message: err.message, statusCode: 500}); 

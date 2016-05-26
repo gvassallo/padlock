@@ -1,6 +1,6 @@
 import React from 'react'; 
 import {connect} from 'react-redux'
-import {If, Then} from 'react-if'
+import {If, Then, Else} from 'react-if'
 import Sidebar from 'react-sidebar'
 import {ListGroup, ListGroupItem} from 'react-bootstrap' 
 import LoginCard from './LoginCard'
@@ -42,8 +42,11 @@ class LoginsList extends React.Component{
     //temporary fix  
     var sidebarContent = //Every time the component is mounted 
       <If condition={this.props.login_card_open}><Then> 
-        <LoginCard login={this.state.login}/> 
-      </Then></If>;
+        <LoginCard login={this.state.login}/></Then>
+        <Else> 
+          <div className='login-card login-card-body'></div>
+        </Else>
+      </If>;
 
     return(
     <div className="login-list"> 

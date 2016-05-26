@@ -45,7 +45,7 @@ class AuthService {
         throw new Error(res.message);
       });
   }
-  // TODO verify if sessionStorage is more appropriate 
+
   auth(user, token, master) {
     sessionStorage.setItem('user', JSON.stringify(user));
     sessionStorage.setItem('token', token);

@@ -2,9 +2,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {If, Then} from  'react-if'
+import Sidebar from 'react-sidebar'
 import LoginsList from '../components/LoginsList'
+import GroupMenu from '../components/GroupMenu'
 import * as OptionsActions from '../actions/OptionsActions' 
 import * as GroupsActions from '../actions/GroupsActions' 
+import '../scss/components/Group.scss'
 
 const mapStateToProps = (state) => ({
     groups: state.groups.list
@@ -15,7 +18,8 @@ class Groups extends React.Component {
     super();  
     this.state = {
       groupId: '', //group uuid 
-      iGroup: 0  // group index in the groups state array 
+      iGroup: 0,  // group index in the groups state array 
+      sidebar_open: false
     }; 
   }
 
@@ -40,14 +44,34 @@ class Groups extends React.Component {
     }); 
   }
 
+  onSetSidebarOpen(isOpen){
+    this.state.sidebar_open = isOpen;  
+    this.setState(this.state);
+  }
+
+  openSidebar(){
+    this.state.sidebar_open = true; 
+    this.setState(this.state);
+  }
+
   render(){
+    var sidebarContent = <GroupMenu group={this.props.groups[this.state.iGroup]}/>;
     return(
       <div className='group-view'>
-        <center> 
-          <h1> 
-            {this.props.groups[this.state.iGroup].name}
-          </h1> 
-        </center> 
+      <Sidebar sidebar={sidebarContent} 
+        pullRight={true} 
+        onSetOpen={this.onSetSidebarOpen.bind(this)}
+        open={this.state.sidebar_open}
+        style={{
+        sidebar: {background: 'white'}
+        }}
+      > 
+        <div></div> 
+      </Sidebar> 
+        <h3 className='group-name'> 
+          {this.props.groups[this.state.iGroup].name}
+        </h3> 
+        <a className='show-group-menu' onClick={this.openSidebar.bind(this)}>show menu</a> 
         <LoginsList logins={this.props.groups[this.state.iGroup].logins}/>
       </div>
     ); 
