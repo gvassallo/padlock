@@ -28,6 +28,7 @@ class GroupMenu extends React.Component{
         dispatch(OptionsActions.snackBarOpen(
           'User \''+ this.state.member+ '\' joined the group!'
         )); 
+        this.setState(this.state);
       })
       .catch(err => {
         this.state.error = true; 
@@ -82,13 +83,17 @@ class GroupMenu extends React.Component{
         </If>
         <h4>Members</h4>
         <div>
-          <ListGroup> 
-          {this.props.group.members.map(listValue => {
-            return <ListGroupItem key={listValue.uuid}>
-                        {listValue.fullName} 
-                  </ListGroupItem>; 
-            })}
-          </ListGroup> 
+          <If condition={!(this.props.group.members == undefined)}>
+            <Then> 
+              <ListGroup> 
+                {this.props.group.members.map(listValue => {
+                return <ListGroupItem key={listValue.uuid}>
+                  {listValue.fullName} 
+                </ListGroupItem>; 
+                })}
+              </ListGroup> 
+            </Then>
+          </If>
         </div>
       </div>
     </div>

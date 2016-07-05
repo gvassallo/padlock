@@ -23,9 +23,11 @@ class HeaderBar extends React.Component {
 
   componentDidMount(){
     if(!this.state.groupsLoaded){
-      this.props.dispatch(GroupsActions.downloadGroups()); 
-      this.state.groupsLoaded = true; 
-      this.setState(this.state); 
+      this.props.dispatch(GroupsActions.downloadGroups())
+        .then(()=>{
+          this.state.groupsLoaded = true; 
+          this.setState(this.state); 
+        });
     }
   }
 

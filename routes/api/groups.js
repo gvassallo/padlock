@@ -13,15 +13,22 @@ module.exports = (passport, router) => {
 
   router.route('/groups')
     .get((req, res, next) => {
-      db.sequelize.transaction({autocommit: false})
-      .then( t => {
-        return Group
-          .findAll({transaction: t})
-          .then(groups => {
-            t.commit(); 
-            res.json(groups);
-          }); 
-      }); 
+      db.sequelize.transaction({ autocommit: false })
+        .then(function(t) {
+          return User
+            .findOne({ where: { uuid: req.decoded.uuid }, transaction: t })
+            .then(user => {
+              return user.getGroups({ transaction: t });
+            })
+            .then(projects => {
+              t.commit();
+              return res.json(projects);
+            })
+            .catch(err => {
+              t.rollback();
+              return next({ statusCode: 500, message: err.message });
+            });
+        });
     })
     .post((req, res, next) => {
       var group = req.body;
@@ -72,7 +79,7 @@ module.exports = (passport, router) => {
          });
       });
     }); 
-
+  //TODO only if the user is a member 
   router.route('/groups/:uuid/members')
     .get((req, res, next) => {
       db.sequelize.transaction({autocommit: false})
@@ -294,17 +301,20 @@ module.exports = (passport, router) => {
             throw Error('Group not found or User does not belong to the group.'); 
           }
           return Login
-            .findOne({where: {uuid: req.params.loginId}, transaction: t})  
-            .then(login_encrypted => {
-              var login = login_encrypted; 
-              return PrivateKey
-                .findOne({where: {userId: req.decoded.uuid}})
-                .then(privateKey => {
-                  login.password = login.decryptPwd(privateKey.value, master);  
-                  t.commit(); 
-                  return res.json(login); 
-                })
-            }); 
+            .findOne({where: {uuid: req.params.loginId}, transaction: t});
+        })
+        .then(login_encrypted => {
+          if(login_encrypted === null){
+            throw Error('Login not found wrong loginId.'); 
+          }
+          var login = login_encrypted; 
+          return PrivateKey
+            .findOne({where: {userId: req.decoded.uuid}})
+            .then(privateKey => {
+              login.password = login.decryptPwd(privateKey.value, master);  
+              t.commit(); 
+              return res.json(login); 
+            })
         })
         .catch(err => {
           t.rollback(); 

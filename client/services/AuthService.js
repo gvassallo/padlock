@@ -52,7 +52,6 @@ class AuthService {
     sessionStorage.setItem('master', master); 
     this.user = user;
     this.token = token;
-    // TODO do I need that ? 
     this.master = master; 
   }
 

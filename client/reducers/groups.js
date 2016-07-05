@@ -26,7 +26,9 @@ export default function groups(state = initialstate, action){
       var index = state.list
         .findIndex(elem => action.group.uuid === elem.uuid) ; 
       state.list[index].members = action.members;       
-      return state; 
+      return Object.assign({}, state, {
+        list: [...state.list]
+      });
 
     case types.RECEIVE_NEW_MEMBER: 
       var index = state.list
@@ -34,7 +36,9 @@ export default function groups(state = initialstate, action){
       if(state.list[index].members === undefined) 
         state.list[index].members = new Array(); 
       state.list[index].members.push(action.member);  
-      return state; 
+      return Object.assign({}, state, {
+        list: [...state.list]
+      });
 
     case types.RECEIVE_NEW_LOGIN_FOR_GROUP: 
       var index = state.list
@@ -70,7 +74,6 @@ export default function groups(state = initialstate, action){
       return state; 
 
     case types.DELETE_LOGIN_FROM_GROUP: 
-      console.log('delete');
       var gindex = state.list
         .findIndex(elem => action.group.uuid === elem.uuid) ; 
       var lindex = state.list[gindex].logins

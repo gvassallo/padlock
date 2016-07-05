@@ -475,7 +475,7 @@ describe('rotues/api', ()=> {
             .set('Content-Type', 'application/json')
             .set('x-access-token', this.userData.token)
             .send({master: this.userData.password})
-            .expect(404)
+            .expect(500)
             .expect('Content-Type', /json/)
             .end((err, res) => {
               expect(res.body).to.be.an('object');
