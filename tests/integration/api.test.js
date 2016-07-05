@@ -15,12 +15,21 @@ describe('rotues/api', ()=> {
       password: '1234',
       token: ''
     };
+
+    this.jon = {
+      username : 'jon',
+      email : 'j@targaryen.com',
+      password : 'r+l=j',
+      uuid: '3d48c975-a116-4ce1-8965-28b257541415'
+    }
+
     this.login = {
       id: '', 
       service: 'fb', 
       username: 'gabri',
       password: 'pwd' 
     }; 
+
     this.group = {
       name: 'Legion of Whom'
     }
@@ -236,11 +245,10 @@ describe('rotues/api', ()=> {
           done(err);
         });
     });
-
   }); 
 
   describe('/api/groups', () => {
-    // TODO
+
     it('GET /api/groups is empty', done => {
       request(app)
         .get('/api/groups')
@@ -631,7 +639,7 @@ describe('rotues/api', ()=> {
             .put('/api/groups/' + this.group.uuid + '/members')
             .set('Content-Type', 'application/json')
             .set('x-access-token', this.userData.token)
-            .send(this.userData)  
+            .send(this.jon)  
             .expect(200)
             .end((err, res) => {
               done(err);
@@ -680,10 +688,10 @@ describe('rotues/api', ()=> {
             .expect('Content-Type', /json/)
             .end((err, res) => {
               expect(res.body).to.be.an('array');
-              expect(res.body).to.have.length(1);
+              expect(res.body).to.have.length(2);
               for (var user of res.body) {
                 expect(user).to.include.keys('username', 'email', 'uuid');
-                expect(user).to.not.contain.any.keys('UserGroup', 'password');
+                expect(user).to.not.contain.any.keys('password');
               }
               done(err);
             });
@@ -724,7 +732,7 @@ describe('rotues/api', ()=> {
           it('DELETE /api/groups/:uuid/members/:userId', done => {
             var group = this.group; 
             request(app)
-              .del('/api/groups/' + group.uuid + '/members/'+ this.userData.uuid)
+              .del('/api/groups/' + group.uuid + '/members/'+ this.jon.uuid)
               .set('Content-Type', 'application/json')
               .set('x-access-token', this.userData.token)
               .expect(200)
@@ -735,8 +743,38 @@ describe('rotues/api', ()=> {
                 done(err);
               });
           });
-        });
-      });
+          
+          //TODO change location
+          it('DELETE /api/groups/:uuid', done => {
+            request(app)
+              .del('/api/groups/'+this.group.uuid)
+              .set('Content-Type', 'application/json')
+              .set('x-access-token', this.userData.token)
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .end((err, res) => {
+                expect(res.body).to.be.an('object');
+                expect(res.body).to.be.empty;
+                done(err);
+              });
+          });
+
+          it('DELETE /api/groups/:uuid', done => {
+            request(app)
+              .del('/api/groups/'+this.group.uuid)
+              .set('Content-Type', 'application/json')
+              .set('x-access-token', this.userData.token)
+              .expect(404)
+              .expect('Content-Type', /json/)
+              .end((err, res) => {
+                expect(res.body).to.be.an('object');
+                expect(res.body.message).to.match(/[Gg]roup[\S\s]+not found/);
+                done(err);
+              });
+          });
+
+        }); // /api/groups/:uuid/members/:userId
+      }); // /api/groups/:uuid/members
     });
   });
 

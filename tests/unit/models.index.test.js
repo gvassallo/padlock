@@ -6,6 +6,16 @@ describe('models/index', () => {
 
   before(done => {
     this.models = require('../../models'); // jshint ignore:line
+
+    this.User = require('../../models').User;
+
+    this.user = {
+      username : 'jon',
+      email : 'j@targaryen.com',
+      password : 'r+l=j',
+      uuid: '3d48c975-a116-4ce1-8965-28b257541415'
+    }
+
     done();
   });
 
@@ -90,6 +100,13 @@ describe('models/index', () => {
     this.models.UserGroup
       .sync({ force: true })
       .then(() => done())
+      .error(error => done(error));
+  });
+  
+  it('insert new User', done => {
+    this.models.User
+      .create(this.user)
+      .then(()=> done())
       .error(error => done(error));
   });
 

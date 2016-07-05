@@ -2,8 +2,9 @@
 module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.createTable('UserGroups', {
-      active: {
-        type: Sequelize.BOOLEAN
+      admin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         type: Sequelize.DATE,

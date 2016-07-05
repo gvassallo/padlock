@@ -20,9 +20,9 @@ module.exports = (passport, router) => {
             .then(user => {
               return user.getGroups({ transaction: t });
             })
-            .then(projects => {
+            .then(groups => {
               t.commit();
-              return res.json(projects);
+              return res.json(groups);
             })
             .catch(err => {
               t.rollback();
@@ -41,7 +41,7 @@ module.exports = (passport, router) => {
             return User.findById(req.decoded.uuid, {transaction: t})
           }) 
           .then(user => {
-            return this.group.addMember(user, {transaction: t}); 
+            return this.group.addMember(user, {admin: 'true', transaction: t}); 
           })
           .then(() => {
             t.commit(); 
@@ -78,7 +78,45 @@ module.exports = (passport, router) => {
           }
          });
       });
-    }); 
+    })
+    .delete((req, res, next) => {
+      db.sequelize.transaction({autocommit: false}) 
+        .then(t => {
+          return Group
+            .findOne({
+              where: {uuid: req.params.uuid}, 
+              include: [{
+                model: User, 
+                as: 'members', 
+                through: {where: {userId: req.decoded.uuid, admin: true}}
+              }]
+            }, {transaction: t})
+            .then(group => {
+              if(group === null){
+                t.rollback();
+                next({statusCode: 404, message: 'Group not found. Wrong UUID.'});
+              }
+              else if(group.members.length < 1){
+                t.rollback();
+                next({statusCode: 500, message: 'The group can be deleted only by the admin.'});
+              }
+              else{
+                Group.destroy({
+                  where: {uuid: req.params.uuid}, 
+                  transaction: t
+                })
+                .then(()=>  {
+                  t.commit();
+                  return res.json({});
+                })
+                .catch(err=> {
+                  t.rollback();
+                  next({statusCode: 500, message: err.message});
+                });
+              }
+            });
+          });
+    });
   //TODO only if the user is a member 
   router.route('/groups/:uuid/members')
     .get((req, res, next) => {
@@ -89,8 +127,8 @@ module.exports = (passport, router) => {
             {
               model: User,
               as: 'members',
-              attributes: [ 'uuid', 'username', 'fullName', 'email' ],
-              through: { attributes: [] }
+              attributes: [ 'uuid', 'username', 'fullName', 'email'],
+              through: { attributes: ['admin'] }
             }
           ]}, {transaction: t})
           .then(group => {
