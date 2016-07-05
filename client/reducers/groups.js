@@ -55,7 +55,9 @@ export default function groups(state = initialstate, action){
       var index = state.list
         .findIndex(elem => action.group.uuid === elem.uuid) ; 
       state.list[index].logins = action.logins; 
-      return state; 
+      return Object.assign({}, state, {
+        list: [...state.list]
+      });
 
     case types.RECEIVE_UPDATED_LOGIN_FOR_GROUP: 
       var gindex = state.list
@@ -80,6 +82,14 @@ export default function groups(state = initialstate, action){
         .findIndex(elem => action.login.uuid === elem.uuid) ; 
       state.list[gindex].logins.splice(index, 1); 
       return state; 
+    
+    case types.REMOVE_GROUP: 
+      var gindex = state.list
+        .findIndex(elem => action.group.uuid === elem.uuid) ; 
+      state.list.splice(gindex, 1);
+      return Object.assign({}, state, {
+        list: [...state.list]
+      });
 
     default: 
       return state; 

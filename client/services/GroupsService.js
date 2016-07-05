@@ -107,6 +107,16 @@ class GroupsService {
       }); 
   }
 
+  deleteGroup(group){
+    return axios
+      .delete('/api/groups/'+group.uuid)
+      .then(res => {
+        if(res.status === 200){
+          return Promise.resolve(res.data);
+        }
+        throw new Error(res.message);
+      });
+  }
 }
 
 export default new GroupsService(); 

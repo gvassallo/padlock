@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Input, Button, Alert, ListGroupItem, ListGroup} from 'react-bootstrap'
 import {If, Then} from 'react-if'
+import {browserHistory} from 'react-router'
 import * as GroupsActions from '../actions/GroupsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 import '../scss/components/GroupMenu.scss'
@@ -11,7 +12,8 @@ class GroupMenu extends React.Component{
     super();
     this.state = {
       member: '', 
-      error: false
+      error: false, 
+      deleteError: false
     };
   }
 
@@ -36,9 +38,21 @@ class GroupMenu extends React.Component{
       });
   }
 
+  delete(){
+    this.props.dispatch(
+      GroupsActions.deleteGroup(this.props.group)
+    ).then(()=> {
+      browserHistory.push('/'); 
+    }).catch(err=> {
+        this.state.error = true; 
+        this.setState(this.state);
+    })
+  }
+
   handleAlertDismiss(){
     this.setState({
-      error: false 
+      error: false, 
+      deleteError: false
     }); 
   }
 
@@ -88,13 +102,22 @@ class GroupMenu extends React.Component{
               <ListGroup> 
                 {this.props.group.members.map(listValue => {
                 return <ListGroupItem key={listValue.uuid}>
-                  {listValue.fullName} 
+                  <div>
+                    <span>{listValue.fullName}</span>
+                    <If condition={listValue.UserGroup.admin}>
+                      <Then><span className='admin-tag'>admin</span></Then>
+                    </If>
+                  </div>
                 </ListGroupItem>; 
                 })}
               </ListGroup> 
             </Then>
           </If>
         </div>
+        <If condition={this.state.deleteError}>
+          <Then>{this.showAlert()}</Then>
+        </If>
+        <Button bsStyle='danger' onClick={this.delete.bind(this)}>Delete</Button>
       </div>
     </div>
     );

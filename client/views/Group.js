@@ -25,7 +25,6 @@ class Groups extends React.Component {
 
   componentWillMount(){
     if(this.props.groups.length === 0){
-      console.log('ciao');
       browserHistory.push('/');
     }
   }
@@ -42,9 +41,10 @@ class Groups extends React.Component {
   update(props){
     const {dispatch} = props; 
     var group = { uuid: props.params.groupId};
-    if(this.state.groupId === group.uuid) 
+    if(this.state.groupId === group.uuid){
+      this.setState(this.state);
       return;
-
+    }
     this.state.loading = true;
     this.setState(this.state);
     this.state.groupId = props.params.groupId; 

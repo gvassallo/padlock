@@ -90,6 +90,15 @@ export function getPassword(group, login){
   }
 }
 
+export function deleteGroup(group){
+  return dispatch => {
+    return GroupsService.deleteGroup(group)
+      .then((group) => {
+        return dispatch(removeGroup(group));
+      });
+  };
+}
+
 function receiveGroupsList(data){
   return {
     type: types.RECEIVE_GROUPS_LIST, 
@@ -149,6 +158,7 @@ function receiveUpdatedLoginForGroup(group, login){
     login 
   }; 
 }
+
 function receivePasswordFromGroup(group, login){
   return {
     type: types.RECEIVE_PASSWORD_FROM_GROUP, 
@@ -156,3 +166,11 @@ function receivePasswordFromGroup(group, login){
     login 
   }; 
 }
+
+function removeGroup(group){
+  return {
+    type: types.REMOVE_GROUP, 
+    group
+  };
+}
+
