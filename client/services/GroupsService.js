@@ -30,8 +30,9 @@ class GroupsService {
   }
 
   addMemberToGroup(group, email){
+    var master = sessionStorage.getItem('master'); 
     return axios
-      .put('/api/groups/'+group.uuid+'/members', {email: email})
+      .put('/api/groups/'+group.uuid+'/members', {user : {email: email}, master: master})
       .then(res => {
         if(res.status === 200){
           return Promise.resolve(res.data); 
@@ -105,6 +106,16 @@ class GroupsService {
         }
         throw new Error(res.message); 
       }); 
+  }
+
+  deleteMemberFromGroup(group, member){
+    return axios('/api/groups/'+group.uuid+'/members/'+member.uuid)
+      .then(res => {
+        if(res.status === 200){
+          return Promise.resolve(res.data);
+        }
+        throw new Error(res.message);
+      });
   }
 
   deleteGroup(group){

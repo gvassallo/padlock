@@ -4,14 +4,14 @@ const initialstate = {
   list: [] 
 }
 
-export default function groups(state = initialstate, action){
+export default function groups(state = initialstate,  action){
 
   switch(action.type) {
 
     case types.RECEIVE_GROUPS_LIST: 
       action.groups.forEach(group => {group.logins=[]});
       return Object.assign({}, state, {
-        list: [...action.groups] 
+        list :  [...action.groups]
       }); 
 
     case types.NEW_GROUP_CREATED: 
@@ -20,7 +20,7 @@ export default function groups(state = initialstate, action){
         list: [
           ...state.list, action.group
         ]
-      }); 
+    }); 
 
     case types.RECEIVE_MEMBERS:
       var index = state.list
@@ -43,17 +43,14 @@ export default function groups(state = initialstate, action){
     case types.RECEIVE_NEW_LOGIN_FOR_GROUP: 
       var index = state.list
         .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      if (state.list[index].logins === undefined) 
-        state.list[index].logins = new Array(); 
-      state.list[index].logins.push(action.login); 
-      /* workaround to make it work */
+      state.list[index].logins.push(action.login);
       return Object.assign({}, state, {
         list: [...state.list]
       });
 
     case types.RECEIVE_LOGINS_FROM_GROUP: 
       var index = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
+        .findIndex(elem => action.group.uuid === elem.uuid); 
       state.list[index].logins = action.logins; 
       return Object.assign({}, state, {
         list: [...state.list]
@@ -65,7 +62,7 @@ export default function groups(state = initialstate, action){
       var lindex = state.list[gindex].logins
         .findIndex(elem => action.login.uuid === elem.uuid) ; 
       state.list[gindex].logins[lindex] = action.login; 
-      return state; 
+      return Object.assign({}, state); 
 
     case types.RECEIVE_PASSWORD_FROM_GROUP: 
       var gindex = state.list
@@ -73,7 +70,7 @@ export default function groups(state = initialstate, action){
       var lindex = state.list[gindex].logins
         .findIndex(elem => action.login.uuid === elem.uuid) ; 
       state.list[gindex].logins[lindex] = action.login; 
-      return state; 
+      return Object.assign({}, state); 
 
     case types.DELETE_LOGIN_FROM_GROUP: 
       var gindex = state.list
@@ -81,8 +78,8 @@ export default function groups(state = initialstate, action){
       var lindex = state.list[gindex].logins
         .findIndex(elem => action.login.uuid === elem.uuid) ; 
       state.list[gindex].logins.splice(index, 1); 
-      return state; 
-    
+      return Object.assign({}, state); 
+
     case types.REMOVE_GROUP: 
       var gindex = state.list
         .findIndex(elem => action.group.uuid === elem.uuid) ; 

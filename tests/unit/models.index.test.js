@@ -103,11 +103,12 @@ describe('models/index', () => {
       .error(error => done(error));
   });
   
-  it('insert new User', done => {
-    this.models.User
-      .create(this.user)
-      .then(()=> done())
-      .error(error => done(error));
-  });
+  // it('insert new User', done => {
+  //   this.models.User
+  //     .create(this.user)
+  //     .then(()=> done())
+  //     .error(error => done(error));
+  //   
+  // });
 
 });

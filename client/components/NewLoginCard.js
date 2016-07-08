@@ -125,7 +125,7 @@ class NewLoginCard extends React.Component {
                 <label className="text-muted">password</label> 
               </Col>
               <Col xs={8} sm={8}>
-                <Input type="text"
+                <Input type="password"
                   onChange={this.handleChange('password')}/>
               </Col> 
             </Row>

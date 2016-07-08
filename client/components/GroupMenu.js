@@ -1,7 +1,7 @@
 import React from 'react' 
 import {connect} from 'react-redux'
 import {Input, Button, Alert, ListGroupItem, ListGroup} from 'react-bootstrap'
-import {If, Then} from 'react-if'
+import {If, Then, Else} from 'react-if'
 import {browserHistory} from 'react-router'
 import * as GroupsActions from '../actions/GroupsActions'
 import * as OptionsActions from '../actions/OptionsActions'
@@ -41,9 +41,8 @@ class GroupMenu extends React.Component{
   delete(){
     this.props.dispatch(
       GroupsActions.deleteGroup(this.props.group)
-    ).then(()=> {
-      browserHistory.push('/'); 
-    }).catch(err=> {
+    )
+    .catch(err=> {
         this.state.error = true; 
         this.setState(this.state);
     })
@@ -68,6 +67,23 @@ class GroupMenu extends React.Component{
         <center>
           User not found!
           <p>Change few things up and try submitting again</p>
+        </center>
+      </Alert>
+    );
+  }
+
+  showAlert2(){
+    var style = {
+      marginTop: '10px', 
+    }; 
+    return(
+      <Alert bsStyle="danger" 
+        style={style} 
+        dismissAfter={3000}
+        onDismiss={this.handleAlertDismiss.bind(this)} > 
+        <center>
+          Error
+          <p>Only the admin can delete the group</p>
         </center>
       </Alert>
     );
@@ -115,9 +131,16 @@ class GroupMenu extends React.Component{
           </If>
         </div>
         <If condition={this.state.deleteError}>
-          <Then>{this.showAlert()}</Then>
+          <Then>{this.showAlert2()}</Then>
         </If>
-        <Button bsStyle='danger' onClick={this.delete.bind(this)}>Delete</Button>
+        <If condition={this.props.group.UserGroup.admin}>
+          <Then>
+            <Button bsStyle='danger' onClick={this.delete.bind(this)} className='delete-button'>Delete</Button>
+          </Then>
+          <Else>
+            <Button bsStyle='primary' className='leave-button'>Leave</Button>
+          </Else>
+        </If>
       </div>
     </div>
     );

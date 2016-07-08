@@ -143,25 +143,76 @@ module.exports = (passport, router) => {
       }); 
     })
     .put((req, res, next) => {
+      var user = req.body.user;
+      var master = req.body.master;
       db.sequelize.transaction({autocommit: false})
       .then(t => {
         return User
-          .findOne({ where: { email: req.body.email }}, {transaction: t}) 
+          .findOne({ where: { email: user.email }}, {transaction: t}) 
           .then(user => {
             if (user === null) {
               throw Error('User not found. Wrong email or username.');
             } else {
               this.user = user;
-              return Group.findOne({ where: { uuid: req.params.uuid } }, {transaction: t});
+              return Group
+                .findOne({ where: { uuid: req.params.uuid }, include: [
+                  {
+                    model: User,
+                    as: 'members',
+                    where: {$or: [{uuid: req.decoded.uuid},{uuid: this.user.uuid}]},
+                    attributes: ['uuid'],
+                    through: { attributes: [''] }
+                  }
+                ]}, {transaction: t});
             }
           })
           .then(group => {
             if (group === null) {
               throw Error('Group not found. Wrong id.');
             } else {
+              if(group.members.length === 0){
+                throw Error('You do not belong to the group.'); 
+              }
+              else if(group.members.length === 2){
+                throw Error('User already belongs to the group.');
+              }
+              else if(group.members.length === 1){
+                if(group.members[0].uuid === this.user.uuid)
+                  throw Error('You do not belong to the group.');
+              }
               this.group = group;
               return group.addMember(this.user, {transaction: t});
             }
+          })
+          .then(() => {
+            return Login
+              .findAll({
+                where: {groupId: this.group.uuid, userId: req.decoded.uuid}, 
+                transaction: t
+              });
+          })
+          .then(logins => {
+            if(logins.length === 0)
+              return;
+            this.logins = logins;
+            return PrivateKey
+              .findOne({where: {userId: req.decoded.uuid}, transaction: t})
+              .then(privateKey => {
+                this.privateKey = privateKey; 
+                return PublicKey
+                  .findOne({where: {userId: this.user.uuid}, transaction: t});
+              })
+              .then(publicKey => {
+                this.publicKey = publicKey; 
+                return Promise.map(logins, login => {
+                  login.password = login.decryptPwd(this.privateKey.value, master);  
+                  login = JSON.parse(JSON.stringify(login));
+                  login.password = Login.encryptPwd(login.password, this.publicKey.value)
+                  login.userId = this.user.uuid;
+                  delete login.uuid;
+                  return Login.create(login, {transaction: t});
+                });
+              });
           })
           .then(() => {
             t.commit(); 
@@ -193,9 +244,12 @@ module.exports = (passport, router) => {
                   include: [{
                     model: User,
                     as: 'members',
-                    where: {uuid: req.params.userId}, 
+                    where: {$or : [
+                      {uuid: req.params.userId}, 
+                      {uuid: req.decoded.uuid}, 
+                    ]},
                     attributes: ['uuid'],
-                    through: { attributes: [] }
+                    through: { attributes: ['admin'] }
                   }]
                 }, {transaction: t});}
             })
@@ -203,7 +257,34 @@ module.exports = (passport, router) => {
               if (group === null) {
                 throw Error('Group not found.');
               } 
-              this.group = group; 
+              if(group.members.length == 1){
+                var member = group.members[0]; 
+                if(member.uuid === req.decoded.uuid && member.uuid === req.params.userId){//its me and i'm trying to delete myself 
+                  if(member.UserGroup.admin) 
+                    throw Error('Error removing a member. If you are the admin, remove the group directly.');
+                  else{
+                    return group;
+                  }
+                }
+                else if(member.uuid === req.decoded.uuid && !member.uuid === req.params.userId){
+                  throw Error('User not found');
+                }
+                else if(member.uuid !== req.decoded.uuid && member.uuid === req.params.userId){
+                  throw Error('Error removing a member. You do not belong to the group');
+                }
+                else{
+                  throw Error('User not found and you do not belong to the group');
+                }
+              }
+              else if(group.members.length == 2){
+                var me = group.members.filter(member => member.uuid == req.decoded.uuid)[0];
+                if(!me.UserGroup.admin){
+                  throw Error('Only the admin can remove a member');
+                }
+                return group; 
+              }
+            })
+            .then(group => {
               return Login.destroy({
                 where: {
                   userId: req.params.userId, 
@@ -224,7 +305,7 @@ module.exports = (passport, router) => {
             })
             .catch(err => {
               t.rollback(); 
-              next({ statusCode: 404, message: err.message });
+              next({ statusCode: 500, message: err.message });
             });
         })
     });

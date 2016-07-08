@@ -15,18 +15,10 @@ class Groups extends React.Component {
   constructor(){
     super();  
     this.state = {
-      groupId: '', //group uuid 
       iGroup: 0,  // group index in the groups state array 
       sidebar_open: false, 
       loading : true, 
-      group: ''
     }; 
-  }
-
-  componentWillMount(){
-    if(this.props.groups.length === 0){
-      browserHistory.push('/');
-    }
   }
 
   componentDidMount(){
@@ -34,28 +26,25 @@ class Groups extends React.Component {
   }
 
   //to update the view when an other group is selected
-  componentWillReceiveProps(nextPros){
-    this.update(nextPros); 
+  componentWillReceiveProps(nextProps){
+    this.update(nextProps); 
   }
 
   update(props){
     const {dispatch} = props; 
-    var group = { uuid: props.params.groupId};
-    if(this.state.groupId === group.uuid){
-      this.setState(this.state);
+    if(props.group === undefined){
       return;
     }
+    if(this.state.iGroup === props.group.uuid)
+      return;
     this.state.loading = true;
     this.setState(this.state);
-    this.state.groupId = props.params.groupId; 
-    this.state.iGroup = props.groups 
-      .findIndex(elem => this.state.groupId === elem.uuid) ; 
-
+    this.state.iGroup = props.group.uuid;
     //fetch data 
     dispatch(OptionsActions.loading());
-    dispatch(GroupsActions.getLoginsFromGroup(group))
+    dispatch(GroupsActions.getLoginsFromGroup(props.group))
       .then(() => {
-        return dispatch(GroupsActions.getMembers(group));
+        return dispatch(GroupsActions.getMembers(props.group));
       })
       .then(() => {
         dispatch(OptionsActions.loadingEnd());
@@ -77,11 +66,11 @@ class Groups extends React.Component {
   render(){
     return(
       <div className='group-view'>
-        <If condition={this.state.loading || this.props.groups.length == 0}>
+        <If condition={this.state.loading || this.props.group.logins === undefined}>
           <Then><div></div></Then>
           <Else>  
             <div>
-              <Sidebar sidebar={<GroupMenu group={this.props.groups[this.state.iGroup]}/>} 
+              <Sidebar sidebar={<GroupMenu group={this.props.group}/>} 
                 pullRight={true} 
                 onSetOpen={this.onSetSidebarOpen.bind(this)}
                 open={this.state.sidebar_open}
@@ -92,10 +81,10 @@ class Groups extends React.Component {
                 <div></div> 
               </Sidebar> 
               <h3 className='group-name'> 
-                {this.props.groups[this.state.iGroup].name}
+                {this.props.group.name}
               </h3> 
               <a className='show-group-menu' onClick={this.openSidebar.bind(this)}>show menu</a> 
-              <LoginsList logins={this.props.groups[this.state.iGroup].logins}/>
+              <LoginsList logins={this.props.group.logins}/>
             </div>
           </Else>
         </If>
@@ -104,8 +93,8 @@ class Groups extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-    groups: state.groups.list,
+const mapStateToProps = (state, ownProps) => ({
+  group: state.groups.list.filter(group => group.uuid === ownProps.params.groupId)[0]
 }); 
 
 export default connect(mapStateToProps)(Groups);  

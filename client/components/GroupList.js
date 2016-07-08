@@ -30,5 +30,9 @@ class GroupList extends React.Component{
   }; 
 }
 
-export default connect()(GroupList); 
+const mapStateToProps = (state) => ({
+  groups : state.groups.list
+});
+
+export default connect(mapStateToProps)(GroupList); 
 // vim: set ft=javascript.jsx: 

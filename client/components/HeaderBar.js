@@ -96,7 +96,7 @@ class HeaderBar extends React.Component {
             </Nav>
         </Navbar>
         <If condition={this.state.groupsOpen}> 
-          <Then><GroupList groups={this.props.groups}/></Then> 
+          <Then><GroupList/></Then> 
         </If> 
       </div>
     ); 
@@ -106,7 +106,7 @@ class HeaderBar extends React.Component {
 const mapStateToProps = (state) => ({
   user : state.auth.user,
   token: state.auth.token, 
-  groups: state.groups.list, 
+  groups: state.groups.list,
   dropdown_open: state.options.dropdown_open, 
   current_view: state.options.current_view
 });

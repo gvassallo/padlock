@@ -1,5 +1,7 @@
 import * as types from '../constants/ActionTypes' 
+import {browserHistory} from 'react-router'
 import GroupsService from '../services/GroupsService' 
+import {snackBarOpen} from './OptionsActions'
 
 export function downloadGroups(){
   return dispatch => {
@@ -90,11 +92,26 @@ export function getPassword(group, login){
   }
 }
 
+export function deleteMemberFromGroup(group, member){
+  return dispatch => {
+    return GroupsService.deleteMemberFromGroup(group, member)
+      .then(()=> {
+        return dispatch(removeMember(group, member)); 
+      })
+  };
+}
+
 export function deleteGroup(group){
   return dispatch => {
     return GroupsService.deleteGroup(group)
       .then((group) => {
+        browserHistory.push('/');
         return dispatch(removeGroup(group));
+      })
+      .then(()=> {
+        return dispatch(snackBarOpen(
+          'Group \''+ group.name +'\' deleted!'
+        )); 
       });
   };
 }
@@ -165,6 +182,14 @@ function receivePasswordFromGroup(group, login){
     group, 
     login 
   }; 
+}
+
+function removeMember(group, member){
+  return {
+    type: types.REMOVE_MEMBER_FROM_GROUP,
+    group, 
+    member
+  };
 }
 
 function removeGroup(group){
