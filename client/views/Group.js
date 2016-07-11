@@ -84,7 +84,7 @@ class Groups extends React.Component {
                 {this.props.group.name}
               </h3> 
               <a className='show-group-menu' onClick={this.openSidebar.bind(this)}>show menu</a> 
-              <LoginsList logins={this.props.group.logins}/>
+              <LoginsList logins={this.props.group.logins.toArray()}/>
             </div>
           </Else>
         </If>
@@ -94,7 +94,7 @@ class Groups extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  group: state.groups.list.filter(group => group.uuid === ownProps.params.groupId)[0]
+  group: state.groups.get(ownProps.params.groupId)
 }); 
 
 export default connect(mapStateToProps)(Groups);  

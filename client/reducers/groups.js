@@ -1,109 +1,91 @@
+import {List, Map} from 'immutable' 
 import * as types from '../constants/ActionTypes' 
 
-const initialstate = {
-  list: [] 
-}
+const initialstate = Map({});
 
 export default function groups(state = initialstate,  action){
 
   switch(action.type) {
 
     case types.RECEIVE_GROUPS_LIST: 
-      action.groups.forEach(group => {group.logins=[]});
-      return Object.assign({}, state, {
-        list :  [...action.groups]
-      }); 
+      action.groups.forEach(group => { 
+        group.logins= Map({});
+        group.members = Map({});
+        state = state.set(group.uuid, group);
+      });
+      return state;
 
     case types.NEW_GROUP_CREATED: 
-      action.group.logins = [];  
+      action.group.logins = Map({});
+      action.group.members = Map({});
       //workaround 
       action.group.UserGroup = new Object();
       action.group.UserGroup.admin = true;
-      return Object.assign({}, state, {
-        list: [
-          ...state.list, action.group
-        ]
-    }); 
+      return state.set(action.group.uuid, action.group);
 
     case types.RECEIVE_MEMBERS:
-      var index = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      state.list[index].members = action.members;       
-      return Object.assign({}, state, {
-        list: [...state.list]
+      var members = Map({});
+      action.members.forEach(member => {
+        members = members.set(member.uuid, member);
       });
+      return state
+        .update(action.group.uuid, value => 
+            Object.assign({}, value, {
+              members: members
+            })
+        );
 
     case types.RECEIVE_NEW_MEMBER: 
-      var index = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      if(state.list[index].members === undefined) 
-        state.list[index].members = new Array(); 
-      state.list[index].members.push(action.member);  
-      return Object.assign({}, state, {
-        list: [...state.list]
-      });
-
-    case types.RECEIVE_NEW_LOGIN_FOR_GROUP: 
-      var index = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      state.list[index].logins.push(action.login);
-      return Object.assign({}, state, {
-        list: [...state.list]
-      });
+      return state
+        .update(action.group.uuid, value => 
+          Object.assign({}, value, {
+            members: value.members.set(action.member.uuid, action.member)
+          })
+        );
 
     case types.RECEIVE_LOGINS_FROM_GROUP: 
-      var index = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid); 
-      state.list[index].logins = action.logins; 
-      return Object.assign({}, state, {
-        list: [...state.list]
-      });
+      var logins = Map({});
+      action.logins.forEach(login => 
+        logins = logins.set(login.uuid, login)
+      );
+      return state
+        .update(action.group.uuid, value => 
+          Object.assign({}, value, {
+            logins: logins
+          })
+        );
 
-    case types.RECEIVE_UPDATED_LOGIN_FOR_GROUP: 
-      var gindex = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      var lindex = state.list[gindex].logins
-        .findIndex(elem => action.login.uuid === elem.uuid) ; 
-      state.list[gindex].logins[lindex] = action.login; 
-      return Object.assign({}, state); 
-
-    case types.RECEIVE_PASSWORD_FROM_GROUP: 
-      var gindex = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      var lindex = state.list[gindex].logins
-        .findIndex(elem => action.login.uuid === elem.uuid) ; 
-      state.list[gindex].logins[lindex] = action.login; 
-      return Object.assign({}, state); 
+    case  types.RECEIVE_NEW_LOGIN_FOR_GROUP || 
+          types.RECEIVE_UPDATED_LOGIN_FOR_GROUP || 
+          types.RECEIVE_PASSWORD_FROM_GROUP: 
+      return state
+        .update(action.group.uuid, value => 
+          Object.assign({}, value, {
+            logins: value.logins.set(action.login.uuid, action.login)
+          })
+        );
 
     case types.DELETE_LOGIN_FROM_GROUP: 
-      var gindex = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      var lindex = state.list[gindex].logins
-        .findIndex(elem => action.login.uuid === elem.uuid) ; 
-      state.list[gindex].logins.splice(index, 1); 
-      return Object.assign({}, state); 
+      return state
+        .update(action.group.uuid, value => 
+          Object.assign({}, value, {
+            logins: value.logins.delete(action.login.uuid)         
+          })
+        );
 
-    case types.REMOVE_GROUP: 
-      var gindex = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      var newState = Object.assign({}, state);
-      newState.list.splice(gindex, 1);
-      return newState;
-    
+    case types.REMOVE_GROUP:
+      return state.delete(action.group.uuid);
+
     case types.LEAVE_GROUP: 
-      var gindex = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      var newState = Object.assign({}, state);
-      newState.list.splice(gindex, 1);
-      return newState;
-  
+      return state.delete(action.group.uuid);
+
     case types.REMOVE_MEMBER_FROM_GROUP: 
-      var gindex = state.list
-        .findIndex(elem => action.group.uuid === elem.uuid); 
-      var mindex = state.list[gindex].members
-        .findIndex(elem => action.member.uuid == elem.uuid);
-      state.list[gindex].members.splice(mindex, 1);
-      return Object.assign({}, state);
+      return state
+        .update(action.group.uuid, value =>
+          Object.assign({}, value, {
+            members: value.members.delete(action.member.uuid)
+          })
+        );
 
     default: 
       return state; 

@@ -9,9 +9,9 @@ import '../scss/components/GroupList.scss'
 
 class GroupList extends React.Component{
   componentDidMount(){
-    this.props.dispatch(
-      GroupsActions.downloadGroups()
-    );
+    // this.props.dispatch(
+    //   GroupsActions.downloadGroups()
+    // );
   }
 
   render(){
@@ -34,7 +34,7 @@ class GroupList extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
-  groups : state.groups.list
+  groups : state.groups.toArray()
 });
 
 export default connect(mapStateToProps)(GroupList); 

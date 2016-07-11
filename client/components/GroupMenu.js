@@ -149,7 +149,7 @@ class GroupMenu extends React.Component{
           <If condition={!(this.props.group.members == undefined)}>
             <Then> 
               <ListGroup> 
-                {this.props.group.members.map(listValue => {
+                {this.props.group.members.toArray().map(listValue => {
                 return <ListGroupItem key={listValue.uuid}>
                   <div>
                     <span>{listValue.fullName}</span>

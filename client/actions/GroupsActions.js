@@ -36,8 +36,8 @@ export function addMemberToGroup(group, email){
   return dispatch => {
     return GroupsService.addMemberToGroup(group, email)
       .then(() => {
-        //TODO check if it's correct 
-        return dispatch(this.getMembers(group)); 
+        //TODO to fix, return user and add UserGroup admin false
+        return dispatch(getMembers(group));
       }); 
   }; 
 }
@@ -121,7 +121,7 @@ export function leaveGroup(group){
 export function deleteGroup(group){
   return dispatch => {
     return GroupsService.deleteGroup(group)
-      .then((group) => {
+      .then(() => {
         browserHistory.push('/');
         return dispatch(removeGroup(group));
       })
@@ -155,9 +155,11 @@ function receiveMembers(group, members){
   }
 }
 
-function receiveNewMember(){
+function receiveNewMember(group, member){
   return {
-    type: types.RECEIVE_NEW_MEMBER 
+    type: types.RECEIVE_NEW_MEMBER, 
+    group, 
+    member
   }; 
 }
 

@@ -84,7 +84,7 @@ class NewLoginCard extends React.Component {
         dispatch(OptionsActions.snackBarOpen('New login added to group!')); 
         this.close(); 
       })
-      .catch(err => {
+      .catch(err => {   
         alert('Service cannot remain empty!'); 
         this.close(); 
       }); 
@@ -176,7 +176,7 @@ class NewLoginCard extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  groups: state.groups.list
+  groups: state.groups.toArray()
 }); 
 
 export default connect(mapStateToProps)(NewLoginCard); 
