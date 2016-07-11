@@ -109,7 +109,8 @@ class GroupsService {
   }
 
   deleteMemberFromGroup(group, member){
-    return axios('/api/groups/'+group.uuid+'/members/'+member.uuid)
+    return axios
+      .delete('/api/groups/'+group.uuid+'/members/'+member.uuid)
       .then(res => {
         if(res.status === 200){
           return Promise.resolve(res.data);
@@ -117,7 +118,7 @@ class GroupsService {
         throw new Error(res.message);
       });
   }
-
+  
   deleteGroup(group){
     return axios
       .delete('/api/groups/'+group.uuid)

@@ -6,9 +6,12 @@ import GroupCell from './GroupCell'
 import * as GroupsActions from '../actions/GroupsActions' 
 import '../scss/components/GroupList.scss'
 
+
 class GroupList extends React.Component{
-  constructor(){
-    super(); 
+  componentDidMount(){
+    this.props.dispatch(
+      GroupsActions.downloadGroups()
+    );
   }
 
   render(){

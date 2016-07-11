@@ -1,6 +1,6 @@
 import React from 'react' 
 import {connect} from 'react-redux'
-import {Input, Button, Alert, ListGroupItem, ListGroup} from 'react-bootstrap'
+import {Input, Button, Alert, ListGroupItem, ListGroup, OverlayTrigger, Popover} from 'react-bootstrap'
 import {If, Then, Else} from 'react-if'
 import {browserHistory} from 'react-router'
 import * as GroupsActions from '../actions/GroupsActions'
@@ -43,7 +43,32 @@ class GroupMenu extends React.Component{
       GroupsActions.deleteGroup(this.props.group)
     )
     .catch(err=> {
-        this.state.error = true; 
+        this.state.deleteError = true; 
+        this.setState(this.state);
+    })
+  }
+
+  deleteMember(member){
+    this.props.dispatch(
+      GroupsActions.deleteMemberFromGroup(this.props.group, member)
+    )
+    .then(()=> {
+      this.props.dispatch(OptionsActions.snackBarOpen(
+      'User \''+member.fullName+'\' removed from group \''+this.props.group.name+'\'!'));
+    })
+    .catch(err=> {
+        this.state.deleteError = true; 
+        this.setState(this.state);
+    })
+
+  }
+
+  leave(){
+    this.props.dispatch(
+      GroupsActions.leaveGroup(this.props.group)
+    )
+    .catch(err=> {
+        this.state.deleteError = true; 
         this.setState(this.state);
     })
   }
@@ -89,6 +114,14 @@ class GroupMenu extends React.Component{
     );
   }
 
+  // getPopover(){
+  //   return (
+  //     <Popover>
+  //       <a>Ciao</a>
+  //     </Popover>
+  //   );
+  // }
+
   render(){
     return(
     <div className='group-menu'>
@@ -122,6 +155,11 @@ class GroupMenu extends React.Component{
                     <span>{listValue.fullName}</span>
                     <If condition={listValue.UserGroup.admin}>
                       <Then><span className='admin-tag'>admin</span></Then>
+                      <Else>
+                        <If condition={this.props.group.UserGroup.admin}>
+                          <Then><a className='delete-tag fa fa-trash' onClick={this.deleteMember.bind(this, listValue)}></a></Then>
+                        </If>
+                      </Else>
                     </If>
                   </div>
                 </ListGroupItem>; 
@@ -138,7 +176,7 @@ class GroupMenu extends React.Component{
             <Button bsStyle='danger' onClick={this.delete.bind(this)} className='delete-button'>Delete</Button>
           </Then>
           <Else>
-            <Button bsStyle='primary' className='leave-button'>Leave</Button>
+            <Button bsStyle='primary' onClick={this.leave.bind(this)} className='leave-button'>Leave</Button>
           </Else>
         </If>
       </div>

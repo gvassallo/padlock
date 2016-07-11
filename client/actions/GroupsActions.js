@@ -1,7 +1,9 @@
 import * as types from '../constants/ActionTypes' 
 import {browserHistory} from 'react-router'
 import GroupsService from '../services/GroupsService' 
+import AuthService from '../services/AuthService'
 import {snackBarOpen} from './OptionsActions'
+
 
 export function downloadGroups(){
   return dispatch => {
@@ -101,6 +103,21 @@ export function deleteMemberFromGroup(group, member){
   };
 }
 
+export function leaveGroup(group){
+  return dispatch =>{
+    return GroupsService.deleteMemberFromGroup(group, AuthService.getUser())
+      .then(()=> {
+        browserHistory.push('/');
+        return dispatch(leave(group)); 
+      })
+      .then(()=> {
+        return dispatch(snackBarOpen(
+          'You left the group \''+ group.name +'\'!'
+        ));
+      });
+  }
+}
+
 export function deleteGroup(group){
   return dispatch => {
     return GroupsService.deleteGroup(group)
@@ -189,6 +206,13 @@ function removeMember(group, member){
     type: types.REMOVE_MEMBER_FROM_GROUP,
     group, 
     member
+  };
+}
+
+function leave(group){
+  return {
+    type: types.LEAVE_GROUP, 
+    group
   };
 }
 

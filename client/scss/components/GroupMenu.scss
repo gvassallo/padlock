@@ -29,6 +29,17 @@
   right: 18px;
 }
 
+.delete-tag{
+  position: fixed;
+  right: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  &:hover{
+    color: black;
+  }
+}
+
 // .leave-button{
 //   position: fixed; 
 //   right: 10px;

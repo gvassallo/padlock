@@ -1,16 +1,19 @@
 import React from 'react'
  
-import SideBar from './components/SideBar'
+import HeaderBar from './components/HeaderBar'
+import Spinner from './components/Spinner' 
 import Snackbar from './components/SnackBar' 
 
 export default class App extends React.Component {
   render(){
     return (
       <div>
-        <SideBar>  
+        <div className='content-wrapper'>  
+          <HeaderBar/>
+          <Spinner/>
           {this.props.children} 
           <Snackbar/> 
-        </SideBar>  
+        </div>  
       </div> 
     )
   }

@@ -16,6 +16,9 @@ export default function groups(state = initialstate,  action){
 
     case types.NEW_GROUP_CREATED: 
       action.group.logins = [];  
+      //workaround 
+      action.group.UserGroup = new Object();
+      action.group.UserGroup.admin = true;
       return Object.assign({}, state, {
         list: [
           ...state.list, action.group
@@ -83,10 +86,24 @@ export default function groups(state = initialstate,  action){
     case types.REMOVE_GROUP: 
       var gindex = state.list
         .findIndex(elem => action.group.uuid === elem.uuid) ; 
-      state.list.splice(gindex, 1);
-      return Object.assign({}, state, {
-        list: [...state.list]
-      });
+      var newState = Object.assign({}, state);
+      newState.list.splice(gindex, 1);
+      return newState;
+    
+    case types.LEAVE_GROUP: 
+      var gindex = state.list
+        .findIndex(elem => action.group.uuid === elem.uuid) ; 
+      var newState = Object.assign({}, state);
+      newState.list.splice(gindex, 1);
+      return newState;
+  
+    case types.REMOVE_MEMBER_FROM_GROUP: 
+      var gindex = state.list
+        .findIndex(elem => action.group.uuid === elem.uuid); 
+      var mindex = state.list[gindex].members
+        .findIndex(elem => action.member.uuid == elem.uuid);
+      state.list[gindex].members.splice(mindex, 1);
+      return Object.assign({}, state);
 
     default: 
       return state; 
