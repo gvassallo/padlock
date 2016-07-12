@@ -13,7 +13,8 @@ class GroupMenu extends React.Component{
     this.state = {
       member: '', 
       error: false, 
-      deleteError: false
+      deleteError: false, 
+      errorMessage: ''
     };
   }
 
@@ -44,6 +45,7 @@ class GroupMenu extends React.Component{
     )
     .catch(err=> {
         this.state.deleteError = true; 
+        this.state.errorMessage = 'Error removing the group';
         this.setState(this.state);
     })
   }
@@ -58,6 +60,7 @@ class GroupMenu extends React.Component{
     })
     .catch(err=> {
         this.state.deleteError = true; 
+        this.state.errorMessage = 'Error removing a member';
         this.setState(this.state);
     })
 
@@ -69,6 +72,7 @@ class GroupMenu extends React.Component{
     )
     .catch(err=> {
         this.state.deleteError = true; 
+        this.state.errorMessage = 'Error leaving the group.';
         this.setState(this.state);
     })
   }
@@ -107,20 +111,11 @@ class GroupMenu extends React.Component{
         dismissAfter={3000}
         onDismiss={this.handleAlertDismiss.bind(this)} > 
         <center>
-          Error
-          <p>Only the admin can delete the group</p>
+          <p>{this.state.errorMessage}</p>
         </center>
       </Alert>
     );
   }
-
-  // getPopover(){
-  //   return (
-  //     <Popover>
-  //       <a>Ciao</a>
-  //     </Popover>
-  //   );
-  // }
 
   render(){
     return(

@@ -18,6 +18,14 @@
   }
 }
 
-.login-card-body{
-  width: 320px;
+@media (max-width: 350px){
+  .login-card-body{
+    width: 100%;
+  }
+}
+
+@media (min-width: 350px){
+  .login-card-body{
+    width: 321px;
+  }
 }

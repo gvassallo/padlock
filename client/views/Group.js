@@ -33,6 +33,7 @@ class Groups extends React.Component {
   update(props){
     const {dispatch} = props; 
     if(props.group === undefined){
+      browserHistory.push('/'); 
       return;
     }
     if(this.state.iGroup === props.group.uuid)
@@ -50,7 +51,7 @@ class Groups extends React.Component {
         dispatch(OptionsActions.loadingEnd());
         this.state.loading = false;
         this.setState(this.state);  
-      });
+      })
   }
 
   onSetSidebarOpen(isOpen){
@@ -66,9 +67,8 @@ class Groups extends React.Component {
   render(){
     return(
       <div className='group-view'>
-        <If condition={this.state.loading || this.props.group.logins === undefined}>
-          <Then><div></div></Then>
-          <Else>  
+        {(this.state.loading || this.props.group === undefined) ? (
+        <div></div>) : (
             <div>
               <Sidebar sidebar={<GroupMenu group={this.props.group}/>} 
                 pullRight={true} 
@@ -86,8 +86,7 @@ class Groups extends React.Component {
               <a className='show-group-menu' onClick={this.openSidebar.bind(this)}>show menu</a> 
               <LoginsList logins={this.props.group.logins.toArray()}/>
             </div>
-          </Else>
-        </If>
+          )}
       </div>
     ); 
   }
