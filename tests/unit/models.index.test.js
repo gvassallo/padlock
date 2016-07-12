@@ -68,6 +68,13 @@ describe('models/index', () => {
       .error(error => done(error));
   });
 
+  it('creates group model', done => {
+    this.models.Group
+      .sync({ force: true })
+      .then(() => done())
+      .error(error => done(error));
+  });
+
   it('creates login model', done => {
     this.models.Login
       .sync({ force: true })
@@ -84,13 +91,6 @@ describe('models/index', () => {
 
   it('creates public key model', done => {
     this.models.PublicKey
-      .sync({ force: true })
-      .then(() => done())
-      .error(error => done(error));
-  });
-
-  it('creates group model', done => {
-    this.models.Group
       .sync({ force: true })
       .then(() => done())
       .error(error => done(error));
