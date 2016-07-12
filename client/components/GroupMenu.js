@@ -128,7 +128,7 @@ class GroupMenu extends React.Component{
       <div className='group-menu-body'> 
         <form action='' onSubmit={this.addMember.bind(this)}> 
           <div className='group-search-member-input'>
-            <Input type='text' onChange={this.handeChange.bind(this)} placeholder='Add member (e.g john@snow.com)'/>
+            <Input type='text' onChange={this.handeChange.bind(this)} placeholder='Add member (e.g jon@snow.com)'/>
           </div> 
           <div className='group-search-member-button'>
             <Button type='submit' >

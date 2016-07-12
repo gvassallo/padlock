@@ -45,13 +45,13 @@ class NewGroup extends React.Component{
   
   render(){
     return(
-        <div className='new-group'> 
+        <form className='new-group' onSubmit={this.createGroup.bind(this)}> 
           <span>Name</span> 
           <Input type='text' placeholder='Group name' onChange={this.handleChange.bind(this)}/> 
-          <Button bsStyle='primary' onClick={this.createGroup.bind(this)}> 
+          <Button type='submit' bsStyle='primary'> 
             Create
           </Button> 
-        </div> 
+        </form> 
     ); 
   }
 }
