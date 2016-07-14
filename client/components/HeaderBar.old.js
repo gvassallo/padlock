@@ -17,8 +17,7 @@ class HeaderBar extends React.Component {
     super(); 
     this.state = {
       groupsOpen: false, 
-      groupsLoaded: false, 
-      dropdown_user_open: false
+      groupsLoaded: false
     }; 
   }
 
@@ -49,9 +48,10 @@ class HeaderBar extends React.Component {
     }
   }
 
-  toggleDropdownUser(isOpen){
-    this.state.dropdown_user_open = !this.state.dropdown_user_open;
-    this.setState(this.state);
+  getPlus(){
+    return (
+      <span className="fa fa-plus"/> 
+    ); 
   }
 
   openGroupsList(event){
@@ -62,14 +62,20 @@ class HeaderBar extends React.Component {
   }
 
   render() {
+    var buttonStyle={
+      border: '0px solid transparent', 
+      color: 'white'
+    };
+
     return (
-    <div>
-      <nav className="header">
-        <div className="container-fluid">
-          <div className="header-left">
+      <div className="header">
+        <Navbar fixedTop style={{lineHeight: '40px'}} fluid>
+          <Nav pullLeft>
             <div className="header-groups-button">        
-              <Button onClick={this.openGroupsList.bind(this)} disabled={!this.state.groupsLoaded}> 
-                Groups
+              <Button style={buttonStyle} onClick={this.openGroupsList.bind(this)} disabled={!this.state.groupsLoaded}> 
+                <span style={{color: 'white'}}> 
+                  Groups
+                </span> 
               </Button> 
             </div> 
             <div className='header-logo'> 
@@ -77,13 +83,12 @@ class HeaderBar extends React.Component {
                 <img src='/img/padlock.png'/>  
               </Link>
             </div> 
-          </div>
-          <div className="header-right">
-            <ul className="header-right-group">
+          </Nav>
+            <Nav pullRight>  
               <NavDropdown 
                 eventKey={1} 
                 id='create-dropdown' 
-                title={<Button><span className="fa fa-plus header-plus"/></Button>}
+                title={this.getPlus()}
                 open={this.props.dropdown_open}
                 onToggle={this.toggleDropdown.bind(this)}
                 noCaret 
@@ -91,23 +96,21 @@ class HeaderBar extends React.Component {
                 <CreateMenu/>               
               </NavDropdown>
               <NavDropdown 
-                eventKey={2} 
+                eventKey={1} 
                 id='user-button' 
                 title={<Button>{this.props.user.username}</Button>}
-                open={this.state.dropdown_user_open}
-                onToggle={this.toggleDropdownUser.bind(this)}
+                open={this.props.dropdown_open}
+                onToggle={this.toggleDropdown.bind(this)}
                 noCaret 
               >
                 <div>ciao</div>
               </NavDropdown>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <If condition={this.state.groupsOpen}> 
-        <Then><GroupList/></Then> 
-      </If> 
-    </div>
+            </Nav>
+        </Navbar>
+        <If condition={this.state.groupsOpen}> 
+          <Then><GroupList/></Then> 
+        </If> 
+      </div>
     ); 
   }
 }; 

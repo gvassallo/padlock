@@ -1,12 +1,12 @@
+.dropdown-menu{
+  left: auto; 
+}
 //CREATE MENU 
 .create-menu {
   width: 320px; 
   color: grey; 
   z-index: 12; 
-  hr{
-    margin-top: 10px; 
-    margin-bottom: 10px; 
-  }
+  line-height: 20px;
 }
 
 .create-menu-item{
@@ -19,7 +19,6 @@
   }
   a { 
     color: black; 
-    display: block; 
     font-size: 14px; 
     font-weight: 700; 
     cursor: pointer; 
@@ -44,29 +43,28 @@
   }
 } 
 
-
 .create-new-header{
   padding: 10px;
   color: #8c8c8c;
+  height: 30px;
+  line-height: 30px;
   div{
-    text-align: center;
-    display: block;
-    margin: 0 10px;
-    overflow: hidden;
-    font-weight: 700;
-    padding: 0 2pc;
-    position: relative;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    z-index: 1
-  }
-  a{
     z-index: 2;
-    top: 7px;
-    text-decoration: none; 
-    color: #8c8c8c;
-    cursor: pointer; 
+    vertical-align: middle;
+    text-align: center;
+    position: absolute;
+    padding: 5px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
+  // a{
+  //   position: absolute;
+  //   top: 12px;
+  //   right: 5px;
+  //   z-index: 2;
+  // }
 }
 
 .create-menu-close{
@@ -74,16 +72,19 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 2
+  z-index: 2;
+  text-decoration: none; 
+  color: #8c8c8c;
+  cursor: pointer; 
 }
-
-.create-menu-back{
-  padding: 10px 4px 10px 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2
-}
+//
+// .create-menu-back{
+//   padding: 10px 4px 10px 10px;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   z-index: 2
+// }
 
 #create-dropdown + ul {
   position: fixed; 

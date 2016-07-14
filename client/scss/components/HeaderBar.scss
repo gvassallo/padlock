@@ -1,26 +1,87 @@
-.navbar{
-  position: relative; 
-  padding-top: 0;
+.header{
+    width: 100%;
+    top: 0;
+    position: relative;
+    padding-top: 0;
+    height: 50px; 
+    line-height: 50px;
+    z-index: 8;
+    right: 0;
+    left: 0;
+    background-color: #f64747;
+    overflow: hidden;
+}
+
+.header-left{
+    float: left !important; 
+    padding-left: 0;
+}
+
+.header-right{
+    float: right !important; 
+    margin-right: -15px;
 }
 
 .header-logo{
-  position: absolute;
-  top: 0;
-  left: 50%;
-  margin-left: -50px !important;  /* 50% of your logo width */
-  display: block;
-  img{
-    width: 120px;
-    padding-top: 8px; 
-  }
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    img{
+        width: 120px;
+        // padding-top: 8px; 
+    }
 }
 
 .header-groups-button{
-  padding-top: 8px;
-  button{
-    background-color: transparent; 
-    &:hover{
-      background-color: transparent;
+    top: 0;
+    bottom: 0;
+    button{
+        height: 35px;
+        border: none;
+        background-color: rgba(255, 255, 255, .3); 
+        color: white;
+        font-weight: 700;
+        &:hover{
+            background-color:  rgba(255, 255, 255, .4);
+        }
     }
-  }
+}
+
+.header-right-group{
+    vertical-align: middle; 
+    li{
+        float: left; 
+    }
+}
+
+#create-dropdown{
+    padding-right: 10px;
+    button{
+        height: 35px;
+        border: none;
+        color: white;
+        background-color: rgba(255, 255, 255, .3); 
+        font-weight: 700;
+        &:hover{
+            background-color:  rgba(255, 255, 255, .4);
+        }
+    }
+}
+
+#user-button{
+    padding-right: 15px;
+    button{
+        height: 35px;
+        border: none;
+        color: white;
+        background-color: rgba(255, 255, 255, .3); 
+        font-weight: 700;
+        &:hover{
+            background-color:  rgba(255, 255, 255, .4);
+        }
+    }
 }
