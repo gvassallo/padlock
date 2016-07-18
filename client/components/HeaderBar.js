@@ -39,9 +39,9 @@ class HeaderBar extends React.Component {
     dispatch(LoginsActions.resetLoginsList()); 
   }
 
-  toggleDropdown(isOpen){
+  toggleDropdown(){
     const {dispatch} = this.props; 
-    if(isOpen){
+    if(!this.props.dropdown_open){
       dispatch(OptionsActions.loginCardClose()); 
       dispatch(OptionsActions.dropdownOpen()); 
     }else{
@@ -80,16 +80,11 @@ class HeaderBar extends React.Component {
           </div>
           <div className="header-right">
             <ul className="header-right-group">
-              <NavDropdown 
-                eventKey={1} 
-                id='create-dropdown' 
-                title={<Button><span className="fa fa-plus header-plus"/></Button>}
-                open={this.props.dropdown_open}
-                onToggle={this.toggleDropdown.bind(this)}
-                noCaret 
-              >
-                <CreateMenu/>               
-              </NavDropdown>
+              <li id='create-dropdown'>
+                <Button onClick={this.toggleDropdown.bind(this)}>
+                  <span className="fa fa-plus header-plus"/>
+                </Button>
+              </li>
               <NavDropdown 
                 eventKey={2} 
                 id='user-button' 
@@ -106,6 +101,9 @@ class HeaderBar extends React.Component {
       </nav>
       <If condition={this.state.groupsOpen}> 
         <Then><GroupList/></Then> 
+      </If> 
+      <If condition={this.props.dropdown_open}> 
+        <Then><CreateMenu/></Then> 
       </If> 
     </div>
     ); 

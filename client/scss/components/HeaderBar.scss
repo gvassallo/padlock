@@ -2,7 +2,6 @@
     width: 100%;
     top: 0;
     position: relative;
-    padding-top: 0;
     height: 50px; 
     line-height: 50px;
     z-index: 8;
@@ -21,7 +20,7 @@
     float: right !important; 
     margin-right: -15px;
 }
-
+//
 .header-logo{
     position: absolute;
     margin: auto;
@@ -35,6 +34,7 @@
         // padding-top: 8px; 
     }
 }
+//
 
 .header-groups-button{
     top: 0;
@@ -59,7 +59,7 @@
 }
 
 #create-dropdown{
-    padding-right: 10px;
+    margin-right: 10px;
     button{
         height: 35px;
         border: none;
@@ -71,7 +71,9 @@
         }
     }
 }
-
+.header-plus{
+  vertical-align: middle; 
+}
 #user-button{
     padding-right: 15px;
     button{

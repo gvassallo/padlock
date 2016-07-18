@@ -92,7 +92,7 @@ class NewLoginCard extends React.Component {
 
   render(){
     return(
-      <div className='new-group'> 
+      <div className='create-new'> 
         <form 
           onSubmit={this.addNewLogin.bind(this)} 
           action='' 
@@ -104,7 +104,9 @@ class NewLoginCard extends React.Component {
                 <label className="text-muted">service</label> 
               </Col>
               <Col xs={8} sm={8}>
-                <Input type="text" onChange={this.handleChange('service')}/>
+                <Input type="text"
+                  className='newlogincard-input'  
+                  onChange={this.handleChange('service')}/>
               </Col>
             </Row>
           </section>
@@ -115,6 +117,7 @@ class NewLoginCard extends React.Component {
               </Col>
               <Col xs={8} sm={8}>
                 <Input type="text" 
+                  className='newlogincard-input'  
                   onChange={this.handleChange('username')}/>
               </Col> 
             </Row>
@@ -126,6 +129,7 @@ class NewLoginCard extends React.Component {
               </Col>
               <Col xs={8} sm={8}>
                 <Input type="password"
+                  className='newlogincard-input'  
                   onChange={this.handleChange('password')}/>
               </Col> 
             </Row>
@@ -159,7 +163,7 @@ class NewLoginCard extends React.Component {
             </Row>
           </section>
           <hr/>
-          <div>
+          <div className='newlogincard-submit'>
             <If condition={this.state.loading}>
               <Then> 
                 <Button bsStyle="default" disabled>Wait</Button> 

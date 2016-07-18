@@ -5,7 +5,7 @@ import * as GroupActions from '../actions/GroupsActions'
 import * as OptionsActions from '../actions/OptionsActions'
 import '../scss/components/CreateMenu.scss' 
 
-class NewGroup extends React.Component{
+class NewGroup extends React.Component{ 
   constructor(){
     super();      
     this.state = {
@@ -45,13 +45,15 @@ class NewGroup extends React.Component{
   
   render(){
     return(
-        <form className='new-group' onSubmit={this.createGroup.bind(this)}> 
+      <div className='create-new create-new-group'>
+        <form onSubmit={this.createGroup.bind(this)}> 
           <span>Name</span> 
           <Input type='text' placeholder='Group name' onChange={this.handleChange.bind(this)}/> 
           <Button type='submit' bsStyle='primary'> 
             Create
           </Button> 
         </form> 
+      </div>
     ); 
   }
 }

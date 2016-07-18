@@ -19,7 +19,7 @@ class GroupList extends React.Component{
       <div className='groups'> 
         <ListGroup className='group-list'> 
         {this.props.groups.map(listValue => {
-          return <ListGroupItem key={listValue.uuid} >
+          return <ListGroupItem key={listValue.uuid} className='group-list-item' >
                     <Link to={`/g/${listValue.uuid}`}>
                         <GroupCell 
                           name={listValue.name} 

@@ -4,6 +4,7 @@ import {If , Then, Else} from 'react-if'
 import NewGroup from './NewGroup' 
 import NewLoginCard from './NewLoginCard' 
 import * as OptionsActions from '../actions/OptionsActions'
+
 import '../scss/components/CreateMenu.scss'
 
 class CreateMenu extends React.Component{
@@ -42,27 +43,28 @@ class CreateMenu extends React.Component{
   render(){
     return(
       <div className='create-menu'> 
+        <div>
           <If condition={this.state.create.login}>
             <Then> 
               <div className='create-new-header'> 
-                <a className='fa fa-arrow-left create-menu-back' onClick={this.back.bind(this)}/> 
+                <a className='fa fa-arrow-left create-menu-back create-menu-icon' onClick={this.back.bind(this)}/> 
                 <div> Create Login.. </div>  
-                <a className='fa fa-close create-menu-close' onClick={this.close.bind(this)} /> 
+                <a className='fa fa-close create-menu-close create-menu-icon' onClick={this.close.bind(this)} /> 
               </div> 
             </Then> 
             <Else>
               <If condition={this.state.create.group}> 
                 <Then> 
                   <div className='create-new-header'> 
-                    <a className='fa fa-arrow-left create-menu-back' onClick={this.back.bind(this)}/> 
+                    <a className='fa fa-arrow-left create-menu-back create-menu-icon' onClick={this.back.bind(this)}/> 
                     <div> Create Group.. </div>  
-                    <a className='fa fa-close create-menu-close' onClick={this.close.bind(this)} /> 
+                    <a className='fa fa-close create-menu-close create-menu-icon' onClick={this.close.bind(this)} /> 
                   </div> 
                 </Then>  
                 <Else> 
                   <div className='create-new-header'> 
                     <div> Create.. </div>  
-                    <a className='fa fa-close create-menu-close' onClick={this.close.bind(this)} /> 
+                    <a className='fa fa-close create-menu-close create-menu-icon' onClick={this.close.bind(this)} /> 
                   </div> 
                 </Else> 
               </If> 
@@ -75,7 +77,7 @@ class CreateMenu extends React.Component{
             <If condition={this.state.create.group}> 
               <Then><NewGroup test={this.state.create.group}/></Then>
               <Else>
-                <div> 
+                <div className='create-menu-body'> 
                   <div className='create-menu-item'> 
                     <a onClick={this.newLoginCard.bind(this)}>
                       <strong>Create a new Login Card..</strong> 
@@ -97,6 +99,7 @@ class CreateMenu extends React.Component{
             </If> 
           </Else> 
         </If> 
+        </div>
       </div> 
     ); 
   }
