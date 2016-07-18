@@ -20,7 +20,7 @@
     float: right !important; 
     margin-right: -15px;
 }
-//
+
 .header-logo{
     position: absolute;
     margin: auto;
@@ -28,13 +28,11 @@
     right: 0;
     top: 0;
     bottom: 0;
-    width: 150px;
+    width: 120px;
     img{
         width: 120px;
-        // padding-top: 8px; 
     }
 }
-//
 
 .header-groups-button{
     top: 0;
@@ -47,12 +45,15 @@
         font-weight: 700;
         &:hover{
             background-color:  rgba(255, 255, 255, .4);
+            color: white;
         }
     }
 }
 
 .header-right-group{
-    vertical-align: middle; 
+    position: absolute;
+    right: 0;
+    z-index: 7;
     li{
         float: left; 
     }
