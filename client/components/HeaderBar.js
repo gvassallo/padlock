@@ -6,6 +6,7 @@ import { Navbar, Nav, NavItem, Dropdown, NavDropdown, MenuItem, Button } from 'r
 import { LinkContainer } from 'react-router-bootstrap'
 import CreateMenu from './CreateMenu' 
 import GroupList from './GroupList' 
+import UserMenu from './UserMenu'
 import * as AuthActions from '../actions/AuthActions' 
 import * as LoginsActions from '../actions/LoginsActions'
 import * as OptionsActions from '../actions/OptionsActions'
@@ -18,7 +19,8 @@ class HeaderBar extends React.Component {
     this.state = {
       groupsOpen: false, 
       groupsLoaded: false, 
-      dropdown_user_open: false
+      dropdown_user_open: false, 
+      usermenu_open: false
     }; 
   }
 
@@ -85,16 +87,11 @@ class HeaderBar extends React.Component {
                   <span className="fa fa-plus header-plus"/>
                 </Button>
               </li>
-              <NavDropdown 
-                eventKey={2} 
-                id='user-button' 
-                title={<Button>{this.props.user.username}</Button>}
-                open={this.state.dropdown_user_open}
-                onToggle={this.toggleDropdownUser.bind(this)}
-                noCaret 
-              >
-                <div>ciao</div>
-              </NavDropdown>
+              <li id='user-button'>
+                <Button onClick={()=>this.setState({usermenu_open:!this.state.usermenu_open})}>
+                  {this.props.user.username}
+                </Button>
+              </li>
             </ul>
           </div>
         </div>
@@ -105,6 +102,9 @@ class HeaderBar extends React.Component {
       <If condition={this.props.dropdown_open}> 
         <Then><CreateMenu/></Then> 
       </If> 
+      <If condition={this.state.usermenu_open}>
+        <Then><UserMenu/></Then>
+      </If>
     </div>
     ); 
   }

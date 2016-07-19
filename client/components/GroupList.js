@@ -17,6 +17,10 @@ class GroupList extends React.Component{
   render(){
     return(
       <div className='groups'> 
+        <div className='groups-title'>
+          <span className='fa fa-group'/>
+          My Groups
+        </div>
         <ListGroup className='group-list'> 
         {this.props.groups.map(listValue => {
           return <ListGroupItem key={listValue.uuid} className='group-list-item' >
