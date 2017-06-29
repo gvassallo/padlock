@@ -5,6 +5,9 @@
   "author": {
     "name": "Gabriele Vassallo"
   },
+  "scripts":{
+      "start": "npm app.js"
+  }, 
   "repository": "none",
   "engines": ">=0.12.0",
   "dependencies": {
