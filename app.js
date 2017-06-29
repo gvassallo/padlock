@@ -7,24 +7,6 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 
-// var cookieParser = require('cookie-parser');
-// var session = require('express-session');
-
-
-//For CLIENT development (Hot loading)
-if(process.env.NODE_ENV === undefined ){
-  var webpack = require('webpack');
-  var config = require('./webpack.config.js');
-
-  var compiler = webpack(config);
-  app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
-  }));
-
-  app.use(require('webpack-hot-middleware')(compiler));
-}
-
 
 // Instruct express to server up static assets
 app.use(compression());
@@ -38,9 +20,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 var api = require('./routes/api')(passport);
-var client = require('./routes/client');
 
-app.use('/', client);
 app.use('/api', api);
 
 app.listen(port, (err) => {

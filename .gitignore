@@ -7,6 +7,4 @@ coverage
 .vscode
 server.*
 xunit.xml
-
-
-
+scripts
